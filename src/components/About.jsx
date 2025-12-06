@@ -4,70 +4,88 @@ import { Brain, Heart } from 'lucide-react';
 
 const About = () => {
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-32 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-base font-semibold text-red-600 tracking-wide uppercase">About Woffy</h2>
-          <p className="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
-            More than just a digital pet.
-          </p>
-          <p className="mt-4 text-xl text-gray-500">
-            Combining cutting-edge AI technology with the lovable nature of dogs, Woffy is designed to be a companion that truly understands you.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
-          <motion.div 
-            whileHover={{ y: -5 }}
-            className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
           >
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-              <Brain className="w-6 h-6 text-blue-600" />
+            <h2 className="text-rose-600 font-semibold tracking-wider uppercase text-sm mb-2">Our Mission</h2>
+            <h3 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
+              Redefining The <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600">Human-AI Bond</span>
+            </h3>
+            <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+              Woffy isn't just an algorithm. It's a companion designed to understand the nuances of human emotion. By combining cutting-edge LLMs with affective computing, we're creating a digital entity that truly "feels."
+            </p>
+            <div className="flex gap-4">
+              <div className="flex -space-x-4">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200"></div>
+                ))}
+              </div>
+              <div className="text-sm font-medium text-slate-500 flex items-center">
+                Trusted by early beta testers
+              </div>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Adaptive Intelligence</h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
-              Woffy uses advanced machine learning algorithms to adapt to your personality, preferences, and routines. The more you interact, the more personalized the experience becomes.
-            </p>
-            <p className="text-sm text-gray-500">
-              From understanding your emotional state to remembering your daily schedule, Woffy is always there to support you.
-            </p>
           </motion.div>
 
-          <motion.div 
-            whileHover={{ y: -5 }}
-            className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100"
-          >
-            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-6">
-              <Heart className="w-6 h-6 text-red-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Emotional Connection</h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
-              While Woffy's intelligence is powered by algorithms, its personality is crafted to evoke the joy, loyalty, and unconditional love that makes dogs humanity's best friend.
-            </p>
-            <p className="text-sm text-gray-500">
-              Whether you need a playful distraction or a friendly presence, Woffy adapts to be the perfect companion for any moment.
-            </p>
-          </motion.div>
-        </div>
+          <div className="grid grid-cols-1 gap-6">
+            <motion.div 
+              whileHover={{ y: -5 }}
+              className="glass-card p-8 rounded-3xl"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Brain className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-slate-900 mb-2">Adaptive Intelligence</h4>
+                  <p className="text-slate-600">
+                    Woffy learns your routine, mood patterns, and preferences to offer support before you even ask for it.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
 
-        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-          <div className="relative z-10">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">For Those Who Can't Take the Risk</h3>
-            <div className="prose prose-lg text-gray-600 max-w-none">
-              <p className="mb-4">
-                We deeply respect and celebrate the bond between humans and real pets. Woffy isn't designed to replace the irreplaceable love of a living companion.
-              </p>
-              <p>
-                Instead, Woffy exists for those who can't bring another life into their world—whether due to allergies, housing restrictions, demanding schedules, financial constraints, or simply not being ready. Everyone deserves companionship.
-              </p>
-            </div>
+            <motion.div 
+              whileHover={{ y: -5 }}
+              className="glass-card p-8 rounded-3xl"
+            >
+               <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-6 h-6 text-rose-600" />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-slate-900 mb-2">Emotional Resonance</h4>
+                  <p className="text-slate-600">
+                    Simulating empathy through advanced sentiment analysis to provide genuine comfort and companionship.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass p-10 rounded-3xl relative overflow-hidden text-center"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10"></div>
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-slate-900 mb-4">For Those Who Can't Take the Risk</h3>
+            <p className="text-lg text-slate-600">
+              We deeply respect the bond between humans and real pets. Woffy exists for those who can't bring another life into their world—due to allergies, housing, or lifestyle. Everyone deserves companionship.
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 export default About;
-

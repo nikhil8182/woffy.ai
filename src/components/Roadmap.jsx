@@ -1,102 +1,108 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { CheckCircle2, Circle, Clock } from 'lucide-react';
 
 const roadmapItems = [
   {
     period: 'Q2 2025',
     status: 'Completed',
     title: 'Concept Development',
-    items: ['Research phase with canine behavior specialists', 'Core AI algorithms development', 'Initial personality framework design', 'UX/UI concept approval'],
+    items: ['Behavioral Research', 'Core AI Algorithms', 'Personality Framework', 'Design System'],
   },
   {
     period: 'Q3 2025',
     status: 'Completed',
     title: 'Alpha Development',
-    items: ['First prototype of Woffy AI engine', 'Emotional response system implementation', 'Learning capabilities foundation', 'Internal testing and refinement'],
+    items: ['Prototype Engine', 'Emotional Response System', 'Learning Foundation', 'Internal Testing'],
   },
   {
     period: 'Q1 2026',
     status: 'In Progress',
     title: 'Beta Testing',
-    items: ['Closed beta program launch', 'User feedback collection and analysis', 'Personalization algorithm refinement', 'AI response optimization'],
+    items: ['Closed Beta Launch', 'Feedback Loop', 'Algorithm Refinement', 'Response Optimization'],
     current: true,
   },
   {
     period: 'Q3 2026',
     status: 'Upcoming',
     title: 'Platform Integration',
-    items: ['Mobile application development', 'Web platform finalization', 'Cross-platform synchronization', 'Advanced interactive features implementation'],
+    items: ['Mobile App', 'Web Platform', 'Cross-sync', 'Interactive Features'],
   },
   {
     period: 'Q4 2026',
     status: 'Upcoming',
     title: 'Public Release',
-    items: ['Official launch of Woffy.ai', 'Marketing campaign rollout', 'Partnership announcements', 'Community building initiatives'],
-  },
-  {
-    period: '2027+',
-    status: 'Future',
-    title: 'Future Development',
-    items: ['AR/VR integration for immersive experiences', 'Advanced emotional intelligence capabilities', 'Global language support expansion', 'Woffy ecosystem development'],
+    items: ['Official Launch', 'Marketing Campaign', 'Partnerships', 'Community Events'],
   },
 ];
 
 const Roadmap = () => {
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-4">
-            Woffy.ai Roadmap
+    <section className="py-32 relative">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+            The Journey Ahead
           </h2>
-          <p className="text-xl text-gray-500">
-            Our journey to bring Woffy to life.
+          <p className="text-xl text-slate-500">
+            Transforming vision into reality, step by step.
           </p>
         </div>
 
-        <div className="relative border-l-2 border-gray-200 ml-6 md:ml-12 space-y-12">
-          {roadmapItems.map((item, index) => (
-            <motion.div
-              key={item.period}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative pl-8 md:pl-12"
-            >
-              <span
-                className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 ${
-                  item.current
-                    ? 'bg-red-600 border-red-200 ring-4 ring-red-100'
-                    : item.status === 'Completed'
-                    ? 'bg-green-500 border-green-200'
-                    : 'bg-white border-gray-300'
-                }`}
-              ></span>
-              
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                <h3 className={`text-lg font-bold ${item.current ? 'text-red-600' : 'text-gray-900'}`}>
-                  {item.period} - {item.title}
-                </h3>
-                <span className={`text-sm font-medium px-2.5 py-0.5 rounded-full w-fit mt-1 sm:mt-0 ${
-                   item.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                   item.status === 'In Progress' ? 'bg-red-100 text-red-800' :
-                   'bg-gray-100 text-gray-800'
-                }`}>
-                  {item.status}
-                </span>
-              </div>
-              
-              <ul className="mt-4 space-y-2 text-gray-600">
-                {item.items.map((subItem, idx) => (
-                  <li key={idx} className="flex items-start">
-                    <span className="mr-2 mt-1.5 h-1.5 w-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>
-                    {subItem}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+        <div className="relative">
+          {/* Glowing Line */}
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-rose-500 to-transparent opacity-50"></div>
+          
+          <div className="space-y-12">
+            {roadmapItems.map((item, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <motion.div
+                  key={item.period}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className={`relative flex flex-col md:flex-row gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}
+                >
+                  {/* Content Side */}
+                  <div className="flex-1 ml-16 md:ml-0">
+                    <div className={`glass-card p-6 rounded-2xl relative ${item.current ? 'border-rose-500/50 ring-1 ring-rose-500/20' : ''}`}>
+                      {item.current && (
+                        <span className="absolute -top-3 right-4 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg shadow-rose-500/30">
+                          CURRENT PHASE
+                        </span>
+                      )}
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
+                        <span className="text-sm font-mono text-slate-500">{item.period}</span>
+                      </div>
+                      <ul className="space-y-2">
+                        {item.items.map((subItem, idx) => (
+                          <li key={idx} className="flex items-center text-sm text-slate-600">
+                            <div className="w-1.5 h-1.5 rounded-full bg-rose-400 mr-2"></div>
+                            {subItem}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Center Marker */}
+                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-8 h-8">
+                     <div className={`w-4 h-4 rounded-full border-2 ${
+                        item.status === 'Completed' ? 'bg-green-500 border-green-200' :
+                        item.current ? 'bg-rose-600 border-rose-200 animate-pulse' :
+                        'bg-slate-200 border-slate-100'
+                     }`}></div>
+                  </div>
+
+                  {/* Empty Side for Layout Balance */}
+                  <div className="flex-1 hidden md:block"></div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
@@ -104,4 +110,3 @@ const Roadmap = () => {
 };
 
 export default Roadmap;
-
