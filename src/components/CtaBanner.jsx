@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CtaBanner = () => {
+const CtaBanner = ({ onJoinWaitlist }) => {
   return (
     <section className="py-24 bg-red-600 relative overflow-hidden">
         {/* Decorative circles */}
@@ -19,12 +19,18 @@ const CtaBanner = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <button className="px-8 py-4 bg-white text-red-600 rounded-full font-bold text-lg hover:bg-red-50 transition-colors shadow-lg">
+          <button 
+            onClick={onJoinWaitlist}
+            className="px-8 py-4 bg-white text-red-600 rounded-full font-bold text-lg hover:bg-red-50 transition-colors shadow-lg"
+          >
             Join the Waitlist
           </button>
-          <button className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition-colors">
+          <a 
+            href="#roadmap"
+            className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-bold text-lg hover:bg-white/10 transition-colors inline-block"
+          >
             View Our Progress
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-red-500/50 pt-8 text-red-100">
@@ -47,4 +53,3 @@ const CtaBanner = () => {
 };
 
 export default CtaBanner;
-
