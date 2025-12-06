@@ -22,8 +22,8 @@ const WoffyAvatar = () => {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         className="w-full h-full relative"
       >
-        {/* Warm Golden Glow */}
-        <div className="absolute inset-0 bg-amber-400/30 blur-3xl rounded-full scale-90"></div>
+        {/* Soft Warm Glow - subtle */}
+        <div className="absolute inset-0 bg-orange-100/50 blur-3xl rounded-full scale-90"></div>
 
         <svg
           viewBox="0 0 200 200"
@@ -35,12 +35,12 @@ const WoffyAvatar = () => {
             animate={{ x: mousePosition.x, y: mousePosition.y }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
           >
-            {/* Golden Retriever Floppy Ears */}
+            {/* Golden Retriever Floppy Ears - Softer Gold */}
             {/* Left Ear */}
             <motion.path
               d="M45 70 C 10 70, 0 110, 15 130 C 25 145, 50 130, 50 110"
-              fill="#F59E0B" // Amber-500
-              stroke="#D97706" // Amber-600
+              fill="#FCD34D" // Amber-300 (Softer Gold)
+              stroke="#D97706" // Amber-600 (Outline)
               strokeWidth="3"
               animate={{ rotate: [-2, 2, -2] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -50,7 +50,7 @@ const WoffyAvatar = () => {
             {/* Right Ear */}
             <motion.path
               d="M155 70 C 190 70, 200 110, 185 130 C 175 145, 150 130, 150 110"
-              fill="#F59E0B" // Amber-500
+              fill="#FCD34D" // Amber-300
               stroke="#D97706" // Amber-600
               strokeWidth="3"
               animate={{ rotate: [2, -2, 2] }}
@@ -59,15 +59,15 @@ const WoffyAvatar = () => {
               originY="70"
             />
 
-            {/* Head Shape - Creamy Gold */}
-            <circle cx="100" cy="100" r="65" fill="#FDE68A" stroke="#F59E0B" strokeWidth="3" />
+            {/* Head Shape - Creamy/Light Gold */}
+            <circle cx="100" cy="100" r="65" fill="#FEF3C7" stroke="#D97706" strokeWidth="3" /> {/* Amber-100 fill */}
             
             {/* Fur Tuft on Top */}
-            <path d="M90 38 Q 100 30, 110 38" fill="none" stroke="#F59E0B" strokeWidth="3" strokeLinecap="round" />
+            <path d="M90 38 Q 100 30, 110 38" fill="none" stroke="#D97706" strokeWidth="3" strokeLinecap="round" />
 
             {/* Cheeks - Warm flush */}
-            <circle cx="65" cy="110" r="8" fill="#FCA5A5" opacity="0.4" />
-            <circle cx="135" cy="110" r="8" fill="#FCA5A5" opacity="0.4" />
+            <circle cx="65" cy="110" r="8" fill="#FDA4AF" opacity="0.4" />
+            <circle cx="135" cy="110" r="8" fill="#FDA4AF" opacity="0.4" />
 
             {/* Eyes */}
             <g>
@@ -76,7 +76,7 @@ const WoffyAvatar = () => {
                 animate={{ scaleY: [1, 0.1, 1] }}
                 transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
               >
-                <ellipse cx="70" cy="90" rx="9" ry="11" fill="#292524" /> {/* Dark brown eyes */}
+                <ellipse cx="70" cy="90" rx="9" ry="11" fill="#292524" />
                 <circle cx="74" cy="86" r="3" fill="white" />
               </motion.g>
               
@@ -90,8 +90,8 @@ const WoffyAvatar = () => {
               </motion.g>
             </g>
 
-            {/* Snout Area - Lighter Cream */}
-            <ellipse cx="100" cy="115" rx="25" ry="20" fill="#FEF3C7" />
+            {/* Snout Area - White/Cream */}
+            <ellipse cx="100" cy="115" rx="25" ry="20" fill="#FFFBEB" />
 
             {/* Nose - Dark Brown */}
             <motion.path
@@ -104,7 +104,7 @@ const WoffyAvatar = () => {
             {/* Mouth */}
             <path d="M92 122 Q 100 128, 108 122" stroke="#292524" strokeWidth="3" strokeLinecap="round" />
             
-            {/* Tongue - Playful */}
+            {/* Tongue - Playful Pink */}
             <motion.path
               d="M96 125 Q 100 138, 104 125"
               fill="#FB7185"
@@ -117,14 +117,14 @@ const WoffyAvatar = () => {
           </motion.g>
         </svg>
 
-        {/* Chat Bubble - Updated Color */}
+        {/* Chat Bubble - Reverted to neutral */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{ opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 0.8], y: [10, 0, 0, -10] }}
           transition={{ duration: 4, repeat: Infinity, times: [0, 0.1, 0.9, 1] }}
-          className="absolute top-10 -right-4 bg-white px-4 py-2 rounded-2xl rounded-bl-none shadow-lg border border-amber-100"
+          className="absolute top-10 -right-4 bg-white px-4 py-2 rounded-2xl rounded-bl-none shadow-lg border border-slate-100"
         >
-          <span className="text-sm font-medium text-amber-900">Woof! 🐾</span>
+          <span className="text-sm font-medium text-slate-700">Woof! 🐾</span>
         </motion.div>
       </motion.div>
     </div>
