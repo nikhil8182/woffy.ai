@@ -1,19 +1,5 @@
-import { initializeApp, getApps } from "firebase/app";
 import { getVertexAI, getGenerativeModel } from "firebase/vertexai";
-
-// Firebase config (reuse from existing)
-const firebaseConfig = {
-  apiKey: "AIzaSyCU_ASRnbMtNuZYxR9IG6MNL7RVIkiCwhU",
-  authDomain: "woffy-ai.firebaseapp.com",
-  projectId: "woffy-ai",
-  storageBucket: "woffy-ai.firebasestorage.app",
-  messagingSenderId: "190287770784",
-  appId: "1:190287770784:web:d0cb3f472607bcd2a985c5",
-  measurementId: "G-19TGTWL0LC"
-};
-
-// Initialize Firebase (check if already initialized)
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+import { app } from "./firebase";
 
 // Initialize Vertex AI
 const vertexAI = getVertexAI(app);
@@ -67,5 +53,5 @@ export const chatWithWoffy = async (message, chatHistory = []) => {
   return response;
 };
 
-export { app, vertexAI };
+export { vertexAI };
 

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Activity, MessageCircle, Sparkles } from 'lucide-react';
+import WoffyDemo from './WoffyDemo';
 
 const Prototype = () => {
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+
   return (
     <section className="py-24 bg-gray-900 text-white overflow-hidden relative">
       {/* Background Glow */}
