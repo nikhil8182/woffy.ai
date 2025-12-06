@@ -9,15 +9,14 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* Left Column: Text */}
           <div className="text-center lg:text-left max-w-3xl mx-auto lg:mx-0">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-rose-50/50 backdrop-blur-sm border border-rose-200 text-rose-600 text-sm font-medium mb-8 shadow-sm hover:shadow-md transition-all"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-amber-50/80 backdrop-blur-sm border border-amber-200 text-amber-700 text-sm font-medium mb-8 shadow-sm hover:shadow-md transition-all"
             >
-              <span className="flex h-2 w-2 rounded-full bg-rose-600 mr-2 animate-pulse"></span>
+              <span className="flex h-2 w-2 rounded-full bg-amber-500 mr-2 animate-pulse"></span>
               Beta Launching Q4 2026
             </motion.div>
 
@@ -29,7 +28,7 @@ const Hero = () => {
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-700">Woffy.ai</span> <br />
               <span className="text-3xl md:text-5xl lg:text-6xl text-slate-400 font-bold block mt-2">Your AI Companion</span>
-              <span className="text-4xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-red-500 to-orange-500 block mt-4 pb-2">
+              <span className="text-4xl md:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 block mt-4 pb-2">
                 Powered by Love
               </span>
             </motion.h1>
@@ -40,7 +39,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-xl md:text-2xl text-slate-600 mb-12 leading-relaxed font-light"
             >
-              Experience the future of companionship. An AI that learns, adapts, and brings unconditional joy to your life.
+              Experience the future of companionship. An AI that learns, adapts, and brings unconditional golden retriever energy to your life.
             </motion.p>
 
             <motion.div
@@ -51,14 +50,14 @@ const Hero = () => {
             >
               <a 
                 href="#prototype"
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-600 to-red-600 text-white rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-rose-500/30 transition-all hover:-translate-y-1 flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-2xl font-semibold text-lg hover:shadow-lg hover:shadow-amber-500/30 transition-all hover:-translate-y-1 flex items-center justify-center gap-2 group"
               >
                 <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 Try Prototype
               </a>
               <a 
                 href="#about"
-                className="w-full sm:w-auto px-8 py-4 bg-white/50 backdrop-blur-sm text-slate-700 border border-slate-200 rounded-2xl font-semibold text-lg hover:bg-white hover:border-slate-300 transition-all hover:-translate-y-1"
+                className="w-full sm:w-auto px-8 py-4 bg-white/50 backdrop-blur-sm text-amber-900 border border-amber-100 rounded-2xl font-semibold text-lg hover:bg-white hover:border-amber-200 transition-all hover:-translate-y-1"
               >
                 Learn More
               </a>
@@ -71,11 +70,11 @@ const Hero = () => {
               className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left"
             >
               {[
-                { icon: Heart, label: "Emotionally Intelligent", color: "text-rose-500" },
-                { icon: Zap, label: "Always Available", color: "text-amber-500" },
-                { icon: Shield, label: "Privacy First", color: "text-indigo-500" }
+                { icon: Heart, label: "Emotionally Intelligent", color: "text-amber-500" },
+                { icon: Zap, label: "Always Available", color: "text-orange-500" },
+                { icon: Shield, label: "Privacy First", color: "text-yellow-600" }
               ].map((item, idx) => (
-                <div key={item.label} className="flex items-center gap-3 p-3 rounded-xl bg-white/30 border border-white/50">
+                <div key={item.label} className="flex items-center gap-3 p-3 rounded-xl bg-white/40 border border-white/60">
                   <div className={`p-2 rounded-lg bg-white shadow-sm ${item.color}`}>
                     <item.icon className="w-4 h-4" />
                   </div>
@@ -85,7 +84,6 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Right Column: Woffy Avatar Animation */}
           <motion.div
              initial={{ opacity: 0, scale: 0.8 }}
              animate={{ opacity: 1, scale: 1 }}
@@ -94,26 +92,25 @@ const Hero = () => {
           >
             <WoffyAvatar />
             
-            {/* Decorative Stats Cards Floating */}
             <motion.div 
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 5, repeat: Infinity, delay: 1 }}
-              className="absolute top-10 right-10 glass-card p-4 rounded-2xl"
+              className="absolute top-10 right-10 glass-card p-4 rounded-2xl border-amber-100"
             >
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-sm font-semibold text-slate-700">Mood: Happy</span>
+                <span className="text-sm font-semibold text-amber-900">Mood: Playful</span>
               </div>
             </motion.div>
 
              <motion.div 
               animate={{ y: [10, -10, 10] }}
               transition={{ duration: 6, repeat: Infinity, delay: 0.5 }}
-              className="absolute bottom-20 -left-4 glass-card p-4 rounded-2xl max-w-[180px]"
+              className="absolute bottom-20 -left-4 glass-card p-4 rounded-2xl max-w-[180px] border-amber-100"
             >
-              <div className="text-xs text-slate-500 mb-1">Learning...</div>
-              <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                <div className="h-full bg-rose-500 w-[75%]"></div>
+              <div className="text-xs text-amber-700 mb-1">Learning...</div>
+              <div className="h-1.5 bg-amber-100 rounded-full overflow-hidden">
+                <div className="h-full bg-amber-500 w-[75%]"></div>
               </div>
             </motion.div>
           </motion.div>

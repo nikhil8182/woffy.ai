@@ -8,7 +8,7 @@
   }
   
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-rose-500/30 selection:text-rose-900;
+    @apply bg-amber-50/50 text-slate-900 font-sans antialiased selection:bg-amber-200 selection:text-amber-900;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -18,11 +18,11 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/60 backdrop-blur-lg border border-white/40 shadow-xl shadow-black/5;
+    @apply bg-white/60 backdrop-blur-lg border border-white/40 shadow-xl shadow-amber-900/5;
   }
   
   .glass-card {
-    @apply bg-white/40 backdrop-blur-md border border-white/30 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white/60 hover:-translate-y-1;
+    @apply bg-white/60 backdrop-blur-md border border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white/80 hover:-translate-y-1;
   }
 
   .text-gradient {
@@ -30,7 +30,7 @@
   }
   
   .text-gradient-brand {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-rose-600 via-red-500 to-orange-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500;
   }
 }
 
