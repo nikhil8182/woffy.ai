@@ -117,14 +117,14 @@ const WoffyAvatar = () => {
           </motion.g>
         </svg>
 
-        {/* Chat Bubble - Reverted to neutral */}
+        {/* Chat Bubble - Onwords Branding */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 10 }}
           animate={{ opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 0.8], y: [10, 0, 0, -10] }}
           transition={{ duration: 4, repeat: Infinity, times: [0, 0.1, 0.9, 1] }}
-          className="absolute top-10 -right-4 bg-white px-4 py-2 rounded-2xl rounded-bl-none shadow-lg border border-slate-100"
+          className="absolute top-10 -right-4 bg-white px-4 py-2 rounded-2xl rounded-bl-none shadow-lg border border-red-100"
         >
-          <span className="text-sm font-medium text-slate-700">Woof! 🐾</span>
+          <span className="text-sm font-bold text-gray-900"><span className="text-red-600">Woof</span>! 🐾</span>
         </motion.div>
       </motion.div>
     </div>

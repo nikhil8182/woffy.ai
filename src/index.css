@@ -9,7 +9,12 @@
   }
   
   body {
-    @apply bg-slate-50 text-slate-900 antialiased selection:bg-brand-rose/30 selection:text-brand-rose;
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+  
+  ::selection {
+    background-color: rgba(225, 29, 72, 0.3);
+    color: #e11d48;
   }
 
   h1, h2, h3, h4, h5, h6 {

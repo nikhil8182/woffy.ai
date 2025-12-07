@@ -1,6 +1,9 @@
+// Use Firebase emulator in dev, production URL otherwise
 const FUNCTION_URL =
   import.meta.env.VITE_WOFFY_FUNCTION_URL ||
-  "https://us-central1-woffy-ai.cloudfunctions.net/chatWithWoffy";
+  (import.meta.env.DEV
+    ? "http://127.0.0.1:5001/woffy-ai/us-central1/chatWithWoffy"
+    : "https://us-central1-woffy-ai.cloudfunctions.net/chatWithWoffy");
 
 // Chat with Woffy via HTTP Function (public)
 export const chatWithWoffy = async (message, chatHistory = []) => {

@@ -96,32 +96,34 @@ const WoffyDemo = ({ isOpen, onClose }) => {
           onClick={e => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="relative px-6 py-4 bg-gradient-to-r from-red-600 to-red-500 flex items-center justify-between">
+          <div className="relative px-6 py-4 bg-gray-950 border-b border-gray-800 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg">
-                  <span className="text-2xl">🐕</span>
+                <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center shadow-lg border-2 border-gray-900">
+                  <span className="text-xl">🐕</span>
                 </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-400 rounded-full border-2 border-red-500"></div>
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-gray-950"></div>
               </div>
               <div>
-                <h3 className="font-bold text-white text-lg">Woffy</h3>
-                <p className="text-red-100 text-xs flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  AI Companion Demo
+                <h3 className="font-bold text-white text-base tracking-wide">
+                  <span className="text-red-600">On</span>words <span className="text-gray-400 font-normal">| Woffy</span>
+                </h3>
+                <p className="text-gray-500 text-xs flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-red-500" />
+                  AI Companion
                 </p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-white/20 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-800 rounded-full transition-colors text-gray-400 hover:text-white"
             >
-              <X className="w-5 h-5 text-white" />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="h-[400px] overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+          <div className="h-[400px] overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent bg-gray-950/50">
             {messages.map((message) => (
               <motion.div
                 key={message.id}
@@ -130,13 +132,13 @@ const WoffyDemo = ({ isOpen, onClose }) => {
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] px-4 py-3 rounded-2xl ${
+                  className={`max-w-[85%] px-5 py-3 rounded-2xl shadow-sm ${
                     message.role === 'user'
-                      ? 'bg-red-600 text-white rounded-br-md'
-                      : 'bg-gray-800 text-gray-100 rounded-bl-md border border-gray-700'
+                      ? 'bg-red-600 text-white rounded-br-none'
+                      : 'bg-white text-gray-900 rounded-bl-none'
                   }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap font-medium">{message.text}</p>
                 </div>
               </motion.div>
             ))}
@@ -147,10 +149,10 @@ const WoffyDemo = ({ isOpen, onClose }) => {
                 animate={{ opacity: 1 }}
                 className="flex justify-start"
               >
-                <div className="bg-gray-800 px-4 py-3 rounded-2xl rounded-bl-md border border-gray-700">
-                  <div className="flex items-center gap-2 text-gray-400">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span className="text-sm">Woffy is thinking...</span>
+                <div className="bg-white px-4 py-3 rounded-2xl rounded-bl-none shadow-sm">
+                  <div className="flex items-center gap-2 text-gray-500">
+                    <Loader2 className="w-4 h-4 animate-spin text-red-600" />
+                    <span className="text-xs font-medium">Thinking...</span>
                   </div>
                 </div>
               </motion.div>
@@ -160,7 +162,7 @@ const WoffyDemo = ({ isOpen, onClose }) => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-800 bg-gray-900/50">
+          <div className="p-4 border-t border-gray-800 bg-gray-950">
             <div className="flex items-center gap-3">
               <input
                 ref={inputRef}
@@ -168,20 +170,20 @@ const WoffyDemo = ({ isOpen, onClose }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder="Say something to Woffy..."
-                className="flex-1 bg-gray-800 text-white placeholder-gray-500 px-4 py-3 rounded-xl border border-gray-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all text-sm"
+                placeholder="Say hello to Woffy..."
+                className="flex-1 bg-gray-900 text-white placeholder-gray-500 px-4 py-3 rounded-xl border border-gray-800 focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all text-sm"
                 disabled={isLoading}
               />
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="p-3 bg-red-600 hover:bg-red-500 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-xl transition-all group"
+                className="p-3 bg-white hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-600 disabled:cursor-not-allowed rounded-xl transition-all group shadow-md"
               >
-                <Send className="w-5 h-5 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <Send className="w-5 h-5 text-red-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
             </div>
-            <p className="text-center text-gray-600 text-xs mt-3 flex items-center justify-center gap-1">
-              Made with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by <span className="text-red-500 font-semibold">On</span><span className="text-white font-semibold">words</span>
+            <p className="text-center text-gray-600 text-[10px] mt-3 uppercase tracking-widest font-bold">
+              Powered by <span className="text-red-600">On</span>words
             </p>
           </div>
         </motion.div>
