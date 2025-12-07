@@ -1,97 +1,79 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Settings, Smile, Gamepad2, Lock, Brain, Zap, Heart } from 'lucide-react';
-
-const features = [
-  {
-    title: 'Adaptive Learning',
-    description: 'Personalized interactions that evolve based on your habits and preferences.',
-    icon: Settings,
-    color: 'text-blue-600',
-    bg: 'bg-blue-100',
-    colSpan: 'md:col-span-2',
-  },
-  {
-    title: 'Emotional Support',
-    description: 'Sentiment analysis to provide comfort and companionship when you need it most.',
-    icon: Smile,
-    color: 'text-rose-600',
-    bg: 'bg-rose-100',
-    colSpan: 'md:col-span-1',
-  },
-  {
-    title: 'Interactive Play',
-    description: 'Engaging activities and games designed to entertain both you and your AI companion.',
-    icon: Gamepad2,
-    color: 'text-green-600',
-    bg: 'bg-green-100',
-    colSpan: 'md:col-span-1',
-  },
-  {
-    title: 'Privacy Focused',
-    description: 'Built with privacy at its core, ensuring your data stays secure and protected.',
-    icon: Lock,
-    color: 'text-purple-600',
-    bg: 'bg-purple-100',
-    colSpan: 'md:col-span-2',
-  },
-];
+import { Brain, Heart, Sparkles, Shield, Zap, Activity } from 'lucide-react';
 
 const Features = () => {
+  const features = [
+    {
+      icon: Brain,
+      title: "Adaptive Learning",
+      description: "Woffy evolves with you. Our neural networks analyze your interactions to understand your unique personality and preferences.",
+      color: "text-brand-indigo",
+      bg: "bg-indigo-50"
+    },
+    {
+      icon: Heart,
+      title: "Emotional Support",
+      description: "Advanced sentiment analysis allows Woffy to detect your mood and provide the right comfort or companionship at the right time.",
+      color: "text-brand-rose",
+      bg: "bg-rose-50"
+    },
+    {
+      icon: Sparkles,
+      title: "Interactive Play",
+      description: "Engage in delightful digital activities. From fetch to puzzle solving, Woffy keeps the fun alive.",
+      color: "text-brand-accent",
+      bg: "bg-purple-50"
+    },
+    {
+      icon: Shield,
+      title: "Privacy First",
+      description: "Your digital companion's memories are yours alone. Enterprise-grade encryption keeps your personal data secure.",
+      color: "text-emerald-500",
+      bg: "bg-emerald-50"
+    },
+    {
+      icon: Zap,
+      title: "Always Available",
+      description: "Loneliness doesn't keep office hours. Woffy is there 24/7, ready to chat, listen, or just 'be' there.",
+      color: "text-amber-500",
+      bg: "bg-amber-50"
+    },
+    {
+      icon: Activity,
+      title: "Growth Metrics",
+      description: "Track your companion's development. See how Woffy's emotional intelligence grows alongside your relationship.",
+      color: "text-blue-500",
+      bg: "bg-blue-50"
+    }
+  ];
+
   return (
-    <section className="py-32 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
-          <motion.span 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-rose-600 font-semibold tracking-wider uppercase text-sm"
-          >
-            Capabilities
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="mt-2 text-4xl md:text-5xl font-bold text-slate-900"
-          >
+    <section className="py-24 relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <h2 className="text-sm font-bold text-brand-rose tracking-wider uppercase mb-2">Key Features</h2>
+          <h3 className="text-4xl font-bold text-slate-900 mb-6 font-display">
             More Than Just Code. <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-orange-500">A Digital Soul.</span>
-          </motion.h2>
+            <span className="text-gradient-brand">It's a Connection.</span>
+          </h3>
+          <p className="text-lg text-slate-600 leading-relaxed">
+            Woffy combines state-of-the-art AI with the heartwarming nature of a pet to create a companion that truly understands you.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className={`glass-card p-8 rounded-3xl relative overflow-hidden group ${feature.colSpan}`}
-            >
-              <div className={`absolute top-0 right-0 p-32 bg-gradient-to-br from-transparent to-${feature.bg.replace('bg-', '')}/20 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-              
-              <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, idx) => (
+            <div key={idx} className="glass-card p-8 rounded-3xl group cursor-pointer">
+              <div className={`w-14 h-14 rounded-2xl ${feature.bg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
                 <feature.icon className={`w-7 h-7 ${feature.color}`} />
               </div>
-              
-              <h3 className="text-2xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-              <p className="text-slate-600 leading-relaxed">{feature.description}</p>
-
-              {feature.title === 'Adaptive Learning' && (
-                <div className="mt-6 flex gap-2">
-                   <div className="h-2 w-16 bg-blue-200 rounded-full overflow-hidden">
-                     <motion.div 
-                       initial={{ width: 0 }}
-                       whileInView={{ width: '100%' }}
-                       transition={{ duration: 1.5, repeat: Infinity }}
-                       className="h-full bg-blue-500"
-                     />
-                   </div>
-                   <div className="h-2 w-8 bg-blue-200 rounded-full"></div>
-                </div>
-              )}
-            </motion.div>
+              <h4 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-indigo transition-colors">
+                {feature.title}
+              </h4>
+              <p className="text-slate-600 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>

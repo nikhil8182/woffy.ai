@@ -1,6 +1,7 @@
-const { onCall, HttpsError } = require("firebase-functions/v2/https");
+const { onRequest, HttpsError } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const cors = require("cors")({ origin: true });
 
 // Define the secret - will be fetched from Secret Manager
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
@@ -18,47 +19,59 @@ Your traits:
 - Always be positive and encouraging
 - Remember you're a prototype demo - be honest about being an AI`;
 
-// Cloud Function to chat with Woffy
-exports.chatWithWoffy = onCall(
-  { 
+// Cloud Function (HTTP) to chat with Woffy — public, CORS-enabled
+exports.chatWithWoffy = onRequest(
+  {
     secrets: [geminiApiKey],
-    cors: true 
+    maxInstances: 3,
+    concurrency: 80,
   },
-  async (request) => {
-    const { message, history } = request.data;
+  async (req, res) => {
+    cors(req, res, async () => {
+      if (req.method === "OPTIONS") {
+        return res.status(204).send("");
+      }
 
-    if (!message) {
-      throw new HttpsError("invalid-argument", "Message is required");
-    }
+      if (req.method !== "POST") {
+        return res.status(405).send("Method not allowed");
+      }
 
-    try {
-      const genAI = new GoogleGenerativeAI(geminiApiKey.value());
-      
-      const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
-        systemInstruction: WOFFY_SYSTEM_PROMPT,
-        generationConfig: {
-          maxOutputTokens: 200,
-          temperature: 0.8,
-        }
-      });
+      const { message, history } = req.body || {};
 
-      // Start chat with history
-      const chat = model.startChat({
-        history: (history || []).map(msg => ({
-          role: msg.role,
-          parts: [{ text: msg.text }]
-        }))
-      });
+      if (!message) {
+        return res.status(400).json({ error: "Message is required" });
+      }
 
-      const result = await chat.sendMessage(message);
-      const response = result.response.text();
+      try {
+        const genAI = new GoogleGenerativeAI(geminiApiKey.value());
 
-      return { response };
-    } catch (error) {
-      console.error("Woffy AI error:", error);
-      throw new HttpsError("internal", "Failed to get response from Woffy");
-    }
+        const model = genAI.getGenerativeModel({
+          model: "gemini-2.0-flash",
+          systemInstruction: WOFFY_SYSTEM_PROMPT,
+          generationConfig: {
+            maxOutputTokens: 200,
+            temperature: 0.8,
+          },
+        });
+
+        const chat = model.startChat({
+          history: (history || []).map((msg) => ({
+            role: msg.role,
+            parts: [{ text: msg.text }],
+          })),
+        });
+
+        const result = await chat.sendMessage(message);
+        const response = result.response.text();
+
+        return res.json({ response });
+      } catch (error) {
+        console.error("Woffy AI error:", error);
+        return res
+          .status(500)
+          .json({ error: "Failed to get response from Woffy" });
+      }
+    });
   }
 );
 

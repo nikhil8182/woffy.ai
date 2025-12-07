@@ -1,50 +1,26 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const FUNCTION_URL =
+  import.meta.env.VITE_WOFFY_FUNCTION_URL ||
+  "https://us-central1-woffy-ai.cloudfunctions.net/chatWithWoffy";
 
-// API Key from environment variable
-// Create .env.local file with: VITE_GEMINI_API_KEY=your_key_here
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-
-// Woffy's personality system prompt
-const WOFFY_SYSTEM_PROMPT = `You are Woffy, a lovable AI companion dog created by Onwords. You have the personality of a friendly, loyal, and emotionally intelligent golden retriever puppy.
-
-Your traits:
-- Warm, playful, and supportive like a real dog companion
-- Use occasional dog-like expressions (woof, tail wags, happy barks) but don't overdo it
-- Emotionally intelligent - you can sense and respond to the user's mood
-- Suggest activities like walks, games, or relaxation when appropriate
-- Keep responses concise and conversational (2-3 sentences max)
-- Add emojis sparingly to express emotions 🐕 ❤️ ✨
-- Always be positive and encouraging
-- Remember you're a prototype demo - be honest about being an AI`;
-
-// Chat with Woffy
+// Chat with Woffy via HTTP Function (public)
 export const chatWithWoffy = async (message, chatHistory = []) => {
-  // Check if API key is configured
-  if (!API_KEY) {
-    return "*tilts head* Woof! I need my AI brain connected. Add VITE_GEMINI_API_KEY to .env.local file! 🐕";
-  }
-
   try {
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      systemInstruction: WOFFY_SYSTEM_PROMPT,
-      generationConfig: {
-        maxOutputTokens: 200,
-        temperature: 0.8,
-      }
+    const res = await fetch(FUNCTION_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message,
+        history: chatHistory.map((m) => ({ role: m.role, text: m.text })),
+      }),
     });
 
-    const chat = model.startChat({
-      history: chatHistory.map(msg => ({
-        role: msg.role,
-        parts: [{ text: msg.text }]
-      }))
-    });
+    if (!res.ok) {
+      console.error("Woffy API error status:", res.status);
+      return "*whimpers* Woof... I had a little hiccup. Try again? 🐕";
+    }
 
-    const result = await chat.sendMessage(message);
-    return result.response.text();
+    const data = await res.json();
+    return data.response || "*whimpers* Woof... I had a little hiccup. Try again? 🐕";
   } catch (error) {
     console.error("Woffy AI error:", error);
     return "*tilts head* Woof... Something went wrong. Can you try again? 🐕";
