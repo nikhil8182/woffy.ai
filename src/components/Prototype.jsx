@@ -46,7 +46,10 @@ const Prototype = () => {
               </li>
             </ul>
 
-            <button className="px-8 py-4 bg-white text-gray-900 rounded-full font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 group">
+            <button 
+              onClick={() => setIsDemoOpen(true)}
+              className="px-8 py-4 bg-white text-gray-900 rounded-full font-bold text-lg hover:bg-gray-100 transition-all flex items-center gap-2 group"
+            >
               <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
               Try Interactive Demo
             </button>
@@ -101,9 +104,11 @@ const Prototype = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Woffy Demo Modal */}
+      <WoffyDemo isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
     </section>
   );
 };
 
 export default Prototype;
-

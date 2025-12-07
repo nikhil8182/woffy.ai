@@ -1,8 +1,8 @@
-import { getVertexAI, getGenerativeModel } from "firebase/vertexai";
+import { getAI, getGenerativeModel } from "firebase/ai";
 import { app } from "./firebase";
 
-// Initialize Vertex AI
-const vertexAI = getVertexAI(app);
+// Initialize Firebase AI
+const ai = getAI(app);
 
 // Woffy's personality system prompt
 const WOFFY_SYSTEM_PROMPT = `You are Woffy, a lovable AI companion dog created by Onwords. You have the personality of a friendly, loyal, and emotionally intelligent golden retriever puppy.
@@ -24,8 +24,8 @@ Example responses:
 
 // Get the Gemini model with Woffy's personality
 export const getWoffyModel = () => {
-  return getGenerativeModel(vertexAI, {
-    model: "gemini-1.5-flash",
+  return getGenerativeModel(ai, {
+    model: "gemini-2.0-flash",
     systemInstruction: WOFFY_SYSTEM_PROMPT,
     generationConfig: {
       maxOutputTokens: 200,
@@ -52,6 +52,3 @@ export const chatWithWoffy = async (message, chatHistory = []) => {
   
   return response;
 };
-
-export { vertexAI };
-
