@@ -1,0 +1,924 @@
+[debug] [2025-12-07T09:42:34.431Z] ----------------------------------------------------------------------
+[debug] [2025-12-07T09:42:34.432Z] Command:       /opt/homebrew/Cellar/node/25.2.1/bin/node /opt/homebrew/bin/firebase emulators:start --only functions
+[debug] [2025-12-07T09:42:34.432Z] CLI Version:   14.26.0
+[debug] [2025-12-07T09:42:34.432Z] Platform:      darwin
+[debug] [2025-12-07T09:42:34.432Z] Node Version:  v25.2.1
+[debug] [2025-12-07T09:42:34.432Z] Time:          Sun Dec 07 2025 15:12:34 GMT+0530 (India Standard Time)
+[debug] [2025-12-07T09:42:34.432Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-12-07T09:42:34.493Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-07T09:42:34.493Z] > authorizing via signed-in user (ceo@onwords.in)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2025-12-07T09:42:34.692Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-12-07T09:42:34.692Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-12-07T09:42:34.693Z] Emulator locator file path: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/hub-woffy-ai.json
+[debug] [2025-12-07T09:42:34.693Z] [hub] writing locator at /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/hub-woffy-ai.json
+[debug] [2025-12-07T09:42:34.890Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-12-07T09:42:34.890Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-12-07T09:42:34.890Z] [tasks] Cloud Tasks Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-12-07T09:42:34.890Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}],"tasks":[{"address":"127.0.0.1","family":"IPv4","port":9499}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: apphosting, auth, firestore, database, hosting, pubsub, storage, dataconnect {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: apphosting, auth, firestore, database, hosting, pubsub, storage, dataconnect"}}
+[warn] ⚠  functions: Application Default Credentials detected. Non-emulated services will access production using these credentials. Be careful! {"metadata":{"emulator":{"name":"functions"},"message":"Application Default Credentials detected. Non-emulated services will access production using these credentials. Be careful!"}}
+[debug] [2025-12-07T09:42:35.167Z] Checked if tokens are valid: true, expires at: 1765103242678
+[debug] [2025-12-07T09:42:35.167Z] Checked if tokens are valid: true, expires at: 1765103242678
+[debug] [2025-12-07T09:42:35.168Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/woffy-ai/adminSdkConfig [none]
+[debug] [2025-12-07T09:42:35.572Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/woffy-ai/adminSdkConfig 200
+[debug] [2025-12-07T09:42:35.573Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/woffy-ai/adminSdkConfig {"projectId":"woffy-ai","storageBucket":"woffy-ai.firebasestorage.app"}
+[info] i  functions: Watching "/Users/onwords/woffyai-web/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/onwords/woffyai-web/functions\" for Cloud Functions..."}}
+[debug] [2025-12-07T09:42:35.587Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:42:35.886Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:42:35.886Z] Building nodejs source
+[debug] [2025-12-07T09:42:35.886Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:42:35.887Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:42:35.891Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8085
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+
+[debug] [2025-12-07T09:42:35.981Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[info] ✔  functions[us-central1-chatWithWoffy]: http function initialized (http://127.0.0.1:5001/woffy-ai/us-central1/chatWithWoffy). {"metadata":{"emulator":{"name":"functions"},"message":"http function initialized (http://127.0.0.1:5001/woffy-ai/us-central1/chatWithWoffy)."}}
+[debug] [2025-12-07T09:42:40.000Z] Could not find VSCode notification endpoint: FetchError: request to http://localhost:40001/vscode/notify failed, reason: . If you are not running the Firebase Data Connect VSCode extension, this is expected and not an issue.
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Functions │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub host: 127.0.0.1 port: 4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2025-12-07T09:42:52.590Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:42:52.590Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:42:52.591Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:42:52.590Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:42:52.591Z] Accepted request OPTIONS /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:42:52.591Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:42:52.591Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:42:52.595Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:42:52.596Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:42:52.839Z] [runtime-status] [39163] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:42:52.839Z] [runtime-status] [39163] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:42:52.839Z] [runtime-status] [39163] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:42:52.839Z] [runtime-status] [39163] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:42:52.895Z] [runtime-status] [39163] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:42:52.895Z] [runtime-status] [39163] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:42:52.895Z] [runtime-status] [39163] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:42:52.896Z] [runtime-status] [39163] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:42:52.896Z] [runtime-status] [39163] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:42:52.896Z] [runtime-status] [39163] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] } {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }"}}
+[debug] [2025-12-07T09:42:52.900Z] [runtime-status] [39163] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:42:52.900Z] [runtime-status] [39163] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_4cdf0717a36519b9.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39163] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_4cdf0717a36519b9.sock"}}
+[debug] [2025-12-07T09:42:52.904Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE"}}
+[debug] [2025-12-07T09:42:52.905Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:42:52.905Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY"}}
+[debug] [2025-12-07T09:42:52.906Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 1.6455ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 1.6455ms"}}
+[debug] [2025-12-07T09:42:52.907Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE"}}
+[debug] [2025-12-07T09:42:52.907Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:42:52.907Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:42:52.907Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:42:52.907Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:42:52.907Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:42:52.907Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:42:52.907Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:42:52.907Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:42:52.907Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:42:52.907Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:42:52.907Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:42:52.907Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY"}}
+[debug] [2025-12-07T09:42:58.615Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 5708.248042ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 5708.248042ms"}}
+[debug] [2025-12-07T09:42:58.616Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE"}}
+[debug] [2025-12-07T09:42:58.616Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:42:58.616Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:42:58.616Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:12.165Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:43:12.165Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:12.165Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:43:12.165Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:43:12.165Z] Accepted request OPTIONS /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:43:12.165Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:43:12.165Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:43:12.165Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:43:12.166Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY"}}
+[debug] [2025-12-07T09:43:12.168Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 2.168042ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 2.168042ms"}}
+[debug] [2025-12-07T09:43:12.168Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE"}}
+[debug] [2025-12-07T09:43:12.168Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:43:12.168Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:43:12.168Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:12.169Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:43:12.169Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:12.169Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:43:12.169Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:43:12.169Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:43:12.169Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:43:12.169Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:43:12.169Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:43:12.169Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY"}}
+[debug] [2025-12-07T09:43:16.840Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 4671.298459ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 4671.298459ms"}}
+[debug] [2025-12-07T09:43:16.841Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE"}}
+[debug] [2025-12-07T09:43:16.841Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:43:16.841Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:43:16.841Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:43.409Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:43:43.409Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:43.409Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:43:43.409Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:43:43.409Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:43:43.409Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:43:43.409Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:43:43.409Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:43:43.409Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: BUSY"}}
+[debug] [2025-12-07T09:43:48.296Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 4887.518166ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 4887.518166ms"}}
+[debug] [2025-12-07T09:43:48.297Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: IDLE"}}
+[debug] [2025-12-07T09:43:48.298Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:43:48.298Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:43:48.298Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:43:55.743Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:43:56.745Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:43:57.017Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:43:57.017Z] Building nodejs source
+[debug] [2025-12-07T09:43:57.017Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:43:57.017Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:43:57.018Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8531
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+[debug] [2025-12-07T09:43:57.109Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:44:01.121Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:44:01.121Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: FINISHING"}}
+[debug] [2025-12-07T09:44:01.128Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: exited"}}
+[debug] [2025-12-07T09:44:01.128Z] [worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-cc4d9acb-8913-4293-ac9c-0892f438c832]: FINISHED"}}
+[debug] [2025-12-07T09:44:01.719Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:44:01.719Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:44:01.720Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:44:01.719Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:44:01.720Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:44:01.720Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:44:01.720Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:44:01.720Z] [worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:44:01.721Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:44:01.721Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:44:01.945Z] [runtime-status] [39266] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:44:01.945Z] [runtime-status] [39266] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:01.945Z] [runtime-status] [39266] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:44:01.945Z] [runtime-status] [39266] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:01.996Z] [runtime-status] [39266] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:44:01.996Z] [runtime-status] [39266] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:44:01.996Z] [runtime-status] [39266] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:01.996Z] [runtime-status] [39266] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:44:01.997Z] [runtime-status] [39266] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:01.997Z] [runtime-status] [39266] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] } {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }"}}
+[debug] [2025-12-07T09:44:02.000Z] [runtime-status] [39266] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:44:02.000Z] [runtime-status] [39266] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_1b3988486db22d3b.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39266] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_1b3988486db22d3b.sock"}}
+[debug] [2025-12-07T09:44:02.028Z] [worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: IDLE"}}
+[debug] [2025-12-07T09:44:02.028Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:44:02.028Z] [worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: BUSY"}}
+[debug] [2025-12-07T09:44:03.424Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 1396.110042ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 1396.110042ms"}}
+[debug] [2025-12-07T09:44:03.424Z] [worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: IDLE"}}
+[debug] [2025-12-07T09:44:03.424Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:44:03.424Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:44:03.424Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:44:09.236Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:44:10.237Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:44:10.581Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:44:10.581Z] Building nodejs source
+[debug] [2025-12-07T09:44:10.581Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:44:10.581Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:44:10.582Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8603
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+[debug] [2025-12-07T09:44:10.675Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:44:14.687Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:44:14.687Z] [worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: FINISHING"}}
+[debug] [2025-12-07T09:44:14.694Z] [worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: exited"}}
+[debug] [2025-12-07T09:44:14.694Z] [worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-81cd2274-2828-4f31-9a6d-d58cb7874d74]: FINISHED"}}
+[debug] [2025-12-07T09:44:27.033Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:44:28.034Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:44:28.335Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:44:28.335Z] Building nodejs source
+[debug] [2025-12-07T09:44:28.335Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:44:28.336Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:44:28.336Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8989
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+
+[debug] [2025-12-07T09:44:28.430Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:44:33.168Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:44:33.168Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:44:33.168Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:44:33.168Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:44:33.168Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:44:33.169Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:44:33.169Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:44:33.169Z] [worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:44:33.170Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:44:33.170Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:44:33.412Z] [runtime-status] [39325] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:44:33.412Z] [runtime-status] [39325] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:33.412Z] [runtime-status] [39325] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:44:33.412Z] [runtime-status] [39325] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:33.468Z] [runtime-status] [39325] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:44:33.468Z] [runtime-status] [39325] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:44:33.468Z] [runtime-status] [39325] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:33.469Z] [runtime-status] [39325] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:44:33.469Z] [runtime-status] [39325] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:44:33.469Z] [runtime-status] [39325] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops"}}
+[debug] [2025-12-07T09:44:33.473Z] [runtime-status] [39325] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:44:33.473Z] [runtime-status] [39325] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_2b24f675c87a5c85.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39325] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_2b24f675c87a5c85.sock"}}
+[debug] [2025-12-07T09:44:33.477Z] [worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: IDLE"}}
+[debug] [2025-12-07T09:44:33.477Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:44:33.478Z] [worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: BUSY"}}
+[debug] [2025-12-07T09:44:37.921Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 4443.854791ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 4443.854791ms"}}
+[debug] [2025-12-07T09:44:37.922Z] [worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: IDLE"}}
+[debug] [2025-12-07T09:44:37.922Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:44:37.922Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:44:37.922Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:44:49.630Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:44:50.631Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:44:50.932Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:44:50.932Z] Building nodejs source
+[debug] [2025-12-07T09:44:50.932Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:44:50.932Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:44:50.933Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8086
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+[debug] [2025-12-07T09:44:51.043Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:44:55.061Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:44:55.062Z] [worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: FINISHING"}}
+[debug] [2025-12-07T09:44:55.066Z] [worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: exited"}}
+[debug] [2025-12-07T09:44:55.066Z] [worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-d364e660-29f8-4c22-bf86-2af43cf3288b]: FINISHED"}}
+[debug] [2025-12-07T09:45:01.130Z] File /Users/onwords/woffyai-web/functions/package.json changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/package.json changed, reloading triggers"}}
+[debug] [2025-12-07T09:45:01.130Z] File /Users/onwords/woffyai-web/functions/package-lock.json changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/package-lock.json changed, reloading triggers"}}
+[debug] [2025-12-07T09:45:02.132Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:45:02.436Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:45:02.436Z] Building nodejs source
+[debug] [2025-12-07T09:45:02.436Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:45:02.436Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:45:02.437Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8637
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+
+[debug] [2025-12-07T09:45:02.530Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:45:19.494Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:45:20.496Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:45:20.772Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:45:20.772Z] Building nodejs source
+[debug] [2025-12-07T09:45:20.772Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:45:20.772Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:45:20.772Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8391
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+
+[debug] [2025-12-07T09:45:20.875Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:45:27.247Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:45:27.247Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:45:27.247Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:45:27.247Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:45:27.247Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:45:27.247Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:45:27.247Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:45:27.248Z] [worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:45:27.248Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:45:27.249Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:45:27.494Z] [runtime-status] [39479] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:45:27.494Z] [runtime-status] [39479] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:27.494Z] [runtime-status] [39479] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:45:27.494Z] [runtime-status] [39479] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:27.550Z] [runtime-status] [39479] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:45:27.550Z] [runtime-status] [39479] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:45:27.550Z] [runtime-status] [39479] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:27.551Z] [runtime-status] [39479] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:45:27.551Z] [runtime-status] [39479] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:27.551Z] [runtime-status] [39479] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] } {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }"}}
+[debug] [2025-12-07T09:45:27.569Z] [runtime-status] [39479] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:45:27.569Z] [runtime-status] [39479] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_b3c39992ea907073.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39479] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_b3c39992ea907073.sock"}}
+[debug] [2025-12-07T09:45:27.656Z] [worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: IDLE"}}
+[debug] [2025-12-07T09:45:27.656Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:45:27.657Z] [worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: BUSY"}}
+[debug] [2025-12-07T09:45:32.805Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 5148.463542ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 5148.463542ms"}}
+[debug] [2025-12-07T09:45:32.805Z] [worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: IDLE"}}
+[debug] [2025-12-07T09:45:32.805Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:45:32.805Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:45:32.805Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:45:46.618Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:45:47.619Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:45:47.921Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:45:47.921Z] Building nodejs source
+[debug] [2025-12-07T09:45:47.921Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:45:47.922Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:45:47.923Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8448
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+[debug] [2025-12-07T09:45:48.031Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:45:52.040Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:45:52.040Z] [worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: FINISHING"}}
+[debug] [2025-12-07T09:45:52.044Z] [worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: exited"}}
+[debug] [2025-12-07T09:45:52.044Z] [worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-4171aba8-9d2f-40c9-83fb-e6f2843e3343]: FINISHED"}}
+[debug] [2025-12-07T09:45:54.877Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:45:54.877Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:45:54.877Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:45:54.877Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:45:54.877Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:45:54.878Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:45:54.878Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:45:54.878Z] [worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:45:54.879Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:45:54.879Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:45:55.124Z] [runtime-status] [39541] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:45:55.124Z] [runtime-status] [39541] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:55.124Z] [runtime-status] [39541] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:45:55.124Z] [runtime-status] [39541] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:55.178Z] [runtime-status] [39541] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:45:55.178Z] [runtime-status] [39541] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:45:55.178Z] [runtime-status] [39541] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:55.179Z] [runtime-status] [39541] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:45:55.179Z] [runtime-status] [39541] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:45:55.179Z] [runtime-status] [39541] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops"}}
+[debug] [2025-12-07T09:45:55.196Z] [runtime-status] [39541] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:45:55.196Z] [runtime-status] [39541] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_9f37c5c55ba35742.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39541] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_9f37c5c55ba35742.sock"}}
+[debug] [2025-12-07T09:45:55.286Z] [worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: IDLE"}}
+[debug] [2025-12-07T09:45:55.286Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:45:55.286Z] [worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: BUSY"}}
+[info] >  Response: { {"user":"Response: {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  Response: {"}}
+[info] >    "sdkHttpResponse": { {"user":"  \"sdkHttpResponse\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"sdkHttpResponse\": {"}}
+[info] >      "headers": { {"user":"    \"headers\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"headers\": {"}}
+[info] >        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000", {"user":"      \"alt-svc\": \"h3=\\\":443\\\"; ma=2592000,h3-29=\\\":443\\\"; ma=2592000\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"alt-svc\": \"h3=\\\":443\\\"; ma=2592000,h3-29=\\\":443\\\"; ma=2592000\","}}
+[info] >        "content-encoding": "gzip", {"user":"      \"content-encoding\": \"gzip\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"content-encoding\": \"gzip\","}}
+[info] >        "content-type": "application/json; charset=UTF-8", {"user":"      \"content-type\": \"application/json; charset=UTF-8\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"content-type\": \"application/json; charset=UTF-8\","}}
+[info] >        "date": "Sun, 07 Dec 2025 09:46:00 GMT", {"user":"      \"date\": \"Sun, 07 Dec 2025 09:46:00 GMT\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"date\": \"Sun, 07 Dec 2025 09:46:00 GMT\","}}
+[info] >        "server": "scaffolding on HTTPServer2", {"user":"      \"server\": \"scaffolding on HTTPServer2\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"server\": \"scaffolding on HTTPServer2\","}}
+[info] >        "server-timing": "gfet4t7; dur=5014", {"user":"      \"server-timing\": \"gfet4t7; dur=5014\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"server-timing\": \"gfet4t7; dur=5014\","}}
+[info] >        "transfer-encoding": "chunked", {"user":"      \"transfer-encoding\": \"chunked\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"transfer-encoding\": \"chunked\","}}
+[info] >        "vary": "Origin, X-Origin, Referer", {"user":"      \"vary\": \"Origin, X-Origin, Referer\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"vary\": \"Origin, X-Origin, Referer\","}}
+[info] >        "x-content-type-options": "nosniff", {"user":"      \"x-content-type-options\": \"nosniff\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"x-content-type-options\": \"nosniff\","}}
+[info] >        "x-frame-options": "SAMEORIGIN", {"user":"      \"x-frame-options\": \"SAMEORIGIN\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"x-frame-options\": \"SAMEORIGIN\","}}
+[info] >        "x-xss-protection": "0" {"user":"      \"x-xss-protection\": \"0\"","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"x-xss-protection\": \"0\""}}
+[info] >      } {"user":"    }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      }"}}
+[info] >    }, {"user":"  },","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    },"}}
+[info] >    "candidates": [ {"user":"  \"candidates\": [","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"candidates\": ["}}
+[info] >      { {"user":"    {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      {"}}
+[info] >        "content": {}, {"user":"      \"content\": {},","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"content\": {},"}}
+[info] >        "finishReason": "MAX_TOKENS", {"user":"      \"finishReason\": \"MAX_TOKENS\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"finishReason\": \"MAX_TOKENS\","}}
+[info] >        "index": 0 {"user":"      \"index\": 0","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"index\": 0"}}
+[info] >      } {"user":"    }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      }"}}
+[info] >    ], {"user":"  ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    ],"}}
+[info] >    "modelVersion": "gemini-3-pro-preview", {"user":"  \"modelVersion\": \"gemini-3-pro-preview\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"modelVersion\": \"gemini-3-pro-preview\","}}
+[info] >    "responseId": "2Ew1aYv5EIPnjuMPu6ah0A8", {"user":"  \"responseId\": \"2Ew1aYv5EIPnjuMPu6ah0A8\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"responseId\": \"2Ew1aYv5EIPnjuMPu6ah0A8\","}}
+[info] >    "usageMetadata": { {"user":"  \"usageMetadata\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"usageMetadata\": {"}}
+[info] >      "promptTokenCount": 179, {"user":"    \"promptTokenCount\": 179,","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"promptTokenCount\": 179,"}}
+[info] >      "totalTokenCount": 378, {"user":"    \"totalTokenCount\": 378,","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"totalTokenCount\": 378,"}}
+[info] >      "promptTokensDetails": [ {"user":"    \"promptTokensDetails\": [","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"promptTokensDetails\": ["}}
+[info] >        { {"user":"      {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        {"}}
+[info] >          "modality": "TEXT", {"user":"        \"modality\": \"TEXT\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          \"modality\": \"TEXT\","}}
+[info] >          "tokenCount": 179 {"user":"        \"tokenCount\": 179","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          \"tokenCount\": 179"}}
+[info] >        } {"user":"      }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        }"}}
+[info] >      ], {"user":"    ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      ],"}}
+[info] >      "thoughtsTokenCount": 199 {"user":"    \"thoughtsTokenCount\": 199","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"thoughtsTokenCount\": 199"}}
+[info] >    } {"user":"  }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    }"}}
+[info] >  } {"user":"}","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  }"}}
+[debug] [2025-12-07T09:46:00.421Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 5134.586959ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 5134.586959ms"}}
+[debug] [2025-12-07T09:46:00.421Z] [worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: IDLE"}}
+[debug] [2025-12-07T09:46:00.421Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:46:00.421Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:46:00.421Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:46:12.553Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:46:13.555Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:46:13.848Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:46:13.848Z] Building nodejs source
+[debug] [2025-12-07T09:46:13.848Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:46:13.849Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:46:13.849Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8743
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+
+[debug] [2025-12-07T09:46:13.990Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:46:18.001Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:46:18.001Z] [worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: FINISHING"}}
+[debug] [2025-12-07T09:46:18.005Z] [worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: exited"}}
+[debug] [2025-12-07T09:46:18.005Z] [worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-b96fa4e9-8674-46e1-9e28-fdb0a81d1850]: FINISHED"}}
+[debug] [2025-12-07T09:46:20.495Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:46:20.495Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:46:20.495Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:46:20.495Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:46:20.495Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:46:20.495Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:46:20.496Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:46:20.496Z] [worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:46:20.497Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:46:20.497Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:46:20.741Z] [runtime-status] [39615] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:46:20.741Z] [runtime-status] [39615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:46:20.741Z] [runtime-status] [39615] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:46:20.741Z] [runtime-status] [39615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:46:20.796Z] [runtime-status] [39615] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:46:20.796Z] [runtime-status] [39615] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:46:20.796Z] [runtime-status] [39615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:46:20.797Z] [runtime-status] [39615] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:46:20.797Z] [runtime-status] [39615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:46:20.798Z] [runtime-status] [39615] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand` {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`"}}
+[debug] [2025-12-07T09:46:20.815Z] [runtime-status] [39615] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:46:20.815Z] [runtime-status] [39615] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_138ca9fba32f16ca.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39615] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_138ca9fba32f16ca.sock"}}
+[debug] [2025-12-07T09:46:20.906Z] [worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: IDLE"}}
+[debug] [2025-12-07T09:46:20.906Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:46:20.906Z] [worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: BUSY"}}
+[info] >  Response: { {"user":"Response: {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  Response: {"}}
+[info] >    "sdkHttpResponse": { {"user":"  \"sdkHttpResponse\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"sdkHttpResponse\": {"}}
+[info] >      "headers": { {"user":"    \"headers\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"headers\": {"}}
+[info] >        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000", {"user":"      \"alt-svc\": \"h3=\\\":443\\\"; ma=2592000,h3-29=\\\":443\\\"; ma=2592000\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"alt-svc\": \"h3=\\\":443\\\"; ma=2592000,h3-29=\\\":443\\\"; ma=2592000\","}}
+[info] >        "content-encoding": "gzip", {"user":"      \"content-encoding\": \"gzip\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"content-encoding\": \"gzip\","}}
+[info] >        "content-type": "application/json; charset=UTF-8", {"user":"      \"content-type\": \"application/json; charset=UTF-8\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"content-type\": \"application/json; charset=UTF-8\","}}
+[info] >        "date": "Sun, 07 Dec 2025 09:46:29 GMT", {"user":"      \"date\": \"Sun, 07 Dec 2025 09:46:29 GMT\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"date\": \"Sun, 07 Dec 2025 09:46:29 GMT\","}}
+[info] >        "server": "scaffolding on HTTPServer2", {"user":"      \"server\": \"scaffolding on HTTPServer2\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"server\": \"scaffolding on HTTPServer2\","}}
+[info] >        "server-timing": "gfet4t7; dur=7967", {"user":"      \"server-timing\": \"gfet4t7; dur=7967\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"server-timing\": \"gfet4t7; dur=7967\","}}
+[info] >        "transfer-encoding": "chunked", {"user":"      \"transfer-encoding\": \"chunked\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"transfer-encoding\": \"chunked\","}}
+[info] >        "vary": "Origin, X-Origin, Referer", {"user":"      \"vary\": \"Origin, X-Origin, Referer\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"vary\": \"Origin, X-Origin, Referer\","}}
+[info] >        "x-content-type-options": "nosniff", {"user":"      \"x-content-type-options\": \"nosniff\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"x-content-type-options\": \"nosniff\","}}
+[info] >        "x-frame-options": "SAMEORIGIN", {"user":"      \"x-frame-options\": \"SAMEORIGIN\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"x-frame-options\": \"SAMEORIGIN\","}}
+[info] >        "x-xss-protection": "0" {"user":"      \"x-xss-protection\": \"0\"","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"x-xss-protection\": \"0\""}}
+[info] >      } {"user":"    }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      }"}}
+[info] >    }, {"user":"  },","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    },"}}
+[info] >    "candidates": [ {"user":"  \"candidates\": [","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"candidates\": ["}}
+[info] >      { {"user":"    {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      {"}}
+[info] >        "content": { {"user":"      \"content\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"content\": {"}}
+[info] >          "parts": [ {"user":"        \"parts\": [","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          \"parts\": ["}}
+[info] >            { {"user":"          {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">            {"}}
+[info] >              "text": "*Wags tail excitedly* Woof! Hello friend! I'm so happy you're here! How is your day going? ❤️", {"user":"            \"text\": \"*Wags tail excitedly* Woof! Hello friend! I'm so happy you're here! How is your day going? ❤️\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">              \"text\": \"*Wags tail excitedly* Woof! Hello friend! I'm so happy you're here! How is your day going? ❤️\","}}
+[info] >              "thoughtSignature": "EooKCocKAXLI2nyLrPK+PEQjRWad3gYCH7jEHZ9hDpLKETd4F0Z9J/HIHyk0lka4UzBfWhauahw2aqjnJkR80IPOJt7e+BDWEshea6+ACzr0L1DqYNqAnKuv5itxGd4LcQerSwi9sWKvwm5J8GzTM7cFL+uwwIaamB6f45w71XBVf6Jh5y8XS1EktL2UOSDELAG+wYKoO51LIL0gWfQ+6natMMMo0+hlIJ/IkWFL08RgmlztXsyGFUzyoaFyYPVQEnVvfESS9fMMp7zsUU2lnYujtj5d3TWWAf/95Rk9lNjONM/qQ1usx5vRmtoXuEOJsaAOGg1z28MgiAM4qU0WbR4GbtEb/N2EodYEKoPsuFbcb5mpFM8e8UudLR0UjbOGbdFWfIjvM7tIXu4tLyYXhaWMa7Mw7RVBa8QT+fnQVpAJKsVq/0bomPdEbxMCwmB6SzYFXM3vsy2sE3skjNrXVcslgZTID+noCTq10UixeFZluR+AZwTIMG/7x/Eab5srLIWc6+iuqnOOjvHEJJLXdE9eKoUrisFokBIIELAtnjICRdBGcWJ1/B0I3xy9ICZAelNtvOFd6QHzRN/eDekDd50k+k6F/bh3V3O+c+g+WB65zza8pfDUsjV+1bZwjSCmrVdCGB6p4LQOy8NbpXZmy7/eviAjKHaoOfwUWe35rccN0+VvByiTnqvWQbbeFHIgX6oLF3df/xfbBoGHUzFRvRtIBgZ5OWqAJHpCJTWlJkxlLlZ6Nf9bP+Q+p8D/smeexSl5HyAt8VgEFt1WhqQrD4XKAiyNsVbZ6Gdu+1BOsOBgItdHqY+crj4Qe0W7BNyptu06IM2XvQqRP6HtpC1IXMl0mlMK6d39xJoP19bXZnCGyHVhSefSTtjtv4NSzEB936cIWicuPBZV0096GdoCC055B3BSVd2xFPrS+pPSOEOO9wLTjky3ENlL6vwR+/6FZVFsYKmIvx9DOZXw6Ap2mBY9+aHSs+Z84mZJMYJwL8jHa5Nffh1AgcKVYajXxipKiE4LxMasLUPru4GQ8pT4sfvsvS+a1Ml9n1d6md3kSvM7SDwMPdl3fSZWp1oL1pHTN/FX4eodIuYqia//nMBHYZVxGl6YVD4Cd17JS6919dqNaUBZBDrPBjzyISysDcdSW+5SyZIufq87JlOACbcH1IvfmLzk5+C5/84g1deNCfTSpiSIH8pQMakLvRMRuOFQEU1o+VFmCH74cjZyp8xnHoB2DSYcWL7NE4ucXNOkCrrXE9Y1ASbXqPL9OXiUORXtHNPz4kCxLdJrG8Dgd/CcJnckE54yb34QpIyaB8nmpvSKpBNZusc+uvDydRB3lU1fC/ELLr8WiBjxk20YHo4O1e2WSJ28eOvQxfY/b8wgvsBr7e7S+WlTjfEBoAHBNSxjfTdoI3f7Im4SQP9aK7kVS9E5kVy5KfKO4zxjMpgu4dwtZH+yZzgNPnZ6iglAYFIdluCyWrewk95nTCDp9cWlXm7mtpZvaOVxiZEhwduuxDBOYoBRm6lU1eZmxVGN/be3crpZRZfTJnTilX3+9D1kzTrhTNNYuwBrWKm6JKqc3wi2rxwGLFwwfArAaMlv/LFR29Dh1jrvbRjsCZYdZFM4BTPJToyzdrzkKU7CK2uKtoq7uUq5dL4ySdeOrdBFz0PSSxCvdjWEy4q0o9aYcE1Zoy/VFjTDdxJJ0hM2LsU5U6xp/xggD7mF6HMUTZTN" {"user":"            \"thoughtSignature\": \"EooKCocKAXLI2nyLrPK+PEQjRWad3gYCH7jEHZ9hDpLKETd4F0Z9J/HIHyk0lka4UzBfWhauahw2aqjnJkR80IPOJt7e+BDWEshea6+ACzr0L1DqYNqAnKuv5itxGd4LcQerSwi9sWKvwm5J8GzTM7cFL+uwwIaamB6f45w71XBVf6Jh5y8XS1EktL2UOSDELAG+wYKoO51LIL0gWfQ+6natMMMo0+hlIJ/IkWFL08RgmlztXsyGFUzyoaFyYPVQEnVvfESS9fMMp7zsUU2lnYujtj5d3TWWAf/95Rk9lNjONM/qQ1usx5vRmtoXuEOJsaAOGg1z28MgiAM4qU0WbR4GbtEb/N2EodYEKoPsuFbcb5mpFM8e8UudLR0UjbOGbdFWfIjvM7tIXu4tLyYXhaWMa7Mw7RVBa8QT+fnQVpAJKsVq/0bomPdEbxMCwmB6SzYFXM3vsy2sE3skjNrXVcslgZTID+noCTq10UixeFZluR+AZwTIMG/7x/Eab5srLIWc6+iuqnOOjvHEJJLXdE9eKoUrisFokBIIELAtnjICRdBGcWJ1/B0I3xy9ICZAelNtvOFd6QHzRN/eDekDd50k+k6F/bh3V3O+c+g+WB65zza8pfDUsjV+1bZwjSCmrVdCGB6p4LQOy8NbpXZmy7/eviAjKHaoOfwUWe35rccN0+VvByiTnqvWQbbeFHIgX6oLF3df/xfbBoGHUzFRvRtIBgZ5OWqAJHpCJTWlJkxlLlZ6Nf9bP+Q+p8D/smeexSl5HyAt8VgEFt1WhqQrD4XKAiyNsVbZ6Gdu+1BOsOBgItdHqY+crj4Qe0W7BNyptu06IM2XvQqRP6HtpC1IXMl0mlMK6d39xJoP19bXZnCGyHVhSefSTtjtv4NSzEB936cIWicuPBZV0096GdoCC055B3BSVd2xFPrS+pPSOEOO9wLTjky3ENlL6vwR+/6FZVFsYKmIvx9DOZXw6Ap2mBY9+aHSs+Z84mZJMYJwL8jHa5Nffh1AgcKVYajXxipKiE4LxMasLUPru4GQ8pT4sfvsvS+a1Ml9n1d6md3kSvM7SDwMPdl3fSZWp1oL1pHTN/FX4eodIuYqia//nMBHYZVxGl6YVD4Cd17JS6919dqNaUBZBDrPBjzyISysDcdSW+5SyZIufq87JlOACbcH1IvfmLzk5+C5/84g1deNCfTSpiSIH8pQMakLvRMRuOFQEU1o+VFmCH74cjZyp8xnHoB2DSYcWL7NE4ucXNOkCrrXE9Y1ASbXqPL9OXiUORXtHNPz4kCxLdJrG8Dgd/CcJnckE54yb34QpIyaB8nmpvSKpBNZusc+uvDydRB3lU1fC/ELLr8WiBjxk20YHo4O1e2WSJ28eOvQxfY/b8wgvsBr7e7S+WlTjfEBoAHBNSxjfTdoI3f7Im4SQP9aK7kVS9E5kVy5KfKO4zxjMpgu4dwtZH+yZzgNPnZ6iglAYFIdluCyWrewk95nTCDp9cWlXm7mtpZvaOVxiZEhwduuxDBOYoBRm6lU1eZmxVGN/be3crpZRZfTJnTilX3+9D1kzTrhTNNYuwBrWKm6JKqc3wi2rxwGLFwwfArAaMlv/LFR29Dh1jrvbRjsCZYdZFM4BTPJToyzdrzkKU7CK2uKtoq7uUq5dL4ySdeOrdBFz0PSSxCvdjWEy4q0o9aYcE1Zoy/VFjTDdxJJ0hM2LsU5U6xp/xggD7mF6HMUTZTN\"","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">              \"thoughtSignature\": \"EooKCocKAXLI2nyLrPK+PEQjRWad3gYCH7jEHZ9hDpLKETd4F0Z9J/HIHyk0lka4UzBfWhauahw2aqjnJkR80IPOJt7e+BDWEshea6+ACzr0L1DqYNqAnKuv5itxGd4LcQerSwi9sWKvwm5J8GzTM7cFL+uwwIaamB6f45w71XBVf6Jh5y8XS1EktL2UOSDELAG+wYKoO51LIL0gWfQ+6natMMMo0+hlIJ/IkWFL08RgmlztXsyGFUzyoaFyYPVQEnVvfESS9fMMp7zsUU2lnYujtj5d3TWWAf/95Rk9lNjONM/qQ1usx5vRmtoXuEOJsaAOGg1z28MgiAM4qU0WbR4GbtEb/N2EodYEKoPsuFbcb5mpFM8e8UudLR0UjbOGbdFWfIjvM7tIXu4tLyYXhaWMa7Mw7RVBa8QT+fnQVpAJKsVq/0bomPdEbxMCwmB6SzYFXM3vsy2sE3skjNrXVcslgZTID+noCTq10UixeFZluR+AZwTIMG/7x/Eab5srLIWc6+iuqnOOjvHEJJLXdE9eKoUrisFokBIIELAtnjICRdBGcWJ1/B0I3xy9ICZAelNtvOFd6QHzRN/eDekDd50k+k6F/bh3V3O+c+g+WB65zza8pfDUsjV+1bZwjSCmrVdCGB6p4LQOy8NbpXZmy7/eviAjKHaoOfwUWe35rccN0+VvByiTnqvWQbbeFHIgX6oLF3df/xfbBoGHUzFRvRtIBgZ5OWqAJHpCJTWlJkxlLlZ6Nf9bP+Q+p8D/smeexSl5HyAt8VgEFt1WhqQrD4XKAiyNsVbZ6Gdu+1BOsOBgItdHqY+crj4Qe0W7BNyptu06IM2XvQqRP6HtpC1IXMl0mlMK6d39xJoP19bXZnCGyHVhSefSTtjtv4NSzEB936cIWicuPBZV0096GdoCC055B3BSVd2xFPrS+pPSOEOO9wLTjky3ENlL6vwR+/6FZVFsYKmIvx9DOZXw6Ap2mBY9+aHSs+Z84mZJMYJwL8jHa5Nffh1AgcKVYajXxipKiE4LxMasLUPru4GQ8pT4sfvsvS+a1Ml9n1d6md3kSvM7SDwMPdl3fSZWp1oL1pHTN/FX4eodIuYqia//nMBHYZVxGl6YVD4Cd17JS6919dqNaUBZBDrPBjzyISysDcdSW+5SyZIufq87JlOACbcH1IvfmLzk5+C5/84g1deNCfTSpiSIH8pQMakLvRMRuOFQEU1o+VFmCH74cjZyp8xnHoB2DSYcWL7NE4ucXNOkCrrXE9Y1ASbXqPL9OXiUORXtHNPz4kCxLdJrG8Dgd/CcJnckE54yb34QpIyaB8nmpvSKpBNZusc+uvDydRB3lU1fC/ELLr8WiBjxk20YHo4O1e2WSJ28eOvQxfY/b8wgvsBr7e7S+WlTjfEBoAHBNSxjfTdoI3f7Im4SQP9aK7kVS9E5kVy5KfKO4zxjMpgu4dwtZH+yZzgNPnZ6iglAYFIdluCyWrewk95nTCDp9cWlXm7mtpZvaOVxiZEhwduuxDBOYoBRm6lU1eZmxVGN/be3crpZRZfTJnTilX3+9D1kzTrhTNNYuwBrWKm6JKqc3wi2rxwGLFwwfArAaMlv/LFR29Dh1jrvbRjsCZYdZFM4BTPJToyzdrzkKU7CK2uKtoq7uUq5dL4ySdeOrdBFz0PSSxCvdjWEy4q0o9aYcE1Zoy/VFjTDdxJJ0hM2LsU5U6xp/xggD7mF6HMUTZTN\""}}
+[info] >            } {"user":"          }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">            }"}}
+[info] >          ], {"user":"        ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          ],"}}
+[info] >          "role": "model" {"user":"        \"role\": \"model\"","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          \"role\": \"model\""}}
+[info] >        }, {"user":"      },","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        },"}}
+[info] >        "finishReason": "STOP", {"user":"      \"finishReason\": \"STOP\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"finishReason\": \"STOP\","}}
+[info] >        "index": 0 {"user":"      \"index\": 0","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        \"index\": 0"}}
+[info] >      } {"user":"    }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      }"}}
+[info] >    ], {"user":"  ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    ],"}}
+[info] >    "modelVersion": "gemini-3-pro-preview", {"user":"  \"modelVersion\": \"gemini-3-pro-preview\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"modelVersion\": \"gemini-3-pro-preview\","}}
+[info] >    "responseId": "9Ew1adCMMeqXjuMP1YfRkAg", {"user":"  \"responseId\": \"9Ew1adCMMeqXjuMP1YfRkAg\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"responseId\": \"9Ew1adCMMeqXjuMP1YfRkAg\","}}
+[info] >    "usageMetadata": { {"user":"  \"usageMetadata\": {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    \"usageMetadata\": {"}}
+[info] >      "promptTokenCount": 179, {"user":"    \"promptTokenCount\": 179,","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"promptTokenCount\": 179,"}}
+[info] >      "candidatesTokenCount": 29, {"user":"    \"candidatesTokenCount\": 29,","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"candidatesTokenCount\": 29,"}}
+[info] >      "totalTokenCount": 572, {"user":"    \"totalTokenCount\": 572,","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"totalTokenCount\": 572,"}}
+[info] >      "promptTokensDetails": [ {"user":"    \"promptTokensDetails\": [","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"promptTokensDetails\": ["}}
+[info] >        { {"user":"      {","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        {"}}
+[info] >          "modality": "TEXT", {"user":"        \"modality\": \"TEXT\",","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          \"modality\": \"TEXT\","}}
+[info] >          "tokenCount": 179 {"user":"        \"tokenCount\": 179","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">          \"tokenCount\": 179"}}
+[info] >        } {"user":"      }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">        }"}}
+[info] >      ], {"user":"    ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      ],"}}
+[info] >      "thoughtsTokenCount": 364 {"user":"    \"thoughtsTokenCount\": 364","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">      \"thoughtsTokenCount\": 364"}}
+[info] >    } {"user":"  }","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">    }"}}
+[info] >  } {"user":"}","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  }"}}
+[debug] [2025-12-07T09:46:28.992Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 8086.028042ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 8086.028042ms"}}
+[debug] [2025-12-07T09:46:28.992Z] [worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: IDLE"}}
+[debug] [2025-12-07T09:46:28.992Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:46:28.993Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:46:28.993Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:46:36.365Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:46:37.364Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:46:37.666Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:46:37.666Z] Building nodejs source
+[debug] [2025-12-07T09:46:37.666Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:46:37.667Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:46:37.667Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8415
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+
+[debug] [2025-12-07T09:46:37.809Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[debug] [2025-12-07T09:46:39.988Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:46:40.990Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:46:41.275Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:46:41.275Z] Building nodejs source
+[debug] [2025-12-07T09:46:41.275Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:46:41.275Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:46:41.275Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8431
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+
+[debug] [2025-12-07T09:46:41.379Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:46:41.816Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:46:41.816Z] [worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: FINISHING"}}
+[debug] [2025-12-07T09:46:41.820Z] [worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: exited"}}
+[debug] [2025-12-07T09:46:41.821Z] [worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-0a431bf2-c27e-4a07-a734-2286e2b5d9af]: FINISHED"}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:48:46.611Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:48:46.611Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:48:46.611Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:48:46.611Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:48:46.611Z] Accepted request OPTIONS /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:48:46.611Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:48:46.611Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:48:46.611Z] [worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for us-central1-chatWithWoffy: 1 --> 0"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:48:46.612Z] [worker-pool] addWorker(us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:48:46.612Z] [worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key us-central1-chatWithWoffy, total=1"}}
+[debug] [2025-12-07T09:48:46.857Z] [runtime-status] [39787] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:48:46.857Z] [runtime-status] [39787] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:48:46.857Z] [runtime-status] [39787] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2025-12-07T09:48:46.857Z] [runtime-status] [39787] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:48:46.914Z] [runtime-status] [39787] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Checked functions.config() {\"config\":{}}"}}
+[debug] [2025-12-07T09:48:46.914Z] [runtime-status] [39787] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}}"}}
+[debug] [2025-12-07T09:48:46.914Z] [runtime-status] [39787] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:48:46.915Z] [runtime-status] [39787] Resolved module firebase-admin {"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2025-12-07T09:48:46.916Z] [runtime-status] [39787] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.6.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"6.6.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-functions/lib/v2/index.js\"}"}}
+[debug] [2025-12-07T09:48:46.916Z] [runtime-status] [39787] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"12.7.0","resolution":"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"12.7.0\",\"resolution\":\"/Users/onwords/woffyai-web/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[info] >  [dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild {"user":"[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":">  [dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild"}}
+[debug] [2025-12-07T09:48:46.935Z] [runtime-status] [39787] Functions runtime initialized. {"cwd":"/Users/onwords/woffyai-web/functions","node_version":"25.2.1"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Functions runtime initialized. {\"cwd\":\"/Users/onwords/woffyai-web/functions\",\"node_version\":\"25.2.1\"}"}}
+[debug] [2025-12-07T09:48:46.935Z] [runtime-status] [39787] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_fdf2ee93b38880c7.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[runtime-status] [39787] Listening to port: /var/folders/25/yj5pnb610b7ct84dpmd39t8w0000gn/T/fire_emu_fdf2ee93b38880c7.sock"}}
+[debug] [2025-12-07T09:48:47.018Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: IDLE"}}
+[debug] [2025-12-07T09:48:47.019Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:48:47.019Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: BUSY"}}
+[debug] [2025-12-07T09:48:47.020Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 1.12025ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 1.12025ms"}}
+[debug] [2025-12-07T09:48:47.020Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: IDLE"}}
+[debug] [2025-12-07T09:48:47.020Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:48:47.020Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:48:47.020Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:48:47.021Z] [work-queue] {"queuedWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:48:47.021Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:48:47.021Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/woffy-ai/us-central1/chatWithWoffy-2025-12-07T09:48:47.021Z"],"workRunningCount":1}
+[debug] [2025-12-07T09:48:47.021Z] Accepted request POST /woffy-ai/us-central1/chatWithWoffy --> us-central1-chatWithWoffy
+[debug] [2025-12-07T09:48:47.021Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2025-12-07T09:48:47.021Z] [functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/woffy-ai/us-central1/chatWithWoffy, mapping to path=/"}}
+[debug] [2025-12-07T09:48:47.021Z] [worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=us-central1-chatWithWoffy)"}}
+[info] i  functions: Beginning execution of "us-central1-chatWithWoffy" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Beginning execution of \"us-central1-chatWithWoffy\""}}
+[debug] [2025-12-07T09:48:47.021Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: BUSY"}}
+[debug] [2025-12-07T09:48:55.204Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "us-central1-chatWithWoffy" in 8183.183792ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finished \"us-central1-chatWithWoffy\" in 8183.183792ms"}}
+[debug] [2025-12-07T09:48:55.204Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: IDLE"}}
+[debug] [2025-12-07T09:48:55.204Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2025-12-07T09:48:55.205Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2025-12-07T09:48:55.205Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-12-07T09:49:15.944Z] File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/onwords/woffyai-web/functions/index.js changed, reloading triggers"}}
+[debug] [2025-12-07T09:49:16.945Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-12-07T09:49:17.211Z] > [functions] package.json contents: {
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "Woffy AI Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.31.0",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}
+[debug] [2025-12-07T09:49:17.211Z] Building nodejs source
+[debug] [2025-12-07T09:49:17.211Z] Failed to find version of module node: reached end of search path /Users/onwords/woffyai-web/functions/node_modules
+[warn] ⚠  functions: Your requested "node" version "20" doesn't match your global version "25". Using node@25 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-12-07T09:49:17.211Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-12-07T09:49:17.212Z] Found firebase-functions binary at '/Users/onwords/woffyai-web/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8545
+
+[info] [dotenv@17.2.3] injecting env (1) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+
+[debug] [2025-12-07T09:49:17.314Z] Got response from /__/functions.yaml {"endpoints":{"chatWithWoffy":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":3,"ingressSettings":null,"concurrency":80,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"chatWithWoffy"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: chatWithWoffy. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatWithWoffy."}}
+[debug] [2025-12-07T09:49:21.322Z] [worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-chatWithWoffy)"}}
+[debug] [2025-12-07T09:49:21.322Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: FINISHING"}}
+[debug] [2025-12-07T09:49:21.326Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: exited"}}
+[debug] [2025-12-07T09:49:21.326Z] [worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-chatWithWoffy"},"extension":{},"message":"[worker-us-central1-chatWithWoffy-bb5480a5-0f59-418e-8bce-05da8ecc5486]: FINISHED"}}
