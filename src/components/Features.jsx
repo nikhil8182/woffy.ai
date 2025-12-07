@@ -85,7 +85,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden transition-colors duration-500"
+    <section className="py-16 md:py-24 relative overflow-hidden transition-colors duration-500"
       style={{ backgroundColor: isTechView ? '#0f172a' : '#f8fafc' }}
     >
       {/* Background Decor */}

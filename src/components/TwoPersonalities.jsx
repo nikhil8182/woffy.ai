@@ -4,7 +4,7 @@ import { Wind, Shield, ArrowRight, Sparkles, Zap } from 'lucide-react';
 
 const TwoPersonalities = ({ onToggleTheme, currentTheme }) => {
   return (
-    <section className="py-32 bg-slate-950 text-white relative overflow-hidden">
+    <section className="py-16 md:py-32 bg-slate-950 text-white relative overflow-hidden">
       {/* Split Background Ambient Glow */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-1/2 h-full bg-rose-900/10 blur-[100px] pointer-events-none"></div>
@@ -30,7 +30,7 @@ const TwoPersonalities = ({ onToggleTheme, currentTheme }) => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-none"
+            className="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-none"
           >
             Two <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-white to-cyan-400">Personalities.</span>
           </motion.h2>
@@ -55,7 +55,7 @@ const TwoPersonalities = ({ onToggleTheme, currentTheme }) => {
             whileHover={{ y: -10, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onToggleTheme('cloud')}
-            className={`cursor-pointer rounded-[3rem] p-10 md:p-14 relative overflow-hidden transition-all duration-500 group border-2 ${
+            className={`cursor-pointer rounded-[3rem] p-6 md:p-14 relative overflow-hidden transition-all duration-500 group border-2 ${
               currentTheme === 'cloud' 
                 ? 'border-rose-400/50 shadow-[0_0_50px_-10px_rgba(251,113,133,0.3)]' 
                 : 'border-white/5 hover:border-rose-500/30 opacity-80 hover:opacity-100'
@@ -102,7 +102,7 @@ const TwoPersonalities = ({ onToggleTheme, currentTheme }) => {
             whileHover={{ y: -10, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onToggleTheme('titan')}
-            className={`cursor-pointer rounded-[3rem] p-10 md:p-14 relative overflow-hidden transition-all duration-500 group border-2 ${
+            className={`cursor-pointer rounded-[3rem] p-6 md:p-14 relative overflow-hidden transition-all duration-500 group border-2 ${
               currentTheme === 'titan' 
                 ? 'border-cyan-400/50 shadow-[0_0_50px_-10px_rgba(34,211,238,0.3)]' 
                 : 'border-white/5 hover:border-cyan-500/30 opacity-80 hover:opacity-100'

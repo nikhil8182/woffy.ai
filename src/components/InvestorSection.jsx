@@ -9,7 +9,7 @@ const InvestorSection = () => {
     ];
 
     return (
-        <section id="investors" className="py-24 bg-white relative overflow-hidden">
+        <section id="investors" className="py-16 md:py-24 bg-white relative overflow-hidden">
             {/* Animated Background Mesh */}
             <div className="absolute inset-0 pointer-events-none">
                 <motion.div 
@@ -136,7 +136,7 @@ const InvestorSection = () => {
                     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-rose/20 rounded-full blur-[100px] pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-indigo/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-                    <div className="relative z-10 p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
+                    <div className="relative z-10 p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
                         <div className="text-center md:text-left max-w-xl">
                             <h3 className="text-3xl md:text-4xl font-bold mb-4">Ready to Invest?</h3>
                             <p className="text-slate-300 text-lg mb-8">

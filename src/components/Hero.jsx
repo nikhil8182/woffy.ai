@@ -22,13 +22,12 @@ const Hero = () => {
               Alpha Testing Phase
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight mb-6">
-              <span className="block text-slate-900">Woffy.ai</span>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight mb-6">
               <span className="block text-gradient-brand">Your AI Companion</span>
-              <span className="block text-slate-800 text-4xl lg:text-5xl mt-2">Powered by Love.</span>
+              <span className="block text-slate-800 text-3xl md:text-4xl lg:text-5xl mt-2">Powered by Love.</span>
             </h1>
 
-            <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               Experience the future of companionship. An AI that learns, adapts, and brings unconditional joy to your life.
             </p>
 

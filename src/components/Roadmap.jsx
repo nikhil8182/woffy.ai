@@ -112,7 +112,7 @@ const Roadmap = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-16 md:py-24 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(244,63,94,0.05),transparent_50%)]"></div>
@@ -136,7 +136,7 @@ const Roadmap = () => {
           >
             Development Timeline
           </motion.h2>
-          <h3 className="text-5xl font-bold text-slate-900 mb-6 font-display">
+          <h3 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 font-display">
             The Journey <span className="bg-gradient-to-r from-brand-rose to-pink-500 bg-clip-text text-transparent">Ahead</span>
           </h3>
           <p className="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
