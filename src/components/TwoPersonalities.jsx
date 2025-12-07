@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Wind, Shield, ArrowRight, Sparkles, Zap } from 'lucide-react';
 
 const TwoPersonalities = ({ onToggleTheme, currentTheme }) => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-16 md:py-32 bg-slate-950 text-white relative overflow-hidden">
       {/* Split Background Ambient Glow */}
@@ -146,7 +149,10 @@ const TwoPersonalities = ({ onToggleTheme, currentTheme }) => {
         </div>
 
         <div className="text-center">
-          <button className="group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+          <button 
+            onClick={() => navigate('/specs')}
+            className="group inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+          >
             <span className="font-bold text-lg tracking-wide border-b border-transparent group-hover:border-white transition-all pb-0.5">Compare Full Specifications</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </button>

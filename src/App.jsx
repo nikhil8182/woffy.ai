@@ -6,6 +6,7 @@ import WaitlistModal from './components/WaitlistModal';
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import RoadmapPage from './pages/RoadmapPage';
+import SpecsPage from './pages/SpecsPage';
 
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -52,6 +53,10 @@ function App() {
               <Route 
                 path="/roadmap" 
                 element={<RoadmapPage openWaitlist={openWaitlist} />} 
+              />
+              <Route 
+                path="/specs" 
+                element={<SpecsPage openWaitlist={openWaitlist} />} 
               />
             </Routes>
           </main>
