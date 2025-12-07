@@ -4,8 +4,9 @@ import {
   Wind, Shield, Zap, Heart, Brain, Wifi, Battery, 
   Cpu, Eye, Music, Mic, Bluetooth, Layers, Check, X,
   ArrowRight, Sparkles, Activity, Thermometer, MapPin, 
-  Smartphone, Lock, Share2, Globe, Command
+  Smartphone, Lock, Share2, Globe, Command, Hand, Scan
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const SpecsPage = ({ openWaitlist }) => {
   const [activeModel, setActiveModel] = useState('cloud');
@@ -37,7 +38,7 @@ const SpecsPage = ({ openWaitlist }) => {
         { label: "Exterior", value: "Hypoallergenic Soft-Touch Fur", icon: <Layers size={18} /> },
         { label: "Frame", value: "Bio-Plastic Composite", icon: <Shield size={18} /> },
         { label: "Haptics", value: "Pulse & Purr Engine", icon: <Heart size={18} /> },
-        { label: "Personality", value: "Nurturing & Calm", icon: <Brain size={18} /> }
+        { label: "Interaction", value: "Advanced Gesture Detection", icon: <Hand size={18} /> }
       ]
     },
     titan: {
@@ -61,7 +62,7 @@ const SpecsPage = ({ openWaitlist }) => {
         { label: "Exterior", value: "Aerospace Titanium Alloy", icon: <Layers size={18} /> },
         { label: "Frame", value: "Reinforced Carbon Fiber", icon: <Shield size={18} /> },
         { label: "Haptics", value: "Force Feedback Alert", icon: <Zap size={18} /> },
-        { label: "Personality", value: "Bold & Protective", icon: <Brain size={18} /> }
+        { label: "Interaction", value: "Long-Range Gesture Control", icon: <Hand size={18} /> }
       ]
     }
   };
@@ -84,7 +85,7 @@ const SpecsPage = ({ openWaitlist }) => {
         { name: "Vision", value: "Dual 4K HDR + LiDAR" },
         { name: "Audio", value: "16-Mic Spatial Array" },
         { name: "Touch", value: "1024-Point Pressure Grid" },
-        { name: "Environment", value: "Temp, Air Quality, GPS" }
+        { name: "Gestures", value: "3D Hand & Body Tracking" }
       ]
     },
     {
@@ -104,7 +105,7 @@ const SpecsPage = ({ openWaitlist }) => {
     { feature: "Allergy Friendly", real: false, woffy: true, noPet: true },
     { feature: "24/7 Availability", real: false, woffy: true, noPet: false },
     { feature: "Zero Maintenance", real: false, woffy: true, noPet: true },
-    { feature: "Learning Capability", real: "Limited", woffy: "Advanced", noPet: false },
+    { feature: "Gesture Recognition", real: "Basic", woffy: "Advanced AI", noPet: false },
     { feature: "Travel Ready", real: false, woffy: true, noPet: true },
     { feature: "Cost Efficiency", real: "Low", woffy: "High", noPet: "High" },
     { feature: "Interactive Play", real: true, woffy: true, noPet: false },
@@ -113,16 +114,25 @@ const SpecsPage = ({ openWaitlist }) => {
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-indigo-500/30">
       
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] animate-pulse delay-1000"></div>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]"></div>
-      </div>
+      {/* Hero Header with Video Background */}
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-60"
+          >
+            <source src="/roadmap-bg.mp4" type="video/mp4" />
+          </video>
+          {/* Gradients Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-950"></div>
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]"></div>
+        </div>
 
-      {/* Hero Header */}
-      <section className="relative z-10 pt-32 pb-20 overflow-hidden">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 relative z-10 pt-20">
           <motion.div 
             style={{ y: heroY, opacity }}
             className="text-center max-w-5xl mx-auto"
@@ -131,27 +141,38 @@ const SpecsPage = ({ openWaitlist }) => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-indigo-300 mb-8 backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-indigo-300 mb-8 backdrop-blur-md"
             >
               <Command className="w-4 h-4" />
               <span>System Specifications</span>
             </motion.div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9] drop-shadow-2xl">
               Engineering <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500">Perfection.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">Perfection.</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
               Two distinct personalities. One advanced neural core. <br />
-              <span className="text-slate-200">Select your companion configuration.</span>
+              <span className="text-white font-medium">Select your companion configuration.</span>
             </p>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        >
+          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
+            <div className="w-1 h-2 bg-white/50 rounded-full"></div>
+          </div>
+        </motion.div>
       </section>
 
       {/* Interactive Model Switcher */}
-      <section className="relative z-10 py-10">
+      <section className="relative z-10 py-10 -mt-20">
         <div className="container mx-auto px-6">
           {/* Toggle Control */}
           <div className="flex justify-center mb-16">
@@ -274,6 +295,61 @@ const SpecsPage = ({ openWaitlist }) => {
                 </div>
               </motion.div>
             </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      {/* Advanced Gesture Control Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="bg-slate-900 border border-white/10 rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
+            {/* Background Effects */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none"></div>
+            
+            <div className="flex flex-col md:flex-row items-center gap-12 relative z-20">
+              <div className="md:w-1/2 relative z-20">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 text-indigo-300 font-medium text-sm mb-6 border border-indigo-500/30">
+                  <Scan size={16} />
+                  <span>Beta Feature Available</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">Advanced Gesture Control</h2>
+                <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+                  Interact with Woffy naturally. Our neural engine processes hand movements in real-time, allowing you to command, play, and communicate without saying a word.
+                </p>
+                <button 
+                  onClick={() => window.open('/gesture-demo', '_blank')}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-indigo-50 transition-colors group cursor-pointer"
+                >
+                  <Scan className="w-5 h-5" />
+                  Try Live Demo
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+              
+              <div className="md:w-1/2 relative">
+                <div className="aspect-video bg-black/50 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/20 to-transparent opacity-50"></div>
+                  
+                  {/* Simulated Gesture UI */}
+                  <div className="relative z-10 flex flex-col items-center">
+                    <motion.div 
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-20 h-20 rounded-full border-2 border-indigo-400 flex items-center justify-center mb-4"
+                    >
+                      <Hand className="w-10 h-10 text-indigo-400" />
+                    </motion.div>
+                    <div className="px-4 py-2 bg-slate-900/80 backdrop-blur rounded-lg border border-white/10 text-sm font-mono text-indigo-300">
+                      Detecting...
+                    </div>
+                  </div>
+                  
+                  {/* Scanning Grid */}
+                  <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.1] bg-[length:20px_20px]"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

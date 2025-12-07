@@ -80,13 +80,52 @@ const About = () => {
                       O
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-slate-900">An Onwords Company</p>
+                      <p className="text-sm font-bold text-slate-900">An <span className="text-red-600">On</span>words Company</p>
                       <p className="text-xs text-slate-500">Built on Trust & Reliability</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">
+                  {/* Inspired by Roddy Card */}
+                  <div className="glass-card p-8 rounded-3xl border border-white/40 shadow-xl shadow-brand-indigo/5 hover:shadow-brand-indigo/10 transition-all duration-300 relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-orange-100/50 rounded-full blur-2xl -ml-8 -mt-8 transition-all duration-500"></div>
+
+                    <h4 className="text-2xl font-bold text-slate-900 mb-6 font-display flex items-center gap-2">
+                        <span className="text-2xl">🐾</span> Inspired by Roddy
+                    </h4>
+                    
+                    <div className="space-y-4 text-slate-600 leading-relaxed relative z-10">
+                        <p>Every big idea has a small, personal beginning. <br/> For Woffy, that spark was <span className="font-bold text-slate-800">Roddy</span>.</p>
+                        
+                        <p>A cute Golden Retriever whose simple daily moments reminded us what real companionship feels like.</p>
+                        
+                        <div className="bg-orange-50/50 p-4 rounded-xl border border-orange-100/50 my-4">
+                            <p className="mb-2 font-medium text-slate-800">Watching Roddy taught us the true magic of a dog:</p>
+                            <ul className="space-y-2">
+                                <li className="flex items-start gap-2">
+                                    <span className="text-orange-400 mt-1">✦</span> The way he notices you.
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-orange-400 mt-1">✦</span> The way he brings warmth without effort.
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-orange-400 mt-1">✦</span> The way his presence alone can change the mood of a room.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <p>Woffy is inspired by that feeling.</p>
+                        
+                        <p>We are not trying to copy a dog. We are trying to recreate the comfort a dog brings, in a form that more people can access.</p>
+                        
+                        <p className="font-medium text-slate-800 pt-2 border-t border-slate-100">
+                            Roddy is our reminder of the standard.<br/>
+                            <span className="italic text-slate-600 font-normal">Companionship should feel pure, safe, and real.</span>
+                        </p>
+                    </div>
+                  </div>
+
                    {/* Living Homes to Living Love Card */}
                   <div className="glass-card p-8 rounded-3xl border border-white/40 shadow-xl shadow-brand-indigo/5 hover:shadow-brand-indigo/10 transition-all duration-300 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-brand-rose/10 rounded-full blur-2xl -mr-8 -mt-8 transition-all duration-500 group-hover:bg-brand-rose/20"></div>
@@ -118,7 +157,7 @@ const About = () => {
                     animate={{ opacity: [0.9, 1, 0.9] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
-                    Onwords
+                    <span className="text-red-600">On</span>words
                   </motion.p>
                   <p className="text-slate-300 max-w-2xl mx-auto text-lg leading-relaxed">
                       A smart home and gate automation company building intelligent systems for real homes in India. The same DNA that powers Onwords drives Woffy: Human-first design, hardware reliability, and real-world usability.
@@ -182,7 +221,7 @@ const About = () => {
                     <div className="absolute top-0 right-0 w-64 h-64 bg-brand-indigo/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
                     
                     <h4 className="text-white font-bold text-xl mb-6 flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5 text-green-400" /> Powered by Onwords
+                        <TrendingUp className="w-5 h-5 text-green-400" /> Powered by <span className="text-red-600">On</span>words
                     </h4>
 
                     <div className="space-y-6 relative z-10">

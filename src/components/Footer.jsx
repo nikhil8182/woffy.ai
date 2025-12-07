@@ -40,7 +40,6 @@ const Footer = () => {
             <h3 className="text-white font-bold mb-6">Contact</h3>
             <ul className="space-y-4">
               <li>hello@woffy.ai</li>
-              <li>Coimbatore, Tamil Nadu</li>
             </ul>
           </div>
         </div>

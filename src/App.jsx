@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import RoadmapPage from './pages/RoadmapPage';
 import SpecsPage from './pages/SpecsPage';
+import GestureDemo from './pages/GestureDemo';
 
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -57,6 +58,10 @@ function App() {
               <Route 
                 path="/specs" 
                 element={<SpecsPage openWaitlist={openWaitlist} />} 
+              />
+              <Route 
+                path="/gesture-demo" 
+                element={<GestureDemo />} 
               />
             </Routes>
           </main>

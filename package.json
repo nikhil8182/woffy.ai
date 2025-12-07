@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/drawing_utils": "^0.3.1675466124",
+    "@mediapipe/face_detection": "^0.4.1646425229",
+    "@mediapipe/hands": "^0.4.1675469240",
     "clsx": "^2.1.0",
     "firebase": "^12.6.0",
     "framer-motion": "^11.0.8",
