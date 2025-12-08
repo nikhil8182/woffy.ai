@@ -119,3 +119,4 @@ const ChooseCompanion = ({ themeMode, openWaitlist }) => {
 
 export default ChooseCompanion;
 
+

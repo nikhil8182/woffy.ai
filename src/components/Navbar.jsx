@@ -30,6 +30,8 @@ const Navbar = ({ onJoinWaitlist, themeMode }) => {
     }
   `;
 
+  const brandTextClass = 'text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-pink-500 to-indigo-600 drop-shadow-[0_10px_32px_rgba(99,102,241,0.35)]';
+
   return (
     <nav className={`fixed w-full z-40 transition-all duration-500 ${
       scrolled 
@@ -39,7 +41,7 @@ const Navbar = ({ onJoinWaitlist, themeMode }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center gap-2">
-            <Link to="/" className={`text-2xl font-bold ${isDark ? 'text-white' : 'bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700'}`}>
+            <Link to="/" className={brandTextClass}>
               Woffy.ai
             </Link>
           </div>

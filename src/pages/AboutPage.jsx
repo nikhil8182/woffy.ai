@@ -13,3 +13,4 @@ const AboutPage = ({ openWaitlist }) => {
 
 export default AboutPage;
 
+

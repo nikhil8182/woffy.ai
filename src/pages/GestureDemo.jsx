@@ -15,18 +15,8 @@ const HAND_CONNECTIONS = [
   [5, 9], [9, 13], [13, 17], [0, 17]
 ];
 
-// Woffy-themed gesture commands
+// Woffy-themed gesture commands - 6 easy-to-detect gestures
 const WOFFY_GESTURES = {
-  'Wave': {
-    emoji: '👋',
-    command: 'Come Here, Woffy!',
-    description: 'Call Woffy to come to you',
-    color: 'from-amber-500 to-orange-500',
-    bgColor: 'bg-amber-500/20',
-    textColor: 'text-amber-400',
-    response: 'Woffy is coming! 🐕',
-    icon: Dog
-  },
   'Open Palm': {
     emoji: '🖐️',
     command: 'Stay, Woffy!',
@@ -57,16 +47,6 @@ const WOFFY_GESTURES = {
     response: 'Woffy is happy! 🐕💚',
     icon: Heart
   },
-  'Thumbs Down': {
-    emoji: '👎',
-    command: 'Bad Boy!',
-    description: 'Negative feedback for Woffy',
-    color: 'from-slate-500 to-gray-600',
-    bgColor: 'bg-slate-500/20',
-    textColor: 'text-slate-400',
-    response: 'Woffy looks sad... 🐕😢',
-    icon: ThumbsDown
-  },
   'Peace Sign': {
     emoji: '✌️',
     command: 'Play Time!',
@@ -77,75 +57,25 @@ const WOFFY_GESTURES = {
     response: 'Woffy wants to play! 🎾',
     icon: Play
   },
-  'I Love You': {
-    emoji: '🤟',
-    command: 'I Love You, Woffy!',
-    description: 'Show affection to Woffy',
-    color: 'from-pink-500 to-rose-500',
-    bgColor: 'bg-pink-500/20',
-    textColor: 'text-pink-400',
-    response: 'Woffy loves you too! 💕',
-    icon: Heart
-  },
-  'Rock On': {
-    emoji: '🤘',
-    command: 'Get Excited!',
-    description: 'Make Woffy excited and playful',
-    color: 'from-orange-500 to-red-500',
-    bgColor: 'bg-orange-500/20',
-    textColor: 'text-orange-400',
-    response: 'Woffy is super excited! 🎉',
-    icon: Zap
-  },
-  'Call Me': {
-    emoji: '🤙',
-    command: 'Speak, Woffy!',
-    description: 'Ask Woffy to bark or speak',
-    color: 'from-cyan-500 to-teal-500',
-    bgColor: 'bg-cyan-500/20',
-    textColor: 'text-cyan-400',
-    response: 'Woof! Woof! 🐕🔊',
-    icon: Phone
-  },
-  'OK Sign': {
-    emoji: '👌',
-    command: 'Perfect, Woffy!',
-    description: 'Tell Woffy everything is okay',
-    color: 'from-indigo-500 to-blue-500',
-    bgColor: 'bg-indigo-500/20',
-    textColor: 'text-indigo-400',
-    response: 'Woffy feels confident! ✨',
-    icon: ThumbsUp
-  },
   'Pointing': {
-    emoji: '👆',
-    command: 'Go There, Woffy!',
-    description: 'Point direction for Woffy to go',
-    color: 'from-teal-500 to-emerald-500',
-    bgColor: 'bg-teal-500/20',
-    textColor: 'text-teal-400',
-    response: 'Woffy goes that way! 🐕➡️',
+    emoji: '☝️',
+    command: 'Come Here!',
+    description: 'Point up - Call Woffy over',
+    color: 'from-amber-500 to-orange-500',
+    bgColor: 'bg-amber-500/20',
+    textColor: 'text-amber-400',
+    response: 'Woffy is coming! 🐕',
     icon: Dog
   },
-  'Three': {
-    emoji: '3️⃣',
-    command: 'Fetch!',
-    description: 'Tell Woffy to fetch something',
-    color: 'from-lime-500 to-green-500',
-    bgColor: 'bg-lime-500/20',
-    textColor: 'text-lime-400',
-    response: 'Woffy runs to fetch! 🎾🐕',
-    icon: Play
-  },
-  'Heart': {
-    emoji: '🫶',
-    command: 'Love You Too!',
-    description: 'Make a heart with your hand',
-    color: 'from-rose-500 to-pink-500',
-    bgColor: 'bg-rose-500/20',
-    textColor: 'text-rose-400',
-    response: 'Woffy loves you too! 💖🐕',
-    icon: Heart
+  'Thumbs Down': {
+    emoji: '👎',
+    command: 'No, Woffy!',
+    description: 'Thumb down - Negative feedback',
+    color: 'from-slate-500 to-gray-600',
+    bgColor: 'bg-slate-500/20',
+    textColor: 'text-slate-400',
+    response: 'Woffy looks sad... 🐕😢',
+    icon: ThumbsDown
   }
 };
 
@@ -180,136 +110,178 @@ const GestureDemo = () => {
 
     const hand = landmarks[0];
     
+    // All 21 hand landmarks
     const wrist = hand[0];
-    const thumbTip = hand[4];
-    const thumbIP = hand[3];
-    const thumbMCP = hand[2];
     const thumbCMC = hand[1];
-    const indexTip = hand[8];
-    const indexDIP = hand[7];
-    const indexPIP = hand[6];
+    const thumbMCP = hand[2];
+    const thumbIP = hand[3];
+    const thumbTip = hand[4];
     const indexMCP = hand[5];
-    const middleTip = hand[12];
-    const middleDIP = hand[11];
-    const middlePIP = hand[10];
+    const indexPIP = hand[6];
+    const indexDIP = hand[7];
+    const indexTip = hand[8];
     const middleMCP = hand[9];
-    const ringTip = hand[16];
-    const ringDIP = hand[15];
-    const ringPIP = hand[14];
+    const middlePIP = hand[10];
+    const middleDIP = hand[11];
+    const middleTip = hand[12];
     const ringMCP = hand[13];
-    const pinkyTip = hand[20];
-    const pinkyDIP = hand[19];
-    const pinkyPIP = hand[18];
+    const ringPIP = hand[14];
+    const ringDIP = hand[15];
+    const ringTip = hand[16];
     const pinkyMCP = hand[17];
+    const pinkyPIP = hand[18];
+    const pinkyDIP = hand[19];
+    const pinkyTip = hand[20];
 
-    // Calculate palm center for better curl detection
+    // ===== PALM GEOMETRY =====
     const palmCenter = {
-      x: (wrist.x + indexMCP.x + pinkyMCP.x + middleMCP.x) / 4,
-      y: (wrist.y + indexMCP.y + pinkyMCP.y + middleMCP.y) / 4,
-      z: (wrist.z + indexMCP.z + pinkyMCP.z + middleMCP.z) / 4
+      x: (wrist.x + indexMCP.x + pinkyMCP.x + middleMCP.x + ringMCP.x) / 5,
+      y: (wrist.y + indexMCP.y + pinkyMCP.y + middleMCP.y + ringMCP.y) / 5,
+      z: ((wrist.z || 0) + (indexMCP.z || 0) + (pinkyMCP.z || 0) + (middleMCP.z || 0) + (ringMCP.z || 0)) / 5
+    };
+    
+    // Palm size for relative measurements
+    const palmSize = distance(wrist, middleMCP);
+    
+    // Hand orientation (is palm facing camera or away)
+    const palmFacingCamera = middleMCP.z < wrist.z;
+
+    // ===== ADVANCED FINGER DETECTION =====
+    
+    // Method 1: Angle-based detection (finger tip above PIP above MCP)
+    const fingerAngleExtended = (tip, pip, mcp) => {
+      return tip.y < pip.y && pip.y < mcp.y;
+    };
+    
+    // Method 2: Distance ratio (tip far from palm vs MCP)
+    const fingerDistanceExtended = (tip, mcp, threshold = 1.4) => {
+      return distance(tip, palmCenter) > distance(mcp, palmCenter) * threshold;
+    };
+    
+    // Method 3: Tip-to-wrist vs MCP-to-wrist (for orientation-independent)
+    const fingerWristExtended = (tip, mcp) => {
+      return distance(tip, wrist) > distance(mcp, wrist) * 1.3;
+    };
+    
+    // Method 4: Curl detection - tip closer to palm than it should be
+    const fingerCurled = (tip, pip, mcp) => {
+      const tipToPalm = distance(tip, palmCenter);
+      const mcpToPalm = distance(mcp, palmCenter);
+      const tipBelowPIP = tip.y > pip.y;
+      return tipToPalm < mcpToPalm * 1.2 || tipBelowPIP;
     };
 
-    // Better finger curl detection using distance to palm
-    const indexCurled = distance(indexTip, palmCenter) < distance(indexMCP, palmCenter) * 1.1;
-    const middleCurled = distance(middleTip, palmCenter) < distance(middleMCP, palmCenter) * 1.1;
-    const ringCurled = distance(ringTip, palmCenter) < distance(ringMCP, palmCenter) * 1.1;
-    const pinkyCurled = distance(pinkyTip, palmCenter) < distance(pinkyMCP, palmCenter) * 1.1;
+    // Combine methods for robust detection (voting system)
+    const isFingerExtended = (tip, dip, pip, mcp) => {
+      let votes = 0;
+      if (fingerAngleExtended(tip, pip, mcp)) votes++;
+      if (fingerDistanceExtended(tip, mcp, 1.3)) votes++;
+      if (fingerWristExtended(tip, mcp)) votes++;
+      if (!fingerCurled(tip, pip, mcp)) votes++;
+      return votes >= 2; // At least 2 methods agree
+    };
     
-    // Alternative curl detection using fingertip to PIP distance
-    const indexCurled2 = distance(indexTip, indexPIP) < distance(indexMCP, indexPIP) * 0.8;
-    const middleCurled2 = distance(middleTip, middlePIP) < distance(middleMCP, middlePIP) * 0.8;
-    const ringCurled2 = distance(ringTip, ringPIP) < distance(ringMCP, ringPIP) * 0.8;
-    const pinkyCurled2 = distance(pinkyTip, pinkyPIP) < distance(pinkyMCP, pinkyPIP) * 0.8;
+    const isFingerCurled = (tip, dip, pip, mcp) => {
+      let votes = 0;
+      if (!fingerAngleExtended(tip, pip, mcp)) votes++;
+      if (!fingerDistanceExtended(tip, mcp, 1.2)) votes++;
+      if (fingerCurled(tip, pip, mcp)) votes++;
+      if (tip.y > pip.y) votes++;
+      return votes >= 2;
+    };
 
-    // Combine both methods for robust curl detection
-    const isIndexCurled = indexCurled || indexCurled2 || (indexTip.y > indexPIP.y);
-    const isMiddleCurled = middleCurled || middleCurled2 || (middleTip.y > middlePIP.y);
-    const isRingCurled = ringCurled || ringCurled2 || (ringTip.y > ringPIP.y);
-    const isPinkyCurled = pinkyCurled || pinkyCurled2 || (pinkyTip.y > pinkyPIP.y);
-
-    // Extended finger detection (opposite of curled)
-    const isIndexExtended = !isIndexCurled && indexTip.y < indexPIP.y;
-    const isMiddleExtended = !isMiddleCurled && middleTip.y < middlePIP.y;
-    const isRingExtended = !isRingCurled && ringTip.y < ringPIP.y;
-    const isPinkyExtended = !isPinkyCurled && pinkyTip.y < pinkyPIP.y;
+    // Apply to each finger
+    const indexExtended = isFingerExtended(indexTip, indexDIP, indexPIP, indexMCP);
+    const middleExtended = isFingerExtended(middleTip, middleDIP, middlePIP, middleMCP);
+    const ringExtended = isFingerExtended(ringTip, ringDIP, ringPIP, ringMCP);
+    const pinkyExtended = isFingerExtended(pinkyTip, pinkyDIP, pinkyPIP, pinkyMCP);
     
-    // Thumb detection
-    const thumbExtendedDist = distance(thumbTip, wrist) > distance(thumbMCP, wrist) * 1.2;
-    const thumbExtendedFromPalm = distance(thumbTip, palmCenter) > distance(thumbMCP, palmCenter) * 1.3;
-    const isThumbExtended = thumbExtendedDist || thumbExtendedFromPalm;
-    const isThumbCurled = distance(thumbTip, indexMCP) < 0.08 || distance(thumbTip, palmCenter) < distance(thumbMCP, palmCenter);
+    const indexCurled = isFingerCurled(indexTip, indexDIP, indexPIP, indexMCP);
+    const middleCurled = isFingerCurled(middleTip, middleDIP, middlePIP, middleMCP);
+    const ringCurled = isFingerCurled(ringTip, ringDIP, ringPIP, ringMCP);
+    const pinkyCurled = isFingerCurled(pinkyTip, pinkyDIP, pinkyPIP, pinkyMCP);
 
-    const isThumbUp = thumbTip.y < thumbMCP.y && thumbTip.y < wrist.y - 0.05;
-    const isThumbDown = thumbTip.y > wrist.y + 0.05;
-
-    const thumbIndexDistance = distance(thumbTip, indexTip);
-    const isThumbIndexTouching = thumbIndexDistance < 0.06;
-
-    // Count curled fingers for fist detection
-    const curledCount = [isIndexCurled, isMiddleCurled, isRingCurled, isPinkyCurled].filter(Boolean).length;
-    const extendedCount = [isIndexExtended, isMiddleExtended, isRingExtended, isPinkyExtended].filter(Boolean).length;
-
-    // Better thumb up/down detection - thumb must be clearly pointing up/down
-    const thumbPointingUp = thumbTip.y < thumbMCP.y - 0.08 && thumbTip.y < indexMCP.y;
-    const thumbPointingDown = thumbTip.y > thumbMCP.y + 0.08 && thumbTip.y > wrist.y;
+    // ===== THUMB DETECTION (Special - moves differently) =====
+    const thumbToWrist = distance(thumbTip, wrist);
+    const thumbMCPToWrist = distance(thumbMCP, wrist);
+    const thumbToPalm = distance(thumbTip, palmCenter);
+    const thumbToIndex = distance(thumbTip, indexMCP);
     
-    // Thumb tucked in (for fist) - thumb is near the curled fingers, not sticking out
-    const thumbTuckedIn = distance(thumbTip, middleMCP) < 0.12 || distance(thumbTip, indexPIP) < 0.1;
-    const thumbStickingOut = distance(thumbTip, palmCenter) > distance(indexMCP, palmCenter) * 1.3;
+    // Thumb extended away from palm
+    const thumbExtended = thumbToPalm > palmSize * 0.8 && thumbToWrist > thumbMCPToWrist * 1.1;
+    
+    // Thumb pointing UP (y decreases upward)
+    const thumbUp = thumbTip.y < thumbMCP.y - palmSize * 0.3 && 
+                    thumbTip.y < indexMCP.y &&
+                    thumbTip.y < wrist.y - palmSize * 0.2;
+    
+    // Thumb pointing DOWN
+    const thumbDown = thumbTip.y > thumbMCP.y + palmSize * 0.3 && 
+                      thumbTip.y > wrist.y + palmSize * 0.2 &&
+                      thumbTip.y > indexTip.y;
+    
+    // Thumb tucked (for fist)
+    const thumbTucked = thumbToIndex < palmSize * 0.5 || thumbToPalm < palmSize * 0.6;
 
+    // ===== FINGER COUNTS =====
+    const extendedFingers = [indexExtended, middleExtended, ringExtended, pinkyExtended];
+    const curledFingers = [indexCurled, middleCurled, ringCurled, pinkyCurled];
+    const extendedCount = extendedFingers.filter(Boolean).length;
+    const curledCount = curledFingers.filter(Boolean).length;
+
+    // ===== GESTURE RECOGNITION WITH PER-GESTURE ENGINEERING =====
     let gestureName = null;
-    let conf = 50;
+    let conf = 0;
 
-    // THUMBS UP - Must check first! Thumb clearly pointing UP, all fingers curled
-    if (thumbPointingUp && thumbStickingOut && curledCount >= 3 && extendedCount === 0) {
-      gestureName = 'Thumbs Up'; conf = 96;
-    }
-    // THUMBS DOWN - Thumb clearly pointing DOWN, all fingers curled
-    else if (thumbPointingDown && thumbStickingOut && curledCount >= 3 && extendedCount === 0) {
-      gestureName = 'Thumbs Down'; conf = 94;
-    }
-    // FIST - All four fingers curled, thumb NOT pointing up/down (tucked or neutral)
-    else if (curledCount >= 3 && extendedCount === 0 && !thumbPointingUp && !thumbPointingDown) {
-      gestureName = 'Fist'; conf = 95;
-    }
-    // OK Sign - Thumb and index touching, other fingers extended
-    else if (isThumbIndexTouching && isMiddleExtended && isRingExtended && isPinkyExtended) {
-      gestureName = 'OK Sign'; conf = 96;
-    }
-    // Open Palm - All fingers extended
-    else if (extendedCount >= 4 && isThumbExtended) {
-      gestureName = 'Open Palm'; conf = 98;
-    }
-    // Peace Sign - Index and middle extended, others curled
-    else if (isIndexExtended && isMiddleExtended && !isRingExtended && !isPinkyExtended) {
-      gestureName = 'Peace Sign'; conf = 93;
-    }
-    // I Love You - Thumb, index, and pinky extended
-    else if (isThumbExtended && isIndexExtended && !isMiddleExtended && !isRingExtended && isPinkyExtended) {
-      gestureName = 'I Love You'; conf = 91;
-    }
-    // Rock On - Index and pinky extended, no thumb
-    else if (!isThumbExtended && isIndexExtended && !isMiddleExtended && !isRingExtended && isPinkyExtended) {
-      gestureName = 'Rock On'; conf = 90;
-    }
-    // Call Me - Thumb and pinky extended
-    else if (isThumbExtended && !isIndexExtended && !isMiddleExtended && !isRingExtended && isPinkyExtended) {
-      gestureName = 'Call Me'; conf = 89;
-    }
-    // Pointing - Only index extended
-    else if (isIndexExtended && !isMiddleExtended && !isRingExtended && !isPinkyExtended) {
-      gestureName = 'Pointing'; conf = 92;
-    }
-    // Three - Index, middle, ring extended
-    else if (isIndexExtended && isMiddleExtended && isRingExtended && !isPinkyExtended) {
-      gestureName = 'Three'; conf = 88;
-    }
-    // Heart - Thumb and index tips touching, forming heart shape, other fingers curled
-    else if (isThumbIndexTouching && isMiddleCurled && isRingCurled && isPinkyCurled) {
-      gestureName = 'Heart'; conf = 94;
+    // 1) OPEN PALM: all fingers extended, good spread, neutral thumb
+    if (extendedCount >= 4 && thumbExtended && !thumbUp && !thumbDown) {
+      const fingerSpread = distance(indexTip, pinkyTip) > palmSize * 0.75;
+      const evenSpread = distance(indexTip, middleTip) > palmSize * 0.25 && distance(ringTip, pinkyTip) > palmSize * 0.2;
+      conf = 92 + (extendedCount === 4 ? 4 : 6) + (fingerSpread ? 3 : 0) + (evenSpread ? 2 : 0);
+      gestureName = 'Open Palm';
     }
 
-    if (gestureName && WOFFY_GESTURES[gestureName]) {
+    // 2) THUMBS UP: thumb strongly up, others curled
+    else if (thumbUp && thumbExtended && curledCount >= 3 && extendedCount <= 1) {
+      const strongThumbUp = thumbTip.y < wrist.y - palmSize * 0.4;
+      const thumbAwayFromPalm = thumbToPalm > palmSize * 0.9;
+      conf = 90 + (curledCount === 4 ? 6 : 3) + (strongThumbUp ? 4 : 0) + (thumbAwayFromPalm ? 2 : 0);
+      gestureName = 'Thumbs Up';
+    }
+
+    // 3) THUMBS DOWN: thumb strongly down, others curled
+    else if (thumbDown && thumbExtended && curledCount >= 3 && extendedCount <= 1) {
+      const strongThumbDown = thumbTip.y > wrist.y + palmSize * 0.4;
+      const thumbAwayFromPalm = thumbToPalm > palmSize * 0.9;
+      conf = 90 + (curledCount === 4 ? 6 : 3) + (strongThumbDown ? 4 : 0) + (thumbAwayFromPalm ? 2 : 0);
+      gestureName = 'Thumbs Down';
+    }
+
+    // 4) FIST: all fingers curled, thumb tucked or neutral (not up/down)
+    else if (curledCount >= 3 && extendedCount === 0 && !thumbUp && !thumbDown) {
+      const tightFist = curledCount === 4 && (thumbTucked || !thumbExtended);
+      conf = 88 + (tightFist ? 8 : 4);
+      gestureName = 'Fist';
+    }
+
+    // 5) PEACE SIGN: index + middle extended, ring + pinky curled, thumb relaxed
+    else if (indexExtended && middleExtended && ringCurled && pinkyCurled && !thumbDown) {
+      const separation = distance(indexTip, middleTip);
+      const balancedV = separation > palmSize * 0.25 && separation < palmSize * 0.8;
+      conf = 90 + (balancedV ? 6 : 3) + (thumbExtended ? 2 : 0);
+      gestureName = 'Peace Sign';
+    }
+
+    // 6) POINTING: only index extended, others curled, thumb neutral
+    else if (indexExtended && !middleExtended && ringCurled && pinkyCurled && !thumbDown) {
+      const strongPoint = distance(indexTip, wrist) > palmSize * 1.4;
+      const stableFinger = distance(indexTip, indexMCP) > palmSize * 0.9;
+      conf = 88 + (middleCurled ? 4 : 0) + (strongPoint ? 4 : 0) + (stableFinger ? 2 : 0);
+      gestureName = 'Pointing';
+    }
+
+    // Return result with confidence
+    if (gestureName && WOFFY_GESTURES[gestureName] && conf >= 85) {
       const gestureData = WOFFY_GESTURES[gestureName];
       return {
         name: gestureName,
@@ -317,7 +289,7 @@ const GestureDemo = () => {
         command: gestureData.command,
         response: gestureData.response,
         color: gestureData.color,
-        confidence: conf
+        confidence: Math.min(conf, 99)
       };
     }
 
@@ -325,55 +297,75 @@ const GestureDemo = () => {
   }, []);
 
   const stabilizeGesture = useCallback((newGesture) => {
-    if (!newGesture) return null;
+    if (!newGesture) {
+      // Clear buffer gradually when no gesture detected
+      if (gestureBuffer.current.length > 0) {
+        gestureBuffer.current.shift();
+      }
+      return null;
+    }
 
-    gestureBuffer.current.push(newGesture.name);
+    // Add new gesture with confidence weight
+    gestureBuffer.current.push({
+      name: newGesture.name,
+      confidence: newGesture.confidence
+    });
     
-    if (gestureBuffer.current.length > 5) {
+    // Keep buffer size at 7 frames for smoother detection
+    if (gestureBuffer.current.length > 7) {
       gestureBuffer.current.shift();
     }
 
+    // Count occurrences with confidence weighting
     const counts = {};
+    const confidenceSum = {};
     gestureBuffer.current.forEach(g => {
-      counts[g] = (counts[g] || 0) + 1;
+      counts[g.name] = (counts[g.name] || 0) + 1;
+      confidenceSum[g.name] = (confidenceSum[g.name] || 0) + g.confidence;
     });
 
-    let mostCommon = null;
-    let maxCount = 0;
+    // Find gesture with highest weighted score
+    let bestGesture = null;
+    let bestScore = 0;
     Object.entries(counts).forEach(([gesture, count]) => {
-      if (count > maxCount) {
-        maxCount = count;
-        mostCommon = gesture;
+      // Score = count * average confidence
+      const avgConf = confidenceSum[gesture] / count;
+      const score = count * (avgConf / 100);
+      if (score > bestScore) {
+        bestScore = score;
+        bestGesture = gesture;
       }
     });
 
-    if (maxCount >= 3) {
-      const gestureData = WOFFY_GESTURES[mostCommon];
+    // Require at least 3 occurrences OR very high confidence
+    const minOccurrences = counts[bestGesture] >= 3;
+    const highConfidence = (confidenceSum[bestGesture] / counts[bestGesture]) >= 92;
+    
+    if (bestGesture && (minOccurrences || (counts[bestGesture] >= 2 && highConfidence))) {
+      const gestureData = WOFFY_GESTURES[bestGesture];
       if (gestureData) {
         return {
           ...newGesture,
-          name: mostCommon,
+          name: bestGesture,
           command: gestureData.command,
           response: gestureData.response,
           color: gestureData.color,
-          emoji: gestureData.emoji
+          emoji: gestureData.emoji,
+          confidence: Math.round(confidenceSum[bestGesture] / counts[bestGesture])
         };
       }
     }
 
-    return newGesture;
+    return null; // Don't show unstable gestures
   }, []);
 
   const updateWoffyMood = useCallback((gestureName) => {
     switch (gestureName) {
       case 'Thumbs Up':
-      case 'I Love You':
-      case 'OK Sign':
         setWoffyMood('happy');
         break;
       case 'Peace Sign':
-      case 'Rock On':
-      case 'Three':
+      case 'Pointing':
         setWoffyMood('excited');
         break;
       case 'Thumbs Down':
@@ -704,7 +696,7 @@ const GestureDemo = () => {
           <div className="mt-4 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
             <p className="text-amber-200 text-sm text-center">
               <Dog className="inline w-4 h-4 mr-2 text-amber-400" />
-              Use hand gestures to communicate with Woffy! Try <span className="text-white font-medium">👍 Good Boy</span>, <span className="text-white font-medium">✊ Stop</span>, <span className="text-white font-medium">✌️ Play Time</span>, or <span className="text-white font-medium">🫶 Love You</span>
+              Use hand gestures to communicate with Woffy! Try <span className="text-white font-medium">🖐️ Stay</span>, <span className="text-white font-medium">✊ Stop</span>, <span className="text-white font-medium">👍 Good Boy</span>, or <span className="text-white font-medium">✌️ Play</span>
             </p>
           </div>
 
