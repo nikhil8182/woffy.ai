@@ -31,3 +31,7 @@ User-agent: YandexBot
 Allow: /
 
 
+
+
+
+

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WaitlistModal from './components/WaitlistModal';
@@ -8,6 +8,19 @@ import AboutPage from './pages/AboutPage';
 import RoadmapPage from './pages/RoadmapPage';
 import SpecsPage from './pages/SpecsPage';
 import GestureDemo from './pages/GestureDemo';
+import { trackPageView } from './utils/analytics';
+
+// Component to track page views on route changes
+function PageViewTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const pageTitle = document.title || 'Woffy.ai';
+    trackPageView(location.pathname, pageTitle);
+  }, [location]);
+
+  return null;
+}
 
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -18,6 +31,7 @@ function App() {
 
   return (
     <Router>
+      <PageViewTracker />
       <div className={`min-h-screen relative overflow-hidden transition-colors duration-700 ${
         themeMode === 'titan' ? 'bg-slate-950 text-slate-200' : 'bg-slate-50 text-slate-900'
       }`}>

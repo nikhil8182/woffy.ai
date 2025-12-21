@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle, AlertCircle, User, Mail, Phone, Sparkles } from 'lucide-react';
 import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
+import { trackWaitlistSignup, trackWaitlistModalOpen } from '../utils/analytics';
 
 const WaitlistModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,13 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   });
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Track modal open
+  useEffect(() => {
+    if (isOpen) {
+      trackWaitlistModalOpen();
+    }
+  }, [isOpen]);
 
   const interestOptions = [
     { value: 'personal', label: '🏠 Personal Companion', desc: 'For home use' },
@@ -53,6 +61,10 @@ const WaitlistModal = ({ isOpen, onClose }) => {
         timestamp: serverTimestamp(),
         source: 'web_waitlist_modal'
       });
+      
+      // Track successful signup
+      trackWaitlistSignup(formData.interest || 'not_specified');
+      
       setStatus('success');
       setTimeout(() => {
         onClose();
