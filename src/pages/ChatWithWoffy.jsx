@@ -3,6 +3,49 @@ import { Send, Bot, User, Sparkles, Zap, Shield, Brain, Command, Mic, Activity, 
 import { motion, AnimatePresence } from 'framer-motion';
 import { chatWithWoffy } from '../ai';
 
+// Simple markdown formatter
+const formatMarkdown = (text) => {
+  const lines = text.split('\n');
+  const elements = [];
+  let bulletItems = [];
+  
+  lines.forEach((line, i) => {
+    // Handle bullet points
+    if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
+      const content = line.trim().substring(2);
+      bulletItems.push(<li key={`li-${i}`} className="ml-4">{formatInline(content)}</li>);
+    } else {
+      // If we have accumulated bullet items, add them as a ul first
+      if (bulletItems.length > 0) {
+        elements.push(<ul key={`ul-${i}`} className="list-disc space-y-1 my-2">{bulletItems}</ul>);
+        bulletItems = [];
+      }
+      // Add paragraph (skip empty lines)
+      if (line.trim()) {
+        elements.push(<p key={`p-${i}`} className="mb-2 last:mb-0">{formatInline(line)}</p>);
+      }
+    }
+  });
+  
+  // Don't forget remaining bullets
+  if (bulletItems.length > 0) {
+    elements.push(<ul key="ul-final" className="list-disc space-y-1 my-2">{bulletItems}</ul>);
+  }
+  
+  return elements;
+};
+
+const formatInline = (text) => {
+  // Handle bold **text**
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i} className="font-bold text-white">{part.slice(2, -2)}</strong>;
+    }
+    return <span key={i}>{part}</span>;
+  });
+};
+
 // --- Enhanced Components ---
 
 const BootSequence = ({ onComplete }) => {
@@ -158,6 +201,89 @@ const ModuleBadge = ({ name, active, icon: Icon }) => (
   </div>
 );
 
+const NeuralBackground = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let particles = [];
+    
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const createParticle = () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3, // Very mild velocity
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 1.5 + 0.5
+    });
+
+    const initParticles = () => {
+      particles = [];
+      const particleCount = Math.min(window.innerWidth * 0.08, 80); 
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(createParticle());
+      }
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw particles
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.fillStyle = 'rgba(99, 102, 241, 0.4)'; // Indigo
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Connections
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 120) {
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.15 * (1 - distance / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+};
+
 const ChatWithWoffy = () => {
   const [bootComplete, setBootComplete] = useState(false);
   const [messages, setMessages] = useState([
@@ -180,6 +306,17 @@ const ChatWithWoffy = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, woffyState]);
+
+  const handleClearChat = () => {
+    setMessages([
+      { 
+        id: Date.now(), 
+        text: "System initialized. Neural core online. Hello! I am Woffy. Ready to assist.", 
+        sender: 'woffy',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ]);
+  };
 
   const handleSendMessage = async (e, text = inputText) => {
     if (e) e.preventDefault();
@@ -233,6 +370,7 @@ const ChatWithWoffy = () => {
         {/* Cinematic Background */}
         <div className="fixed inset-0 z-0 pointer-events-none">
            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/40 via-slate-950 to-slate-950" />
+           <NeuralBackground />
            {/* Animated Grid */}
            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay"></div>
            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
@@ -335,9 +473,16 @@ const ChatWithWoffy = () => {
                    </span>
                  </div>
                </div>
-               <div className="flex items-center gap-4">
-                 <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-400 font-mono">
-                   <Activity size={10} />
+               <div className="flex items-center gap-3">
+                 <button
+                   onClick={handleClearChat}
+                   className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 hover:border-red-500/30 text-slate-400 hover:text-red-400 transition-all duration-300 text-xs font-medium"
+                 >
+                    <Trash2 size={14} className="group-hover:scale-110 transition-transform duration-300" />
+                    <span>Clear Chat</span>
+                 </button>
+                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-400 font-mono">
+                   <Activity size={10} className="animate-pulse" />
                    LIVE
                  </div>
                </div>
@@ -375,7 +520,13 @@ const ChatWithWoffy = () => {
                         }`}>
                           <div className="text-sm leading-relaxed tracking-wide">
                             {msg.sender === 'woffy' && msg.id === messages[messages.length - 1].id && woffyState !== 'speaking' ? (
-                               <Typewriter text={msg.text} />
+                              // Show typewriter for the latest message while it's being "typed"
+                              <Typewriter text={msg.text} />
+                            ) : msg.sender === 'woffy' ? (
+                              // Show formatted markdown for older messages
+                              <div className="space-y-1">
+                                {formatMarkdown(msg.text)}
+                              </div>
                             ) : (
                                msg.text
                             )}

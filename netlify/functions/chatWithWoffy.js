@@ -224,15 +224,29 @@ exports.handler = async (event, context) => {
       parts: [{ text: message }],
     });
 
-    // Use systemInstruction for the system prompt (cleaner approach)
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-exp",
-      contents,
-      config: {
-        maxOutputTokens: 2048,
-        temperature: 0.8,
-        systemInstruction: WOFFY_SYSTEM_PROMPT,
+    // Tools configuration for Google Search
+    const tools = [
+      {
+        googleSearch: {}
+      }
+    ];
+
+    // Configuration with thinking and tools
+    const config = {
+      maxOutputTokens: 2048,
+      temperature: 0.8,
+      systemInstruction: WOFFY_SYSTEM_PROMPT,
+      thinkingConfig: {
+        thinkingLevel: 'HIGH',
       },
+      tools,
+    };
+
+    // Use non-streaming response with Gemini 3 (faster and more reliable)
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents,
+      config,
     });
 
     // Extract text from response
