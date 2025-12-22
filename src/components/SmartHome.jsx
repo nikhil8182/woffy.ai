@@ -267,3 +267,4 @@ const SmartHome = () => {
 
 export default SmartHome;
 
+

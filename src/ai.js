@@ -1,9 +1,9 @@
-// Use Firebase emulator in dev, production URL otherwise
+// Use Netlify function (works for dev and production)
 const FUNCTION_URL =
   import.meta.env.VITE_WOFFY_FUNCTION_URL ||
   (import.meta.env.DEV
-    ? "http://127.0.0.1:5001/woffy-ai/us-central1/chatWithWoffy"
-    : "https://us-central1-woffy-ai.cloudfunctions.net/chatWithWoffy");
+    ? "http://localhost:8888/.netlify/functions/chatWithWoffy"
+    : "/.netlify/functions/chatWithWoffy");
 
 // Chat with Woffy via HTTP Function (public)
 export const chatWithWoffy = async (message, chatHistory = []) => {
@@ -19,13 +19,13 @@ export const chatWithWoffy = async (message, chatHistory = []) => {
 
     if (!res.ok) {
       console.error("Woffy API error status:", res.status);
-      return "*whimpers* Woof... I had a little hiccup. Try again? 🐕";
+      return "I had a little hiccup. Try again?";
     }
 
     const data = await res.json();
-    return data.response || "*whimpers* Woof... I had a little hiccup. Try again? 🐕";
+    return data.response || "I had a little hiccup. Try again?";
   } catch (error) {
     console.error("Woffy AI error:", error);
-    return "*tilts head* Woof... Something went wrong. Can you try again? 🐕";
+    return "Something went wrong. Can you try again?";
   }
 };

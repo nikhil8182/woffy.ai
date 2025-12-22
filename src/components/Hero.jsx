@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ShieldCheck, WifiOff } from 'lucide-react';
 
 const Hero = ({ onOpenWaitlist }) => {
@@ -36,10 +37,10 @@ const Hero = ({ onOpenWaitlist }) => {
               >
                 Join Waitlist
               </button>
-              <a href="#investors" className="btn-secondary w-full sm:w-auto text-lg flex items-center justify-center gap-2">
+              <Link to="/investors" className="btn-secondary w-full sm:w-auto text-lg flex items-center justify-center gap-2">
                 Investor Deck
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </a>
+              </Link>
             </div>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm font-medium text-slate-500">

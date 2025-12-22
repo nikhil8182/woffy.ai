@@ -1,3 +1,21 @@
 {
-  "siteId": "08019b7f-7352-4b1e-a97a-f6fead73cb91"
+	"siteId": "08019b7f-7352-4b1e-a97a-f6fead73cb91",
+	"geolocation": {
+		"data": {
+			"city": "Avinashi",
+			"country": {
+				"code": "IN",
+				"name": "India"
+			},
+			"subdivision": {
+				"code": "TN",
+				"name": "Tamil Nadu"
+			},
+			"timezone": "Asia/Kolkata",
+			"latitude": 11.1955,
+			"longitude": 77.2718,
+			"postalCode": "641654"
+		},
+		"timestamp": 1766437902831
+	}
 }

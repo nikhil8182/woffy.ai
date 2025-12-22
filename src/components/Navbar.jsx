@@ -53,6 +53,7 @@ const Navbar = ({ onJoinWaitlist, themeMode }) => {
             <Link to="/about" className={linkClass(isAbout)}>About</Link>
             <Link to="/roadmap" className={linkClass(isRoadmap)}>Roadmap</Link>
             <Link to="/investors" className={linkClass(isInvestors)}>Investors</Link>
+            <Link to="/chat" className={linkClass(location.pathname === '/chat')}>Chat</Link>
           </div>
 
           <div className="flex items-center gap-4">

@@ -30,3 +30,11 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
+
+
+
+
+
+
+
+

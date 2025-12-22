@@ -1,0 +1,10 @@
+{
+  "name": "woffy-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify serverless functions for Woffy AI",
+  "main": "chatWithWoffy.js",
+  "dependencies": {
+    "@google/genai": "^1.31.0"
+  }
+}
+

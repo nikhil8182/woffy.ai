@@ -9,6 +9,7 @@ import RoadmapPage from './pages/RoadmapPage';
 import SpecsPage from './pages/SpecsPage';
 import GestureDemo from './pages/GestureDemo';
 import InvestorPage from './pages/InvestorPage';
+import ChatWithWoffy from './pages/ChatWithWoffy';
 import { trackPageView } from './utils/analytics';
 
 // Component to track page views on route changes
@@ -94,9 +95,13 @@ function App() {
                 path="/investors" 
                 element={<InvestorPage openWaitlist={openWaitlist} />} 
               />
+              <Route 
+                path="/chat" 
+                element={<ChatWithWoffy />} 
+              />
             </Routes>
           </main>
-          <Footer />
+          {location.pathname !== '/chat' && <Footer />}
         </div>
 
         <WaitlistModal
