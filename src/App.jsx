@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import RoadmapPage from './pages/RoadmapPage';
 import SpecsPage from './pages/SpecsPage';
 import GestureDemo from './pages/GestureDemo';
+import InvestorPage from './pages/InvestorPage';
 import { trackPageView } from './utils/analytics';
 
 // Component to track page views on route changes
@@ -22,6 +23,17 @@ function PageViewTracker() {
   return null;
 }
 
+// Ensure each route change starts at the top of the viewport
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [themeMode, setThemeMode] = useState('cloud'); // 'cloud' or 'titan'
@@ -32,6 +44,7 @@ function App() {
   return (
     <Router>
       <PageViewTracker />
+      <ScrollToTop />
       <div className={`min-h-screen relative overflow-hidden transition-colors duration-700 ${
         themeMode === 'titan' ? 'bg-slate-950 text-slate-200' : 'bg-slate-50 text-slate-900'
       }`}>
@@ -76,6 +89,10 @@ function App() {
               <Route 
                 path="/gesture-demo" 
                 element={<GestureDemo />} 
+              />
+              <Route 
+                path="/investors" 
+                element={<InvestorPage openWaitlist={openWaitlist} />} 
               />
             </Routes>
           </main>

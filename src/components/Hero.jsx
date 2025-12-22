@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import WaitlistModal from './WaitlistModal';
+import React from 'react';
+import { ShieldCheck, WifiOff } from 'lucide-react';
 
-const Hero = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+const Hero = ({ onOpenWaitlist }) => {
   return (
     <div className="relative min-h-screen flex items-center pt-20 overflow-hidden">
       {/* Background Elements */}
@@ -23,17 +21,17 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold leading-tight mb-6">
-              <span className="block text-gradient-brand">Your AI Companion</span>
-              <span className="block text-slate-800 text-3xl md:text-4xl lg:text-5xl mt-2">Powered by Love.</span>
+              <span className="block text-gradient-brand">The AI Companion that</span>
+              <span className="block text-slate-800 text-3xl md:text-4xl lg:text-5xl mt-2">Loves, Connects & Protects.</span>
             </h1>
 
             <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Experience the future of companionship. An AI that learns, adapts, and brings unconditional joy to your life.
+              More than a pet. Woffy is an emotional bond, a smart home hub, and a security patrol—all rolled into one adorable friend.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12">
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={onOpenWaitlist}
                 className="btn-primary w-full sm:w-auto text-lg"
               >
                 Join Waitlist
@@ -44,14 +42,14 @@ const Hero = () => {
               </a>
             </div>
 
-            <div className="flex items-center justify-center lg:justify-start gap-8 text-sm font-medium text-slate-500">
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Secure & Private
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm font-medium text-slate-500">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-50 border border-green-100 text-green-700">
+                <ShieldCheck size={18} />
+                <span>100% Privacy First</span>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Continuous Learning
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-100 text-slate-600 tooltip" title="Core features work without internet">
+                <WifiOff size={18} />
+                <span>Offline Promise</span>
               </div>
             </div>
           </div>
@@ -71,7 +69,7 @@ const Hero = () => {
                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-xl">🧠</div>
                 <div>
                   <p className="text-xs text-slate-500 uppercase font-bold tracking-wider">Status</p>
-                  <p className="font-bold text-slate-800">Learning...</p>
+                  <p className="font-bold text-slate-800">Guarding...</p>
                 </div>
               </div>
 
@@ -79,15 +77,13 @@ const Hero = () => {
                 <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-xl">❤️</div>
                 <div>
                   <p className="text-xs text-slate-500 uppercase font-bold tracking-wider">Mood</p>
-                  <p className="font-bold text-slate-800">Happy</p>
+                  <p className="font-bold text-slate-800">Loving</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <WaitlistModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

@@ -94,12 +94,15 @@ const GestureDemo = () => {
   const [gestureHistory, setGestureHistory] = useState([]);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [woffyMood, setWoffyMood] = useState('happy'); // happy, excited, sad, calm
+  const [permissionStatus, setPermissionStatus] = useState('unknown'); // unknown, prompt, granted, denied, blocked, unsupported, error
+  const [isRequestingPermission, setIsRequestingPermission] = useState(false);
   const lastFrameTime = useRef(Date.now());
   const frameCount = useRef(0);
   const gestureBuffer = useRef([]);
   const lastGesture = useRef(null);
   const faceDetectionRef = useRef(null);
   const handsRef = useRef(null);
+  const permissionRequestRef = useRef(false);
 
   const distance = (p1, p2) => {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2) + Math.pow((p1.z || 0) - (p2.z || 0), 2));
@@ -404,11 +407,86 @@ const GestureDemo = () => {
     }
   }, [soundEnabled, updateWoffyMood]);
 
+  const requestCameraAccess = useCallback(async (userInitiated = false) => {
+    if (permissionRequestRef.current) return false;
+
+    if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+      setCameraError('Camera access is not supported in this browser.');
+      setPermissionStatus('unsupported');
+      setIsLoading(false);
+      return false;
+    }
+
+    permissionRequestRef.current = true;
+    setIsRequestingPermission(true);
+    setPermissionStatus('prompt');
+
+    let granted = false;
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' },
+      });
+      
+      // We only need the permission grant; release the stream because Mediapipe will request it again.
+      stream.getTracks().forEach(track => track.stop());
+
+      setPermissionStatus('granted');
+      setCameraError(null);
+      granted = true;
+    } catch (error) {
+      console.error('Camera permission error:', error);
+      const denied = error?.name === 'NotAllowedError' || error?.name === 'PermissionDeniedError';
+      const notFound = error?.name === 'NotFoundError' || error?.name === 'OverconstrainedError';
+
+      if (denied) {
+        setPermissionStatus('denied');
+        setCameraError(
+          userInitiated
+            ? 'Camera permission is still blocked. Please allow access in your browser settings and try again.'
+            : 'Camera access was blocked. Please allow permissions to use the gesture demo.'
+        );
+      } else if (notFound) {
+        setPermissionStatus('error');
+        setCameraError('No camera device was found. Connect a camera and try again.');
+      } else {
+        setPermissionStatus('error');
+        setCameraError('Unable to access the camera. Please check your device settings and try again.');
+      }
+    } finally {
+      permissionRequestRef.current = false;
+      setIsRequestingPermission(false);
+      if (!granted) {
+        setIsLoading(false);
+      }
+    }
+
+    return granted;
+  }, []);
+
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (!window.isSecureContext) {
+      setCameraError('Camera access requires a secure (HTTPS) connection. Please reopen this page over https:// to continue.');
+      setPermissionStatus('blocked');
+      setIsLoading(false);
+      return;
+    }
+
+    requestCameraAccess(false);
+  }, [requestCameraAccess]);
+
+  useEffect(() => {
+    if (permissionStatus !== 'granted') return;
+
     let camera = null;
 
     const initializeTracking = async () => {
       try {
+        setIsLoading(true);
+        setCameraError(null);
+
         faceDetectionRef.current = new FaceDetection({
           locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`,
         });
@@ -522,7 +600,7 @@ const GestureDemo = () => {
       if (handsRef.current) handsRef.current.close();
       if (faceDetectionRef.current) faceDetectionRef.current.close();
     };
-  }, [recognizeGesture, stabilizeGesture, updateHistory]);
+  }, [permissionStatus, recognizeGesture, stabilizeGesture, updateHistory]);
 
   const getMoodEmoji = () => {
     switch (woffyMood) {
@@ -609,13 +687,34 @@ const GestureDemo = () => {
             {/* Camera Error */}
             {cameraError && (
               <div className="absolute inset-0 flex items-center justify-center bg-slate-900/95">
-                <div className="text-center p-8 max-w-md">
-                  <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-bold text-white mb-2">Camera Access Required</h3>
-                  <p className="text-slate-400 mb-6">{cameraError}</p>
-                  <button onClick={() => window.location.reload()} className="px-6 py-3 bg-amber-600 text-white rounded-full font-medium hover:bg-amber-500 transition-colors">
-                    Try Again
-                  </button>
+                <div className="text-center p-8 max-w-md space-y-4">
+                  <AlertCircle className="w-16 h-16 text-red-500 mx-auto" />
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Camera Access Required</h3>
+                    <p className="text-slate-400 mt-2">{cameraError}</p>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    {permissionStatus !== 'granted' && permissionStatus !== 'unsupported' && (
+                      <button
+                        onClick={() => requestCameraAccess(true)}
+                        disabled={isRequestingPermission}
+                        className="px-6 py-3 bg-emerald-600 text-white rounded-full font-semibold hover:bg-emerald-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        {isRequestingPermission ? 'Requesting Access…' : 'Allow Camera Access'}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="px-6 py-3 bg-slate-800 text-white rounded-full font-medium hover:bg-slate-700 transition-colors"
+                    >
+                      Reload Page
+                    </button>
+                  </div>
+                  {(permissionStatus === 'denied' || permissionStatus === 'blocked') && (
+                    <p className="text-xs text-slate-500">
+                      If the browser blocked the camera, enable permissions from the address bar (🔒 icon) and try again.
+                    </p>
+                  )}
                 </div>
               </div>
             )}

@@ -17,6 +17,7 @@ const Navbar = ({ onJoinWaitlist, themeMode }) => {
   const isAbout = location.pathname === '/about';
   const isRoadmap = location.pathname === '/roadmap';
   const isSpecs = location.pathname === '/specs';
+  const isInvestors = location.pathname === '/investors';
 
   // Determine if we should use dark mode styles
   // Titan mode OR if we are on the Specs page (which is always dark)
@@ -51,6 +52,7 @@ const Navbar = ({ onJoinWaitlist, themeMode }) => {
             <Link to="/specs" className={linkClass(isSpecs)}>Specs</Link>
             <Link to="/about" className={linkClass(isAbout)}>About</Link>
             <Link to="/roadmap" className={linkClass(isRoadmap)}>Roadmap</Link>
+            <Link to="/investors" className={linkClass(isInvestors)}>Investors</Link>
           </div>
 
           <div className="flex items-center gap-4">

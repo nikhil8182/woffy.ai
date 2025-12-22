@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { WAITLIST_COUNT } from '../utils/constants';
 
 const InvestorSection = () => {
     const stats = [
         { label: 'Market Opportunity', value: '$100B+', icon: '🌍', color: 'text-blue-600', bg: 'bg-blue-100' },
         { label: 'Growth Potential', value: '300%', icon: '📈', color: 'text-emerald-600', bg: 'bg-emerald-100' },
-        { label: 'Waitlist', value: '50k+', icon: '👥', color: 'text-brand-rose', bg: 'bg-rose-100' },
+        { label: 'Waitlist', value: WAITLIST_COUNT, icon: '👥', color: 'text-brand-rose', bg: 'bg-rose-100' },
     ];
 
     return (
@@ -107,7 +108,7 @@ const InvestorSection = () => {
                     {[
                         { label: 'TAM', value: '$100B+', icon: '💰' },
                         { label: 'CAGR', value: '25%', icon: '📈' },
-                        { label: 'Waitlist', value: '15k+', icon: '👥' },
+                        { label: 'Waitlist', value: WAITLIST_COUNT, icon: '👥' },
                         { label: 'Patents', value: '3', icon: '🔒' },
                     ].map((stat, idx) => (
                         <motion.div

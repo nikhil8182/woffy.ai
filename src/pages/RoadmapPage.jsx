@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { 
   Brain, 
   Zap, 
@@ -12,7 +12,8 @@ import {
   ArrowRight,
   Target,
   Cpu,
-  Code2
+  Code2,
+  Flag
 } from 'lucide-react';
 import CtaBanner from '../components/CtaBanner';
 
@@ -20,76 +21,65 @@ const roadmapData = [
   {
     id: 'phase-1',
     period: 'Q2 2025',
-    title: 'Concept & Foundation',
+    title: 'Functional Prototype',
     status: 'completed',
     icon: Brain,
-    description: 'Laying the neural pathways for emotional AI.',
+    description: 'Core hardware assembly and basic emotional intelligence.',
     progress: 100,
+    gate: 'Gate Passed: 70%+ testers said "it feels alive"',
     items: [
-      'Behavioral Research & Analysis',
-      'Core AI Algorithm Architecture',
-      'Personality Framework Design',
-      'Initial Design System'
+      'Hardware Assembly (Motors, Chassis)',
+      'OLED Eyes & Basic Emotions',
+      'Face Detection & Voice Commands',
+      'Investor Demo Day'
     ]
   },
   {
     id: 'phase-2',
     period: 'Q3 2025',
     title: 'Alpha Development',
-    status: 'completed',
+    status: 'in-progress',
     icon: Zap,
-    description: 'Building the prototype and core engine.',
-    progress: 100,
+    description: 'Feature-complete units for internal testing.',
+    progress: 65,
+    gate: 'Target Gate: 7-day retention > 40%',
     items: [
-      'Prototype Engine Development',
-      'Emotional Response System V1',
-      'Internal Testing & Validation',
-      'Learning Model Foundation'
+      'LiDAR & SLAM Navigation',
+      'Full 50+ Emotional State Library',
+      'INIYAL Smart Home Integration',
+      'Auto-Docking System'
     ]
   },
   {
     id: 'phase-3',
     period: 'Q1 2026',
-    title: 'Beta Testing',
-    status: 'in-progress',
+    title: 'Beta & Pre-Production',
+    status: 'upcoming',
     icon: Rocket,
-    description: 'Refining the experience with early adopters.',
-    progress: 65,
+    description: 'Production-ready design and certification.',
+    progress: 0,
+    gate: 'Target Gate: < 2% failure rate in stress tests',
     items: [
-      'Closed Beta Launch',
-      'User Feedback Integration',
-      'Algorithm Optimization',
-      'Response Latency Improvements'
+      'Custom PCB Validation',
+      'Injection Mold Tooling',
+      'BIS / CE / FCC Certifications',
+      'Beta Program (50-100 Users)'
     ]
   },
   {
     id: 'phase-4',
     period: 'Q3 2026',
-    title: 'Platform Integration',
-    status: 'upcoming',
-    icon: Layers,
-    description: 'Expanding to mobile and web platforms.',
-    progress: 0,
-    items: [
-      'Mobile App Development (iOS/Android)',
-      'Cross-Platform Sync',
-      'Web Dashboard',
-      'Advanced Interactive Features'
-    ]
-  },
-  {
-    id: 'phase-5',
-    period: 'Q4 2026',
-    title: 'Global Launch',
+    title: 'Launch & Scale',
     status: 'upcoming',
     icon: Globe,
-    description: 'Bringing Woffy to the world.',
+    description: 'Commercial release and market expansion.',
     progress: 0,
+    gate: 'Target Gate: Support playbook & inventory ready',
     items: [
-      'Public Release',
-      'Global Marketing Campaign',
-      'Strategic Partnerships',
-      'Community Events & API Access'
+      'Initial Production (500 Units)',
+      'E-commerce Launch',
+      'Titan Edition Development Start',
+      'Global Marketing Campaign'
     ]
   }
 ];
@@ -180,6 +170,16 @@ const RoadmapItem = ({ phase, index, isEven }) => {
                   {phase.description}
                 </p>
               </div>
+            </div>
+
+            {/* Gate Criteria (Investor Confidence) */}
+            <div className={`mb-6 p-3 rounded-xl border flex items-start gap-3 ${
+              isCompleted 
+                ? 'bg-green-900/10 border-green-900/30 text-green-400' 
+                : 'bg-slate-900 border-slate-700 text-slate-400'
+            }`}>
+              <Flag className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <div className="text-sm font-medium">{phase.gate}</div>
             </div>
 
             {/* Progress Bar (if in progress or completed) */}
@@ -283,14 +283,14 @@ const RoadmapPage = ({ openWaitlist }) => {
             </motion.div>
             
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 tracking-tight">
-              Building the <br />
+              From Concept to <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-rose via-brand-accent to-brand-indigo animate-gradient-x">
-                Future of AI
+                Reality
               </span>
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-12">
-              Explore our strategic roadmap as we develop, refine, and launch the next generation of emotional artificial intelligence.
+              Our systematic approach to building the future of companionship. De-risked at every stage with clear milestones and validation gates.
             </p>
 
             <div className="flex justify-center gap-4">

@@ -26,7 +26,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     { value: 'personal', label: '🏠 Personal Companion', desc: 'For home use' },
     { value: 'family', label: '👨‍👩‍👧‍👦 Family Pet', desc: 'For kids & family' },
     { value: 'elderly', label: '👴 Elderly Care', desc: 'For senior support' },
-    { value: 'therapy', label: '💚 Emotional Support', desc: 'Therapy companion' },
+    { value: 'smarthome', label: '🤖 Smart Home Hub', desc: 'Voice control & automation' }, // NEW: Added Smart Home
     { value: 'investor', label: '💼 Investor Interest', desc: 'Investment opportunity' },
     { value: 'other', label: '✨ Other', desc: 'Something else' }
   ];
