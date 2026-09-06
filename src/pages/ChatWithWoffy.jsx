@@ -42,10 +42,10 @@ function MessageText({ text }) {
 }
 
 function ConceptPortrait({ className = '' }) {
-  return <img className={className} src="/images/woffy-detail.webp" alt="Design concept of Woffy’s rounded face and expressive eyes" width="1024" height="1024" decoding="async" onError={(event) => {
+  return <img className={className} src="/images/cloud-front.webp" alt="Cloud design study with a plush body and expressive face" width="1536" height="1024" decoding="async" onError={(event) => {
     if (!event.currentTarget.dataset.fallback) {
       event.currentTarget.dataset.fallback = 'true';
-      event.currentTarget.src = '/images/woffy-studio.webp';
+      event.currentTarget.src = '/images/cloud-front.webp';
     }
   }} />;
 }
@@ -118,7 +118,7 @@ export default function ChatWithWoffy() {
         setPending(false);
         // Keep a mobile keyboard closed after a suggestion; never steal focus
         // when someone has moved to a link or another control while waiting.
-        if (document.activeElement === document.body) inputRef.current?.focus({ preventScroll: true });
+        if (request.restoreInputFocus && document.activeElement === document.body) inputRef.current?.focus({ preventScroll: true });
       }
     }
   };
@@ -132,7 +132,7 @@ export default function ChatWithWoffy() {
     followMessages.current = true;
     setMessages(previous => [...previous, userMessage]);
     setInput('');
-    sendRequest({ text: question, history });
+    sendRequest({ text: question, history, restoreInputFocus: document.activeElement === inputRef.current });
   };
 
   const retry = () => {

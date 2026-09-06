@@ -105,6 +105,44 @@ test("missing keys, provider errors, empty answers and network failures produce 
   }
 });
 
+test("FAQ distinguishes Cloud and Titan design concepts and answers edition comparisons", async () => {
+  const handler = createChatHandler({ env: {}, logger });
+  const answer = async (message) => {
+    const res = await call(handler, request({ message }));
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.data.mode, "project-faq");
+    assert.match(res.data.response, /design concepts.*not finished products/i);
+    return res.data.response;
+  };
+  const cloud = await answer("Tell me about Cloud");
+  assert.match(cloud, /pink.*plush.*floppy ears.*cyan.*four articulated legs/i);
+  assert.doesNotMatch(cloud, /gunmetal|amber|upright ears/i);
+  const titan = await answer("What does Titan look like?");
+  assert.match(titan, /silver.*gunmetal.*upright ears.*amber.*four articulated legs/i);
+  assert.doesNotMatch(titan, /pink|plush|floppy ears|cyan/i);
+  for (const message of [
+    "How are Cloud and Titan different?",
+    "Compare the editions",
+  ]) {
+    const comparison = await answer(message);
+    assert.match(comparison, /Cloud.*plush.*Titan.*gunmetal/i);
+    assert.match(comparison, /cyan.*amber/i);
+  }
+});
+
+test("Edition-specific FAQ questions retain hardware, privacy and availability limits", async () => {
+  const handler = createChatHandler({ env: {}, logger });
+  for (const [message, expected] of [
+    ["What is Cloud's battery life?", /battery runtime.*not confirmed/i],
+    ["Does Titan work offline?", /local processing.*goals.*not completed/i],
+    ["Can I buy Cloud?", /no confirmed sale price or shipping date/i],
+  ]) {
+    const res = await call(handler, request({ message }));
+    assert.equal(res.data.mode, "project-faq");
+    assert.match(res.data.response, expected);
+  }
+});
+
 test("OpenAI recovers a Gemini outage with the same grounded context and no stored completion", async () => {
   const calls = [];
   const handler = createChatHandler({

@@ -228,3 +228,57 @@
   .p-details-list > div { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) { .p-page *, .p-page *::before, .p-page *::after { scroll-behavior: auto !important; transition-duration: 0s !important; animation-duration: 0s !important; } }
+
+/* Product stories built around the distinct Cloud and Titan studies. */
+.p-design-intent { padding-top: 72px; padding-bottom: 100px; }
+.p-intent-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 46px; list-style: none; margin: 0; padding: 0; }
+.p-intent-list li { border-top: 1px solid #cdd6d1; padding-top: 24px; }
+.p-intent-list li > span { display: block; font-size: 11px; color: var(--muted, #667572); margin-bottom: 27px; }
+.p-intent-list h3 { font-size: clamp(23px, 2.4vw, 31px); line-height: 1.25; margin: 0 0 18px; }
+.p-intent-list p { font-size: 16px; color: var(--muted, #667572); margin: 0; }
+.p-story-separated { border-top: 1px solid #cdd6d1; padding-top: 76px; }
+.p-ecosystem .p-section-heading { align-items: end; }
+.p-ecosystem .eyebrow, .p-ecosystem .p-intent-list li > span { color: #afc5bd; }
+.p-ecosystem .p-section-heading > p, .p-ecosystem .p-intent-list p { color: #bdccc6; }
+.p-ecosystem .p-intent-list li { border-color: #4f6965; }
+.p-about .p-page-cta { margin-top: 100px; }
+.p-page .p-edition-study img { aspect-ratio: 3 / 2; height: auto; object-fit: contain; object-position: center; background: #e8ece8; }
+.p-page .p-partner-image.p-edition-study img { aspect-ratio: 3 / 2; }
+.p-development-study { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 68px; align-items: center; padding-bottom: 104px; }
+.p-development-image img { aspect-ratio: 3 / 2; height: auto; object-fit: contain; background: #e8ece8; }
+.p-development-copy h2 { font-size: clamp(30px, 3vw, 46px); }
+.p-development-copy p:not(.eyebrow) { color: var(--muted, #667572); font-size: 16px; margin: 0 0 20px; }
+.p-development-copy .text-link { margin-top: 10px; }
+.p-rationale-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-bottom: 40px; }
+.p-rationale-grid img { aspect-ratio: 3 / 2; height: auto; object-fit: cover; }
+.p-rationale-grid figcaption { padding-top: 28px; }
+.p-rationale-grid .eyebrow { display: block; margin-bottom: 17px; }
+.p-rationale-grid h3 { font-size: clamp(27px, 2.8vw, 39px); margin: 0 0 18px; line-height: 1.22; }
+.p-rationale-grid p { font-size: 16px; color: var(--muted, #667572); margin: 0; max-width: 580px; }
+.p-collaboration-section { padding: 104px 0 0; }
+@media (max-width: 1100px) {
+  .p-intent-list { gap: 30px; }
+  .p-development-study { gap: 42px; grid-template-columns: 1.2fr 1fr; }
+}
+@media (max-width: 800px) {
+  .p-design-intent { padding-top: 52px; padding-bottom: 70px; }
+  .p-intent-list { grid-template-columns: 1fr; gap: 30px; }
+  .p-intent-list li { display: grid; grid-template-columns: 1fr 2fr; gap: 12px 28px; }
+  .p-intent-list li > span { grid-column: 1 / -1; margin-bottom: 2px; }
+  .p-intent-list h3 { font-size: 25px; }
+  .p-story-separated { padding-top: 52px; }
+  .p-about .p-page-cta { margin-top: 70px; }
+  .p-development-study { grid-template-columns: 1fr; gap: 36px; padding-bottom: 65px; }
+  .p-development-copy { max-width: 620px; }
+  .p-rationale-grid { grid-template-columns: 1fr; gap: 42px; }
+  .p-rationale-grid h3 { font-size: 33px; }
+  .p-collaboration-section { padding-top: 70px; }
+  .p-page .p-partner-image.p-edition-study img { aspect-ratio: 3 / 2; }
+}
+@media (max-width: 520px) {
+  .p-intent-list li { display: block; }
+  .p-intent-list li > span { margin-bottom: 20px; }
+  .p-intent-list h3 { margin-bottom: 14px; }
+  .p-rationale-grid figcaption { padding-top: 23px; }
+  .p-rationale-grid h3 { font-size: 30px; }
+}

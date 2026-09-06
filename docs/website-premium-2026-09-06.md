@@ -1,25 +1,30 @@
-# Woffy premium design pass | 6 September 2026
+# Woffy design and content refresh | 6 September 2026
 
-The founder's latest instruction authorizes a broader premium redesign across the website, new generated imagery, and scroll effects. It supersedes the earlier request for limited visual changes. The constraint against real photos remains in force.
+The founder requested a premium redesign across the site, then clarified that the entire product story and both physical editions must guide the imagery. No real photographs are used.
 
-## Direction
+## Product direction
 
-This feels like a considered companion-robot design studio. Preserve Woffy's ivory body, pink ears, dark face and cyan eyes. Use fog paper (#F2F4F1), deep teal ink (#152A2B), mineral mint (#BBD8D2), restrained coral (#DC6C50), and muted green-grey (#667572). Sora Variable provides the display type; DM Sans Variable supports body copy. Both are self-hosted.
+Reviewed every active route and the original source content. The existing concept animation provides the strongest visual reference: Cloud is a shaggy pink quadruped with floppy ears and cyan screen eyes; Titan is an angular silver quadruped with upright ears, articulated panels and amber eyes. The new studies preserve these distinct forms. Cutaways illustrate proposed systems, not engineering-ready construction.
 
-The composition gives the character room, uses clear typography and fewer decorative panels, and tells a product story. Scroll-linked layers, a sticky detail image, and a full-width interior concept support that story. Native scrolling remains intact and reduced-motion preferences remove transforms.
+The site restores the Loves / Connects / Protects vision, Kids / Companion / Care scenarios, home routines, expression, articulation, haptics, privacy controls and charging goals. Proposed capabilities remain labelled as development intentions. Robot-arm training is clearly distinguished from a completed autonomous companion. Unverified hardware numbers, availability claims, traction and performance guarantees are not presented as facts. Onwords is positioned in South India.
 
-## Implementation
+## Experience
 
-- New home, navigation, footer, signup styling and favicon; mobile menu makes the page behind it inert while open.
-- Coordinated Design, About, Roadmap and Investors pages with useful model comparisons, current research, evidence-based milestones, and direct contact.
-- Refined chat with a desktop portrait panel, conversation-first mobile layout, readable messages, loading, retry, reset and keyboard controls. No simulated device telemetry or inactive microphone.
-- Generated studio, close-up and home concepts, each optimized to WebP with responsive variants. All three primary images total 261,922 bytes. No real photos appear in the new pages.
-- Lazy-loaded secondary pages and the camera experiment. Initial JavaScript decreased from 651.72 kB to approximately 320 kB before gzip.
-- Shared accessible privacy, terms, cookies, loading and missing-page experiences.
-- Existing signup and AI service behavior retained. Regional positioning is South India in public copy and the chat prompt.
+- Ten generated studies: front, side, rear and cutaway for each edition, plus Cloud at home and Titan exploring. Twenty optimized WebP files including phone variants total approximately 1.32 MB; lower-page images are lazy loaded.
+- Shared edition selection across the home hero and gallery. Keyboard-accessible angle controls announce changes. Design links carry the selected edition into the cutaway.
+- Interactive internal-system callouts and exterior/cutaway switching. Each image retains its original proportions so callouts align at every size.
+- Opt-in concept animation, gentle parallax, sticky product galleries and restrained transitions. Reduced-motion preferences remove transforms; native scrolling stays intact. No claim of a live 3D model or complete 360-degree asset.
+- Coordinated home, story, design, roadmap, investors, chat, gesture experiment and policy pages. Sora and DM Sans are self-hosted.
+- Chat retains actual AI/FAQ modes, bounded history, errors, retry and reset. Suggestions do not summon the phone keyboard. The guide knows the two editions and the limits of current development.
+- Camera experiment opens only after an explicit action; stream/model/frame-loop cleanup covers stop, unmount, initialization errors and late permissions. Optional synthesized gesture sounds default off.
+- Native signup dialog retains consent, validation, real storage, duplicate-safe success, focus management and Escape handling.
 
 ## Verification
 
-Production build, scoped ESLint and all 16 existing API/helper tests passed before final browser verification. Browser checks cover desktop, tablet and 320/390 px phones; responsive images; no page-level horizontal overflow on checked routes; native dialog focus/Escape; Cloud/Titan selection; FAQ expansion; actual scroll transforms and sticky positioning; reduced-motion behavior; chat connection failure, retry without duplication and reset. The initial image and full character framing were corrected after inspecting the rendered page.
+Production builds and scoped lint passed. All 18 API/helper tests pass, including edition knowledge and existing provider/signup contracts. Eleven isolated mocked camera/chat lifecycle checks passed on the build server; no physical camera permission was granted.
 
-Backup before editing: tag `codex/woffy-before-premium-20260906` at commit `69eeff37`. Original checkout remains untouched.
+Rendered checks cover 320/390 px phone, 768 px tablet and 1280/1440 px desktop layouts. All main routes have zero horizontal overflow at 320 px, including browsers with visible scrollbars. Verified both character forms, viewing-angle changes, responsive images, cutaway callouts and proportions, exterior switching, edition-aware links, native video playback, signup focus/Escape and the camera-off state. Existing checks also cover chat failure/retry without duplication and reduced-motion behavior.
+
+Initial application JavaScript is approximately 334 kB (109 kB gzip), down from 652 kB (198 kB gzip) before the refresh. Camera code loads only on its experiment route.
+
+Backup: tag `codex/woffy-before-premium-20260906` at `69eeff37`. The original checkout remains untouched. Deployment and production receipt are recorded separately in the workspace release note.

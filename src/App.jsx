@@ -12,13 +12,23 @@ const InvestorPage = lazy(() => import('./pages/InvestorPage'));
 const ChatWithWoffy = lazy(() => import('./pages/ChatWithWoffy'));
 const GestureDemo = lazy(() => import('./pages/GestureDemo'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
+function RouteScroll() {
+  const { pathname, hash, search, key } = useLocation();
+  useEffect(() => {
+    let anchor = hash.slice(1);
+    try { anchor = decodeURIComponent(anchor); } catch { /* Treat malformed fragments as literal IDs. */ }
+    const target = anchor ? document.getElementById(anchor) : null;
+    if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+    else window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname, hash, search, key]);
+  return null;
+}
 function Site() {
   const { pathname } = useLocation();
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const openWaitlist = () => setIsWaitlistOpen(true);
   const isChat = pathname === '/chat';
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     const titles = { '/': 'Woffy | A little more company', '/about': 'Our story | Woffy', '/specs': 'Design & details | Woffy', '/roadmap': 'The build | Woffy', '/investors': 'Build with us | Woffy', '/chat': 'Meet Woffy | Conversation demo', '/gesture-demo': 'Gesture experiment | Woffy', '/privacy': 'Privacy | Woffy', '/terms': 'Terms | Woffy', '/cookies': 'Cookies | Woffy' };
     document.title = titles[pathname] || 'Page not found | Woffy';
     document.querySelector('link[rel=canonical]')?.setAttribute('href', 'https://woffy.ai' + pathname);
@@ -41,6 +51,7 @@ function Site() {
           <Route path="/cookies" element={<LegalPage kind="cookies" />} />
           <Route path="*" element={<div className="not-found wrap"><p className="eyebrow">A small detour</p><h1>Nothing here. Yet.</h1><p>Let’s get you back to Woffy.</p><Link className="button button-primary" to="/">Back home</Link></div>} />
         </Routes>
+        <RouteScroll />
       </Suspense>
     </main>
     {!isChat && <Footer />}

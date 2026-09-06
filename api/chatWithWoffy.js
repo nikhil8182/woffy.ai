@@ -9,10 +9,15 @@ import {
 const SYSTEM_PROMPT = `You are the Woffy website project guide, a conversational software demo from Onwords in South India. You are not a connected physical robot.
 Use only these project facts for claims about Woffy:
 - Woffy is a companion robotics project in research and development. Product design and hardware specifications are still being tested.
-- The team is exploring movement, interaction and useful home assistance, and learning through robot-arm experiments. These experiments do not prove autonomous whole-home capabilities.
-- Website robot images are concept visualisations unless explicitly identified as photographs or recordings of a prototype.
+- The team is training robot arms and exploring robot learning alongside Woffy's early design work. Robot-arm experiments are not a finished Woffy companion, and do not demonstrate autonomous whole-home capabilities. Visitors can try a working software conversation demo on this website.
+- Cloud is the gentle companion design concept: a shaggy plush quadruped in pastel pink and cotton white, with floppy ears, cyan screen eyes and four articulated legs. Its intended character is soft, approachable and playful, for companionship and everyday home routines.
+- Titan is the robust explorer design concept: an angular quadruped with upright ears, a segmented brushed-silver and gunmetal exterior, amber screen eyes and four articulated legs. It explores a more alert, structured character for exploration, useful actions and builder control. Its protective-looking exterior does not establish safety, security or outdoor durability.
+- Cloud and Titan are distinct design studies, not products available to buy. Their proposed forms, materials and construction remain subject to testing. The website's generated multi-angle artwork, cutaways and concept animation illustrate design direction, not prototype evidence or a final manufacturing layout.
+- "Loves, Connects, Protects" describes the intended experience: companionship and play; approachable home routines; and awareness with understandable alerts and human control. These are aspirations, not demonstrated abilities, literal emotions, or promises of protection.
+- Kids, Companion and Care are intended use cases. Kids explores shared games, stories and curious conversations with parental controls. Companion explores a friendly presence for conversation, play and daily rituals. Care explores simple reminders and check-ins with people in control; it does not replace human or professional care, childcare or emergency support.
+- Intended home routines include morning reminders, curtains and lighting; movie lighting and entertainment settings; and reviewing home status before heading out. These are ideas shaped by Onwords' smart-home background, not confirmed integrations or autonomous actions already available on a Woffy robot.
+- Expressive screen faces, sensing, articulated motion, touch and haptic feedback, visible sensing states, a privacy shutter, easy stop controls, charging and local compute are design goals under exploration. Hardware selection, shutter implementation, charging method, battery runtime and local-versus-cloud boundaries are not settled. Illustrative cutaways show proposed sensing, control, energy, frame and joint systems, not validated engineering.
 - There is no confirmed sale price, shipping date, retail availability, measured battery life, final processor, storage capacity or published waitlist total.
-- Cloud and Titan are design concepts, not products available to buy.
 - Privacy is a design goal, not a proven claim that every future feature works offline. This website conversation uses a cloud AI provider. Never claim the chat is local, private by guarantee, or medical care.
 - Visitors can sign up for build updates at woffy.ai. Registration is interest only, not a preorder or promise of beta access.
 - Contact: hello@woffy.ai. Project pages: /about, /specs, /roadmap, /privacy.
@@ -20,25 +25,40 @@ Be friendly, concise and clear. Say when a detail is undecided. Never invent tra
 
 export function projectFaq(message) {
   const text = message.toLowerCase();
-  if (/privacy|data|offline|camera|microphone|record|store/.test(text))
-    return "Privacy is a design goal for Woffy. The website chat uses a cloud AI service when available; this FAQ reply is from the project’s published information. Final robot data handling is still being designed. Read /privacy for the website’s current practices.";
+  if (/privacy|data|offline|camera|microphone|record|store|shutter|local (?:compute|processing)|cloud (?:ai|service|provider)/.test(text))
+    return "Privacy is a design goal for both Cloud and Titan. A privacy shutter, clear sensing states and local processing are goals under exploration, not completed or guaranteed features. Final robot data handling is still being designed. This website uses a cloud AI provider when available; this reply is the project FAQ. Read /privacy for the website’s current practices.";
   if (/price|cost|buy|order|launch|release|ship|available|when/.test(text))
     return "Woffy is in research and development. There is no confirmed sale price or shipping date yet. You can join build updates to hear about demonstrated progress; signing up is not a preorder or a promise of beta access.";
   if (
-    /battery|spec|processor|memory|storage|weight|lidar|sensor|titan|cloud edition/.test(
+    /battery|spec|processor|memory|storage|weight|lidar|sensor|charg|haptic|touch feedback/.test(
       text,
     )
   )
-    return "Woffy’s final hardware specifications are not confirmed. Movement, interaction and home assistance are being explored through prototypes. Cloud and Titan are design concepts, and concept images do not establish measured battery life or product performance. See /specs for the current development scope.";
+    return "Cloud and Titan are four-legged design concepts, with proposed sensing, control electronics, power, frame and joint systems. Expressive movement, touch and haptic feedback, and charging are being explored. Final hardware, charging method and battery runtime are not confirmed. The cutaways are illustrative design studies, not validated engineering or measured performance. See /specs for the development scope.";
   if (/waitlist|sign.?up|update|subscribe|join|beta/.test(text))
     return "Use “Get build updates” to register your email for Woffy project updates. Your name is optional. This is an expression of interest, not a preorder or guaranteed beta access. You can ask hello@woffy.ai to remove your registration.";
+  if (/\bcloud\b|\btitan\b|\beditions?\b|\bvariants?\b/.test(text)) {
+    const cloud = "Cloud explores a gentle, playful companion: shaggy pastel-pink and cotton-white plush, floppy ears, cyan screen eyes and four articulated legs.";
+    const titan = "Titan explores a more alert, structured explorer: angular brushed-silver and gunmetal panels, upright ears, amber screen eyes and four articulated legs.";
+    const onlyCloud = /\bcloud\b/.test(text) && !/\btitan\b|compar|differ|versus|\bvs\b/.test(text);
+    const onlyTitan = /\btitan\b/.test(text) && !/\bcloud\b|compar|differ|versus|\bvs\b/.test(text);
+    return `${onlyCloud ? cloud : onlyTitan ? titan : `${cloud} ${titan}`} These are design concepts in development, not finished products or demonstrated capabilities. Explore the viewing angles and illustrative cutaways at /specs.`;
+  }
+  if (/\bkids?\b|\bchildren\b|\bcare\b|parent|check.?in/.test(text))
+    return "Kids, Companion and Care are intended experiences for Woffy. Kids explores games, stories and curious conversations with parental controls; Companion explores conversation, play and everyday rituals; Care explores simple reminders and check-ins with people in control. These are aspirations, not demonstrated services, and do not replace human or professional care, childcare or emergency support.";
+  if (/smart.?home|home routine|curtain|lighting|movie|morning|heading out|entertainment/.test(text))
+    return "We want Woffy to make home routines more approachable: morning reminders, curtains and lighting; movie lighting and entertainment settings; or reviewing home status before heading out. These are ideas shaped by Onwords’ smart-home background, not confirmed integrations or working autonomous Woffy actions. People should remain in control.";
+  if (/\bloves?\b|\bconnects?\b|\bprotects?\b|vision|companionship|purpose/.test(text))
+    return "Loves, Connects, Protects describes Woffy’s intended experience: companionship and play; approachable home routines; and awareness with understandable alerts and human control. Cloud explores a softer companion, while Titan explores a more structured, alert character. These are aspirations under development, not literal emotions, demonstrated home-security features or a promise of protection.";
+  if (/image|photo|animation|cutaway|artwork|design study/.test(text))
+    return "The website’s generated artwork, viewing angles, cutaways and concept animation show Cloud and Titan’s design direction. They are design studies, not prototype footage, final manufacturing plans or proof of working capabilities. The proposed materials, internal layout and movement still need development and testing.";
   if (/who|team|onwords|founder|company|contact|partner|invest/.test(text))
     return "Woffy is a companion robotics project being built by Onwords in South India. The team is exploring how movement, interaction and home assistance could come together. For collaboration, contact hello@woffy.ai or visit /about.";
   if (
-    /roadmap|progress|stage|status|milestone|today|capabilit|can.*do/.test(text)
+    /roadmap|progress|stage|status|milestone|today|capabilit|can.*do|robot.?arm|training|learning/.test(text)
   )
-    return "Woffy is currently in research and development. The team is exploring movement, interaction and home assistance, with robot-arm experiments as part of that learning. These experiments are not evidence of a finished autonomous companion. See /roadmap for the current work and next tests.";
-  return "Woffy is a companion robotics project in research and development by Onwords. I can share project information about its current stage, intended features, privacy and build updates. This is the project FAQ, not a live AI conversation. What would you like to know about Woffy?";
+    return "Woffy is in research and development. The team is training robot arms and exploring robot learning alongside Cloud and Titan’s early design work. Those experiments are not a finished autonomous companion or proof of whole-home capability. You can try the website’s AI conversation demo and follow /roadmap for the work ahead.";
+  return "Woffy is a companion robotics project in research and development by Onwords. Cloud explores a soft, playful plush companion; Titan explores a structured metal character. The vision is companionship, home routines and useful awareness with people in control. This is the project FAQ, not a live AI conversation. Ask about the editions, intended experiences or current progress.";
 }
 
 function validateChat(body) {

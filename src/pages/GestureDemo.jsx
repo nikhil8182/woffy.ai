@@ -4,8 +4,39 @@ import { Hand, Camera, Scan, Sparkles, ChevronLeft, AlertCircle, Zap, History, V
 import { Link } from 'react-router-dom';
 import { Hands } from '@mediapipe/hands';
 import { FaceDetection } from '@mediapipe/face_detection';
-import { Camera as MPCamera } from '@mediapipe/camera_utils';
 import '../styles/gesture.css';
+
+export function createFrameLoop({ processFrame, onError, requestFrame = requestAnimationFrame, cancelFrame = cancelAnimationFrame }) {
+  let stopped = false;
+  let started = false;
+  let frame = null;
+  const tick = async () => {
+    frame = null;
+    if (stopped) return;
+    try {
+      await processFrame(() => stopped);
+    } catch (error) {
+      if (!stopped) {
+        stopped = true;
+        onError(error);
+      }
+      return;
+    }
+    if (!stopped) frame = requestFrame(tick);
+  };
+  return {
+    start() {
+      if (started || stopped) return;
+      started = true;
+      frame = requestFrame(tick);
+    },
+    stop() {
+      stopped = true;
+      if (frame !== null) cancelFrame(frame);
+      frame = null;
+    },
+  };
+}
 
 const HAND_CONNECTIONS = [
   [0, 1], [1, 2], [2, 3], [3, 4],
@@ -104,12 +135,66 @@ const GestureDemo = () => {
   const faceDetectionRef = useRef(null);
   const handsRef = useRef(null);
   const permissionRequestRef = useRef(false);
-  const cameraRef = useRef(null);
+  const streamRef = useRef(null);
+  const frameLoopRef = useRef(null);
+  const trackingCleanupRef = useRef(null);
+  const responseTimerRef = useRef(null);
+  const soundEnabledRef = useRef(false);
+  const audioContextRef = useRef(null);
   const mountedRef = useRef(true);
 
   useEffect(() => {
     mountedRef.current = true;
-    return () => { mountedRef.current = false; };
+    return () => {
+      mountedRef.current = false;
+      trackingCleanupRef.current?.();
+      frameLoopRef.current?.stop();
+      streamRef.current?.getTracks().forEach(track => track.stop());
+      clearTimeout(responseTimerRef.current);
+      audioContextRef.current?.close().catch(() => {});
+      audioContextRef.current = null;
+    };
+  }, []);
+
+  const toggleSound = async () => {
+    if (soundEnabledRef.current) {
+      soundEnabledRef.current = false;
+      setSoundEnabled(false);
+      audioContextRef.current?.suspend().catch(() => {});
+      return;
+    }
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    try {
+      const context = audioContextRef.current || new AudioContextClass();
+      audioContextRef.current = context;
+      await context.resume();
+      if (!mountedRef.current) return;
+      soundEnabledRef.current = context.state === 'running';
+      setSoundEnabled(soundEnabledRef.current);
+    } catch {
+      soundEnabledRef.current = false;
+      if (mountedRef.current) setSoundEnabled(false);
+    }
+  };
+
+  const playSoundCue = useCallback(() => {
+    const context = audioContextRef.current;
+    if (!soundEnabledRef.current || !context || context.state !== 'running') return;
+    try {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      const time = context.currentTime;
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(660, time);
+      gain.gain.setValueAtTime(0.018, time);
+      gain.gain.exponentialRampToValueAtTime(0.001, time + 0.08);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+      oscillator.start(time);
+      oscillator.stop(time + 0.085);
+    } catch { /* A sound cue must never interrupt recognition. */ }
   }, []);
 
   const distance = (p1, p2) => {
@@ -397,7 +482,10 @@ const GestureDemo = () => {
 
       // Show Woffy's response
       setWoffyResponse(gesture.response);
-      setTimeout(() => setWoffyResponse(null), 2000);
+      clearTimeout(responseTimerRef.current);
+      responseTimerRef.current = setTimeout(() => {
+        if (mountedRef.current) setWoffyResponse(null);
+      }, 2000);
 
       // Update mood
       updateWoffyMood(gesture.name);
@@ -407,16 +495,12 @@ const GestureDemo = () => {
         return newHistory;
       });
 
-      if (soundEnabled) {
-        const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
-        audio.volume = 0.2;
-        audio.play().catch(() => {});
-      }
+      playSoundCue();
     }
-  }, [soundEnabled, updateWoffyMood]);
+  }, [playSoundCue, updateWoffyMood]);
 
   const requestCameraAccess = useCallback(async (userInitiated = false) => {
-    if (!userInitiated || permissionRequestRef.current) return false;
+    if (!userInitiated || permissionRequestRef.current || streamRef.current) return false;
 
     if (!window.isSecureContext) {
       setCameraError('Camera access needs HTTPS. Open the secure website to try this experiment.');
@@ -441,13 +525,15 @@ const GestureDemo = () => {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user' },
+        video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false,
       });
 
-      // We only need the permission grant; release the stream because Mediapipe will request it again.
-      stream.getTracks().forEach(track => track.stop());
-
-      if (!mountedRef.current) return false;
+      if (!mountedRef.current) {
+        stream.getTracks().forEach(track => track.stop());
+        return false;
+      }
+      streamRef.current = stream;
 
       setPermissionStatus('granted');
       setCameraError(null);
@@ -501,10 +587,16 @@ const GestureDemo = () => {
   }, []);
 
   const stopCamera = () => {
-    cameraRef.current?.stop();
-    const stream = videoRef.current?.srcObject;
+    trackingCleanupRef.current?.();
+    frameLoopRef.current?.stop();
+    const stream = streamRef.current;
     stream?.getTracks?.().forEach(track => track.stop());
-    if (videoRef.current) videoRef.current.srcObject = null;
+    streamRef.current = null;
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.srcObject = null;
+    }
+    clearTimeout(responseTimerRef.current);
     setPermissionStatus('unknown');
     setIsLoading(false);
     setCameraError(null);
@@ -514,24 +606,82 @@ const GestureDemo = () => {
     setFaceDetected(false);
     setFaceCount(0);
     setFps(0);
+    setConfidence(0);
+    setWoffyMood('happy');
     gestureBuffer.current = [];
+    lastGesture.current = null;
+    frameCount.current = 0;
+    lastFrameTime.current = Date.now();
   };
 
   useEffect(() => {
-    if (permissionStatus !== 'granted') return;
+    if (permissionStatus !== 'granted' || !streamRef.current) return;
 
-    let camera = null;
+    let loop = null;
+    let hands = null;
+    let faceDetection = null;
     let cancelled = false;
+    let released = false;
     const videoElement = videoRef.current;
+    const stream = streamRef.current;
+
+    const release = () => {
+      cancelled = true;
+      loop?.stop();
+      if (released) return;
+      released = true;
+      if (trackingCleanupRef.current === release) trackingCleanupRef.current = null;
+      if (frameLoopRef.current === loop) frameLoopRef.current = null;
+      stream.getTracks().forEach(track => {
+        track.removeEventListener('ended', onStreamEnded);
+        track.stop();
+      });
+      if (streamRef.current === stream) streamRef.current = null;
+      if (videoElement?.srcObject === stream) {
+        videoElement.pause();
+        videoElement.srcObject = null;
+      }
+      if (hands) Promise.resolve().then(() => hands.close()).catch(() => {});
+      if (faceDetection) Promise.resolve().then(() => faceDetection.close()).catch(() => {});
+      if (handsRef.current === hands) handsRef.current = null;
+      if (faceDetectionRef.current === faceDetection) faceDetectionRef.current = null;
+    };
+
+    const reportTrackingError = (error) => {
+      if (cancelled || !mountedRef.current) return;
+      release();
+      let errorMessage = 'Unable to run gesture recognition. Please try the camera again.';
+      if (error?.name === 'NotAllowedError' || error?.name === 'PermissionDeniedError') errorMessage = 'Camera permission denied. Please allow access in your browser settings.';
+      else if (/fetch|load|network/i.test(error?.message || '')) errorMessage = 'The recognition models could not load. Check your connection and try again.';
+      else if (/camera|stream/i.test(error?.message || '')) errorMessage = 'Camera access ended. Check your camera and try again.';
+      clearTimeout(responseTimerRef.current);
+      setCameraError(errorMessage);
+      setPermissionStatus('error');
+      setIsLoading(false);
+      setDetectedGesture(null);
+      setWoffyResponse(null);
+      setHandCount(0);
+      setFaceDetected(false);
+      setFaceCount(0);
+      setFps(0);
+      setConfidence(0);
+      lastGesture.current = null;
+      gestureBuffer.current = [];
+    };
+
+    function onStreamEnded() { reportTrackingError(new Error('Camera stream ended')); }
+    trackingCleanupRef.current = release;
+    stream.getTracks().forEach(track => track.addEventListener('ended', onStreamEnded));
 
     const initializeTracking = async () => {
       try {
         setIsLoading(true);
         setCameraError(null);
 
-        faceDetectionRef.current = new FaceDetection({
+        faceDetection = new FaceDetection({
           locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/${file}`,
         });
+        faceDetectionRef.current = faceDetection;
 
         faceDetectionRef.current.setOptions({
           model: 'short',
@@ -544,9 +694,10 @@ const GestureDemo = () => {
           setFaceCount(results.detections?.length || 0);
         });
 
-        handsRef.current = new Hands({
+        hands = new Hands({
           locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`,
         });
+        handsRef.current = hands;
 
         handsRef.current.setOptions({
           maxNumHands: 2,
@@ -617,57 +768,30 @@ const GestureDemo = () => {
           ctx.restore();
         });
 
-        if (videoRef.current) {
-          camera = new MPCamera(videoRef.current, {
-            onFrame: async () => {
-              if (cancelled) return;
-              if (handsRef.current && videoRef.current) await handsRef.current.send({ image: videoRef.current });
-              if (faceDetectionRef.current && videoRef.current) await faceDetectionRef.current.send({ image: videoRef.current });
-            },
-            width: 1280,
-            height: 720,
-          });
-          cameraRef.current = camera;
-
-          await camera.start();
-          if (cancelled) {
-            camera.stop();
-            videoElement?.srcObject?.getTracks?.().forEach(track => track.stop());
-            return;
-          }
-          setIsLoading(false);
-        }
-      } catch (error) {
+        if (!videoElement) throw new Error('Camera preview is unavailable');
+        videoElement.srcObject = stream;
+        await videoElement.play();
         if (cancelled) return;
-        camera?.stop();
-        videoElement?.srcObject?.getTracks?.().forEach(track => track.stop());
-        console.error('Error initializing tracking:', error);
-
-        let errorMessage = 'Unable to initialize gesture recognition.';
-
-        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-          errorMessage = 'Camera permission denied. Please allow access in your browser settings.';
-        } else if (error.message && (error.message.includes('fetch') || error.message.includes('load'))) {
-          errorMessage = 'Failed to load AI models. Please check your internet connection.';
-        } else if (error.message && error.message.includes('camera')) {
-          errorMessage = 'Unable to access camera. Please check your device settings.';
-        }
-
-        setCameraError(errorMessage);
+        loop = createFrameLoop({
+          processFrame: async (isStopped) => {
+            if (cancelled || videoElement.readyState < 2) return;
+            await hands.send({ image: videoElement });
+            if (cancelled || isStopped()) return;
+            await faceDetection.send({ image: videoElement });
+          },
+          onError: reportTrackingError,
+        });
+        frameLoopRef.current = loop;
+        loop.start();
         setIsLoading(false);
+      } catch (error) {
+        reportTrackingError(error);
       }
     };
 
     initializeTracking();
 
-    return () => {
-      cancelled = true;
-      if (camera) camera.stop();
-      if (cameraRef.current === camera) cameraRef.current = null;
-      videoElement?.srcObject?.getTracks?.().forEach(track => track.stop());
-      if (handsRef.current) Promise.resolve(handsRef.current.close()).catch(() => {});
-      if (faceDetectionRef.current) Promise.resolve(faceDetectionRef.current.close()).catch(() => {});
-    };
+    return release;
   }, [permissionStatus, recognizeGesture, stabilizeGesture, updateHistory]);
 
   const getMoodEmoji = () => {
@@ -693,7 +817,7 @@ const GestureDemo = () => {
             type="button"
             aria-label={soundEnabled ? 'Turn sound cues off' : 'Turn sound cues on'}
             aria-pressed={soundEnabled}
-            onClick={() => setSoundEnabled(!soundEnabled)}
+            onClick={toggleSound}
             className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
           >
             {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} className="text-slate-500" />}
