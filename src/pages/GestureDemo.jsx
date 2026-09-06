@@ -488,7 +488,7 @@ const GestureDemo = () => {
         setCameraError(null);
 
         faceDetectionRef.current = new FaceDetection({
-          locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`,
+          locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/${file}`,
         });
 
         faceDetectionRef.current.setOptions({
@@ -502,7 +502,7 @@ const GestureDemo = () => {
         });
 
         handsRef.current = new Hands({
-          locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
+          locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`,
         });
 
         handsRef.current.setOptions({
@@ -588,7 +588,18 @@ const GestureDemo = () => {
         }
       } catch (error) {
         console.error('Error initializing tracking:', error);
-        setCameraError('Unable to access camera. Please allow camera permissions and try again.');
+        
+        let errorMessage = 'Unable to initialize gesture recognition.';
+        
+        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+          errorMessage = 'Camera permission denied. Please allow access in your browser settings.';
+        } else if (error.message && (error.message.includes('fetch') || error.message.includes('load'))) {
+          errorMessage = 'Failed to load AI models. Please check your internet connection.';
+        } else if (error.message && error.message.includes('camera')) {
+          errorMessage = 'Unable to access camera. Please check your device settings.';
+        }
+        
+        setCameraError(errorMessage);
         setIsLoading(false);
       }
     };

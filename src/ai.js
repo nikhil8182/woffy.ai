@@ -3,7 +3,7 @@ const FUNCTION_URL =
   import.meta.env.VITE_WOFFY_FUNCTION_URL ||
   (import.meta.env.DEV
     ? "http://localhost:8888/.netlify/functions/chatWithWoffy"
-    : "/.netlify/functions/chatWithWoffy");
+    : "/api/chatWithWoffy");
 
 // Chat with Woffy via HTTP Function (public)
 export const chatWithWoffy = async (message, chatHistory = []) => {
