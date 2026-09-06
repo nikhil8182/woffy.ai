@@ -25,3 +25,9 @@ Chat uses the configured OpenAI provider with a grounded project prompt, bounded
 - Exact Firestore rules verified in an isolated official emulator: initial create 200, duplicate 409, public read 403, invalid write 403. Production public reads also remain denied.
 
 Source backup: commit 605bbb03, tag codex/woffy-before-refresh-20260906. The original local checkout was preserved. Tracked dependencies and environment files were removed from the source branch; earlier history remains recoverable.
+
+## Correction: preserve the original website
+
+The founder clarified that the request was for targeted UI corrections, not a complete redesign, and that real photos must not be used. The original layouts, pink/indigo styling, Woffy concept artwork, section composition, model switchers, and dark animated chat were restored from605bbb03. The replacement white/amber mascot and real SO-101 bench photograph were removed from the deployed site.
+
+Retained only functional and focused interface corrections: secure signup, accessible dialog, working AI chat/history/retry, real navigation and policy links, mobile hero ordering, and clear concept/status labels. Supporting pages preserve their original visual structures while correcting unsupported claims and stale dates. The chat header now provides a home link. The earlier full redesign is superseded.

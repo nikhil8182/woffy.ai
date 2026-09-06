@@ -1,161 +1,493 @@
-import React from "react";
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import {
+  Wind, Shield, Zap, Heart, Brain, Wifi, Battery,
+  Cpu, Eye, Music, Mic, Bluetooth, Layers, Check, X,
+  ArrowRight, Sparkles, Activity, Thermometer, MapPin,
+  Smartphone, Lock, Share2, Globe, Command, Hand, Scan
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const directions = [
-  {
-    area: "Perception",
-    direction: "Understand useful cues from people and nearby objects.",
-    status: "Research direction",
-  },
-  {
-    area: "Movement",
-    direction: "Explore controlled motion and learning from demonstrations.",
-    status: "Robot-arm experiments",
-  },
-  {
-    area: "Interaction",
-    direction:
-      "Develop a friendly character through expression, sound, and movement.",
-    status: "Concept exploration",
-  },
-  {
-    area: "Home integration",
-    direction: "Explore useful connections with everyday home routines.",
-    status: "Proposed capability",
-  },
-  {
-    area: "Human control",
-    direction:
-      "Design clear controls, predictable behavior, and ways to stop an action.",
-    status: "Design requirement",
-  },
-];
+const SpecsPage = ({ openWaitlist }) => {
+  const [activeModel, setActiveModel] = useState('cloud');
+  const { scrollY } = useScroll();
 
-export default function SpecsPage({ openWaitlist }) {
+  // Parallax effects
+  const heroY = useTransform(scrollY, [0, 500], [0, 200]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  const models = {
+    cloud: {
+      name: "Cloud Concept",
+      tagline: "The Gentle Companion",
+      icon: <Wind className="w-8 h-8" />,
+      color: "rose",
+      gradient: "from-rose-400 to-pink-500",
+      accent: "text-rose-400",
+      bg: "bg-rose-500/10",
+      border: "border-rose-500/20",
+      shadow: "shadow-rose-500/20",
+      description: "A design concept for a gentle indoor companion. Materials, interactions, and final capabilities are being explored.",
+      stats: {
+        weight: "Unconfirmed",
+        battery: "Unconfirmed",
+        material: "Exploring",
+        environment: "Indoor target"
+      },
+      features: [
+        { label: "Exterior", value: "Soft-touch finish (concept)", icon: <Layers size={18} /> },
+        { label: "Frame", value: "Material to be confirmed", icon: <Shield size={18} /> },
+        { label: "Haptics", value: "Haptic feedback (concept)", icon: <Heart size={18} /> },
+        { label: "Interaction", value: "Gesture interaction (target)", icon: <Hand size={18} /> }
+      ]
+    },
+    titan: {
+      name: "Titan Concept",
+      tagline: "The Robust Explorer",
+      icon: <Shield className="w-8 h-8" />,
+      color: "cyan",
+      gradient: "from-cyan-400 to-blue-500",
+      accent: "text-cyan-400",
+      bg: "bg-cyan-500/10",
+      border: "border-cyan-500/20",
+      shadow: "shadow-cyan-500/20",
+      description: "A design concept for exploration and utility. Outdoor suitability and hardware specifications require testing.",
+      stats: {
+        weight: "Unconfirmed",
+        battery: "Unconfirmed",
+        material: "Exploring",
+        environment: "Outdoor target"
+      },
+      features: [
+        { label: "Exterior", value: "Durable finish (concept)", icon: <Layers size={18} /> },
+        { label: "Frame", value: "Material to be confirmed", icon: <Shield size={18} /> },
+        { label: "Haptics", value: "Haptic feedback (concept)", icon: <Zap size={18} /> },
+        { label: "Interaction", value: "Gesture interaction (target)", icon: <Hand size={18} /> }
+      ]
+    }
+  };
+
+  const techSpecs = [
+    {
+      title: "Neural Core",
+      icon: <Brain className="w-6 h-6 text-indigo-400" />,
+      specs: [
+        { name: "Processor", value: "To be confirmed" },
+        { name: "Memory", value: "To be confirmed" },
+        { name: "Storage", value: "To be confirmed" },
+        { name: "Learning", value: "Robot-arm research" }
+      ]
+    },
+    {
+      title: "Sensory Array",
+      icon: <Eye className="w-6 h-6 text-emerald-400" />,
+      specs: [
+        { name: "Vision", value: "Sensor choice under study" },
+        { name: "Audio", value: "To be confirmed" },
+        { name: "Touch", value: "Interaction research" },
+        { name: "Gestures", value: "Browser demo only" }
+      ]
+    },
+    {
+      title: "Connectivity",
+      icon: <Wifi className="w-6 h-6 text-amber-400" />,
+      specs: [
+        { name: "Wireless", value: "To be confirmed" },
+        { name: "Local", value: "To be confirmed" },
+        { name: "IoT", value: "Integration target" },
+        { name: "Updates", value: "Update design target" }
+      ]
+    }
+  ];
+
+  const comparisonData = [
+    { feature: "AI Learning", real: "Robot-arm training", woffy: "Physical interaction", noPet: "In research" },
+    { feature: "Expression", real: "Concept design", woffy: "Friendly responses", noPet: "Proposed" },
+    { feature: "Movement", real: "Bench experiments", woffy: "Controlled motion", noPet: "In research" },
+    { feature: "Gesture Recognition", real: "Browser experiment", woffy: "Natural interaction", noPet: "Proposed" },
+    { feature: "Home Integration", real: "Exploration", woffy: "Useful routines", noPet: "Proposed" },
+    { feature: "Materials", real: "Design exploration", woffy: "Durable construction", noPet: "Unconfirmed" },
+    { feature: "Battery Life", real: "Not published", woffy: "Measure in testing", noPet: "Unconfirmed" },
+    { feature: "Pricing", real: "Not published", woffy: "Confirm after validation", noPet: "Unconfirmed" },
+  ];
+
   return (
-    <div className="page-shell">
-      <header className="page-intro">
-        <p className="eyebrow">Architecture &amp; design direction</p>
-        <h1>
-          A thoughtful robot.
-          <br />
-          Built one layer at a time.
-        </h1>
-        <p className="page-lead">
-          Our focus is the connection between understanding, movement, and
-          useful interaction. Here is what we are exploring.
-        </p>
-        <span className="status-pill">Research &amp; development</span>
-      </header>
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-indigo-500/30">
 
-      <section className="split-section" aria-labelledby="research-heading">
-        <div>
-          <p className="eyebrow">On the bench today</p>
-          <h2 id="research-heading" className="section-heading">
-            Teach. Try. Observe.
-            <br />
-            Then try again.
-          </h2>
+      {/* Hero Header with Video Background */}
+      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-60"
+          >
+            <source src="/roadmap-bg.mp4" type="video/mp4" />
+          </video>
+          {/* Gradients Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-950"></div>
+          <div className="absolute inset-0  opacity-[0.03]"></div>
         </div>
-        <div className="prose">
-          <p>
-            We are training robot arms and exploring how AI turns a
-            demonstration into a physical action. The SO-101 learning bench
-            helps us study that loop.
-          </p>
-          <p>
-            This work informs the larger Woffy vision. It does not yet
-            demonstrate a complete companion robot or production-ready home
-            features.
-          </p>
-          <Link to="/roadmap" className="text-link">
-            Follow the development path{" "}
-            <ArrowRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
 
-      <section aria-labelledby="architecture-heading">
-        <div className="section-note">
-          <p className="eyebrow">The pieces we are exploring</p>
-          <h2 id="architecture-heading" className="section-heading">
-            From sensing to doing.
-          </h2>
-          <p>
-            These are development directions. Availability and implementation
-            will depend on testing.
-          </p>
+        <div className="container mx-auto px-6 relative z-10 pt-20">
+          <motion.div
+            style={{ y: heroY, opacity }}
+            className="text-center max-w-5xl mx-auto"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-indigo-300 mb-8 backdrop-blur-md"
+            >
+              <Command className="w-4 h-4" />
+              <span>Design Direction · In Development</span>
+            </motion.div>
+
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9] drop-shadow-2xl">
+              Engineering <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">Possibility.</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
+              Two concept personalities. One robotics research journey. <br />
+              <span className="text-white font-medium">Explore the direction. Final specifications are not confirmed.</span>
+              <span className="block mt-4 text-sm text-slate-400">Concept visuals, not footage of a finished Woffy robot.</span>
+            </p>
+          </motion.div>
         </div>
-        <div
-          className="spec-table-wrap"
-          tabIndex="0"
-          role="region"
-          aria-label="Architecture directions table"
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
         >
-          <table className="spec-table">
-            <caption className="sr-only">
-              Woffy architecture areas, intended direction, and current status
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Layer</th>
-                <th scope="col">Design direction</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {directions.map(({ area, direction, status }) => (
-                <tr key={area}>
-                  <th scope="row">{area}</th>
-                  <td>{direction}</td>
-                  <td>
-                    <span className="label">{status}</span>
-                  </td>
-                </tr>
+          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
+            <div className="w-1 h-2 bg-white/50 rounded-full"></div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Interactive Model Switcher */}
+      <section className="relative z-10 py-10 -mt-20">
+        <div className="container mx-auto px-6">
+          {/* Toggle Control */}
+          <div className="flex justify-center mb-16">
+            <div className="bg-slate-900/80 backdrop-blur-xl p-2 rounded-full border border-white/10 flex gap-2 shadow-2xl">
+              {['cloud', 'titan'].map((model) => (
+                <button
+                  key={model}
+                  aria-pressed={activeModel === model}
+                  onClick={() => setActiveModel(model)}
+                  className={`relative px-8 py-3 rounded-full font-bold transition-all duration-300 ${
+                    activeModel === model ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                  }`}
+                >
+                  {activeModel === model && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className={`absolute inset-0 rounded-full bg-gradient-to-r ${
+                        model === 'cloud' ? 'from-rose-500 to-pink-500' : 'from-cyan-500 to-blue-500'
+                      }`}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    {model === 'cloud' ? <Wind size={18} /> : <Shield size={18} />}
+                    {model.charAt(0).toUpperCase() + model.slice(1)}
+                  </span>
+                </button>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </div>
+
+          {/* Model Display */}
+          <div className="max-w-6xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeModel}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="grid lg:grid-cols-2 gap-12 items-center"
+              >
+                {/* Visual Side */}
+                <div className={`aspect-square rounded-[3rem] relative overflow-hidden group border border-white/10 ${
+                  activeModel === 'cloud' ? 'shadow-[0_0_100px_-20px_rgba(244,63,94,0.3)]' : 'shadow-[0_0_100px_-20px_rgba(6,182,212,0.3)]'
+                }`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br opacity-20 ${
+                    activeModel === 'cloud' ? 'from-rose-500 to-transparent' : 'from-cyan-500 to-transparent'
+                  }`}></div>
+
+                  {/* Abstract Representation of Model */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {activeModel === 'cloud' ? (
+                      <div className="relative">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                          className="w-64 h-64 border-2 border-rose-500/30 rounded-full border-dashed"
+                        />
+                        <motion.div
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{ duration: 4, repeat: Infinity }}
+                          className="absolute inset-0 m-auto w-32 h-32 bg-rose-500/20 blur-2xl rounded-full"
+                        />
+                        <Wind className="absolute inset-0 m-auto text-rose-300 w-24 h-24" />
+                      </div>
+                    ) : (
+                      <div className="relative">
+                         <motion.div
+                          animate={{ rotate: -360 }}
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                          className="w-64 h-64 border-2 border-cyan-500/30 rounded-full border-dashed"
+                        />
+                         <div className="absolute inset-0 m-auto w-48 h-48 border border-cyan-400/20 rotate-45" />
+                         <Shield className="absolute inset-0 m-auto text-cyan-300 w-24 h-24" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Floating Specs */}
+                  <div className="absolute bottom-8 left-8 right-8">
+                    <div className="grid grid-cols-2 gap-4">
+                      {Object.entries(models[activeModel].stats).map(([key, value]) => (
+                        <div key={key} className="bg-slate-900/60 backdrop-blur p-4 rounded-2xl border border-white/5">
+                          <div className="text-xs text-slate-400 uppercase font-bold mb-1">{key}</div>
+                          <div className="text-lg font-semibold text-white">{value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Specs Side */}
+                <div>
+                   <h2 className={`text-4xl md:text-6xl font-black mb-4 bg-gradient-to-r bg-clip-text text-transparent ${models[activeModel].gradient}`}>
+                     {models[activeModel].name}
+                   </h2>
+                   <p className="text-2xl text-slate-300 font-light mb-8">{models[activeModel].tagline}</p>
+                   <p className="text-lg text-slate-400 mb-12 leading-relaxed">
+                     {models[activeModel].description}
+                   </p>
+
+                   <div className="grid gap-4">
+                     {models[activeModel].features.map((feature, idx) => (
+                       <motion.div
+                         key={idx}
+                         initial={{ opacity: 0, x: 20 }}
+                         animate={{ opacity: 1, x: 0 }}
+                         transition={{ delay: idx * 0.1 }}
+                         className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors"
+                       >
+                         <div className={`p-3 rounded-xl ${models[activeModel].bg} ${models[activeModel].accent}`}>
+                           {feature.icon}
+                         </div>
+                         <div>
+                           <div className="text-sm text-slate-500 font-bold uppercase tracking-wider">{feature.label}</div>
+                           <div className="text-lg font-medium text-slate-200">{feature.value}</div>
+                         </div>
+                       </motion.div>
+                     ))}
+                   </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </section>
 
-      <section className="split-section" aria-labelledby="specs-heading">
-        <div>
-          <p className="eyebrow">Before a spec sheet</p>
-          <h2 id="specs-heading" className="section-heading">
-            Measure first.
-            <br />
-            Publish what holds up.
-          </h2>
+      {/* Advanced Gesture Control Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="bg-slate-900 border border-white/10 rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
+            {/* Background Effects */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none"></div>
+
+            <div className="flex flex-col md:flex-row items-center gap-12 relative z-20">
+              <div className="md:w-1/2 relative z-20">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/20 text-indigo-300 font-medium text-sm mb-6 border border-indigo-500/30">
+                  <Scan size={16} />
+                  <span>Browser Experiment</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">Advanced Gesture Control</h2>
+                <p className="text-xl text-slate-400 mb-8 leading-relaxed">
+                  Explore gesture detection in your browser using your camera. This experiment does not control a physical Woffy robot or demonstrate a finished product feature.
+                </p>
+                <button
+                  onClick={() => window.open('/gesture-demo', '_blank', 'noopener,noreferrer')}
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:bg-indigo-50 transition-colors group cursor-pointer"
+                >
+                  <Scan className="w-5 h-5" />
+                  Explore Browser Demo
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+
+              <div className="md:w-1/2 relative">
+                <div className="aspect-video bg-black/50 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-indigo-500/20 to-transparent opacity-50"></div>
+
+                  {/* Simulated Gesture UI */}
+                  <div className="relative z-10 flex flex-col items-center">
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-20 h-20 rounded-full border-2 border-indigo-400 flex items-center justify-center mb-4"
+                    >
+                      <Hand className="w-10 h-10 text-indigo-400" />
+                    </motion.div>
+                    <div className="px-4 py-2 bg-slate-900/80 backdrop-blur rounded-lg border border-white/10 text-sm font-mono text-indigo-300">
+                      Gesture concept
+                    </div>
+                  </div>
+
+                  {/* Scanning Grid */}
+                  <div className="absolute inset-0  opacity-[0.1] bg-[length:20px_20px]"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="prose">
-          <p>
-            Production hardware, dimensions, weight, battery life, sensors,
-            connectivity, and pricing are not confirmed. We will publish
-            specifications when we have a tested configuration.
-          </p>
-          <p>
-            Home navigation, autonomous charging, and smart-home control remain
-            proposed features. Certifications and availability will be announced
-            only when confirmed.
-          </p>
-          <p>
-            Images of the Woffy character are concept illustrations. The final
-            product may look and work differently.
+      </section>
+
+      {/* Blueprint Tech Specs */}
+      <section className="py-32 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Core Architecture</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {techSpecs.map((category, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -5 }}
+                className="bg-slate-900 border border-white/10 rounded-3xl p-8 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="p-3 bg-white/5 rounded-2xl border border-white/5">
+                    {category.icon}
+                  </div>
+                  <h3 className="text-xl font-bold">{category.title}</h3>
+                </div>
+
+                <ul className="space-y-6">
+                  {category.specs.map((spec, i) => (
+                    <li key={i} className="group/item">
+                      <div className="flex flex-wrap gap-x-3 gap-y-1 justify-between items-baseline mb-2">
+                        <span className="text-slate-400 text-sm">{spec.name}</span>
+                        <span className="text-slate-200 font-medium text-right">{spec.value}</span>
+                      </div>
+                      <div className="h-px bg-white/5 w-full group-hover/item:bg-indigo-500/30 transition-colors"></div>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Matrix */}
+      <section className="py-20 bg-slate-900/50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-5xl mx-auto bg-slate-950 rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+            <div className="p-8 md:p-12">
+               <div className="text-center mb-12">
+                 <h2 className="text-3xl font-bold mb-4">Development Overview</h2>
+                 <p className="text-slate-400">Current research and proposed features. Product availability is not confirmed.</p>
+               </div>
+
+               <div className="overflow-x-auto">
+                 <table className="w-full">
+                   <thead>
+                     <tr className="border-b border-white/10">
+                       <th className="py-6 px-4 text-left text-slate-400 font-bold uppercase text-sm tracking-wider">Feature</th>
+                       <th className="py-6 px-4 text-center text-slate-500 font-bold uppercase text-sm tracking-wider w-1/5">Research Today</th>
+                       <th className="py-6 px-4 text-center text-indigo-400 font-bold uppercase text-sm tracking-wider w-1/5 bg-indigo-500/5 rounded-t-xl">Woffy Direction</th>
+                       <th className="py-6 px-4 text-center text-slate-500 font-bold uppercase text-sm tracking-wider w-1/5">Availability</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                     {comparisonData.map((row, idx) => (
+                       <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                         <td className="py-4 px-4 font-medium text-slate-200">{row.feature}</td>
+
+                         <td className="py-4 px-4 text-center">
+                           {row.real === true ? <Check className="inline text-emerald-500 w-5 h-5"/> :
+                            row.real === false ? <X className="inline text-rose-500 w-5 h-5"/> :
+                            <span className="text-sm text-slate-400">{row.real}</span>}
+                         </td>
+
+                         <td className="py-4 px-4 text-center bg-indigo-500/5">
+                           {row.woffy === true ? (
+                             <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-400">
+                               <Check className="w-5 h-5"/>
+                             </div>
+                           ) : row.woffy === false ? (
+                             <X className="inline text-slate-500 w-5 h-5"/>
+                           ) : (
+                             <span className="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm font-bold">{row.woffy}</span>
+                           )}
+                         </td>
+
+                         <td className="py-4 px-4 text-center">
+                            {row.noPet === true ? <Check className="inline text-slate-500 w-5 h-5"/> :
+                             row.noPet === false ? <X className="inline text-slate-600 w-5 h-5"/> :
+                             <span className="text-sm text-slate-500">{row.noPet}</span>}
+                         </td>
+                       </tr>
+                     ))}
+                   </tbody>
+                 </table>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-24 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-6xl font-black tracking-tight mb-8"
+          >
+            The Future of Friendship <br/>
+            <span className="text-indigo-500">Starts Here.</span>
+          </motion.h2>
+
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <button
+              onClick={openWaitlist}
+              className="px-10 py-5 bg-white text-indigo-950 rounded-full font-bold text-xl hover:shadow-[0_0_50px_-10px_rgba(255,255,255,0.4)] transition-all flex items-center gap-3 mx-auto"
+            >
+              <Sparkles className="w-5 h-5 text-indigo-500" />
+              Get Build Updates
+            </button>
+          </motion.div>
+
+          <p className="mt-6 text-slate-500 text-sm uppercase tracking-widest font-bold">
+            No confirmed launch date. No purchase or reservation.
           </p>
         </div>
       </section>
 
-      <section className="callout" aria-labelledby="specs-join-heading">
-        <div>
-          <p className="eyebrow">Follow the experiments</p>
-          <h2 id="specs-join-heading">See the idea take shape.</h2>
-          <p>Get updates as the hardware and the software develop together.</p>
-        </div>
-        <button className="button button-primary" onClick={openWaitlist}>
-          Get build updates <ArrowRight size={18} aria-hidden="true" />
-        </button>
-      </section>
     </div>
   );
-}
+};
+
+export default SpecsPage;

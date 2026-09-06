@@ -13,14 +13,15 @@ export default function WaitlistModal({ isOpen, onClose }) {
       return;
     }
     const previous = document.activeElement;
+    const modal = dialog.current;
     setStatus("idle");
     setError("");
-    dialog.current.showModal();
+    modal.showModal();
     email.current?.focus();
     const original = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      dialog.current?.close();
+      modal.close();
       document.body.style.overflow = original;
       previous?.focus();
     };
@@ -82,11 +83,9 @@ export default function WaitlistModal({ isOpen, onClose }) {
           </div>
         ) : (
           <>
-            <p className="eyebrow">Follow the build</p>
+            <p className="eyebrow">Join Waitlist</p>
             <h2 id="signup-title">
-              A little closer
-              <br />
-              to Woffy.
+              Join the Woffy Pack
             </h2>
             <p id="signup-description">
               Get occasional build notes and future pilot news. No deposit or
@@ -160,7 +159,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
                   </>
                 ) : (
                   <>
-                    Keep me in the loop <ArrowUpRight size={18} />
+                    Join Waitlist <ArrowUpRight size={18} />
                   </>
                 )}
               </button>

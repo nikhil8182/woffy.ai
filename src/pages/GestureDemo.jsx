@@ -112,7 +112,7 @@ const GestureDemo = () => {
     if (!landmarks || landmarks.length === 0) return null;
 
     const hand = landmarks[0];
-    
+
     // All 21 hand landmarks
     const wrist = hand[0];
     const thumbCMC = hand[1];
@@ -142,30 +142,30 @@ const GestureDemo = () => {
       y: (wrist.y + indexMCP.y + pinkyMCP.y + middleMCP.y + ringMCP.y) / 5,
       z: ((wrist.z || 0) + (indexMCP.z || 0) + (pinkyMCP.z || 0) + (middleMCP.z || 0) + (ringMCP.z || 0)) / 5
     };
-    
+
     // Palm size for relative measurements
     const palmSize = distance(wrist, middleMCP);
-    
+
     // Hand orientation (is palm facing camera or away)
     const palmFacingCamera = middleMCP.z < wrist.z;
 
     // ===== ADVANCED FINGER DETECTION =====
-    
+
     // Method 1: Angle-based detection (finger tip above PIP above MCP)
     const fingerAngleExtended = (tip, pip, mcp) => {
       return tip.y < pip.y && pip.y < mcp.y;
     };
-    
+
     // Method 2: Distance ratio (tip far from palm vs MCP)
     const fingerDistanceExtended = (tip, mcp, threshold = 1.4) => {
       return distance(tip, palmCenter) > distance(mcp, palmCenter) * threshold;
     };
-    
+
     // Method 3: Tip-to-wrist vs MCP-to-wrist (for orientation-independent)
     const fingerWristExtended = (tip, mcp) => {
       return distance(tip, wrist) > distance(mcp, wrist) * 1.3;
     };
-    
+
     // Method 4: Curl detection - tip closer to palm than it should be
     const fingerCurled = (tip, pip, mcp) => {
       const tipToPalm = distance(tip, palmCenter);
@@ -183,7 +183,7 @@ const GestureDemo = () => {
       if (!fingerCurled(tip, pip, mcp)) votes++;
       return votes >= 2; // At least 2 methods agree
     };
-    
+
     const isFingerCurled = (tip, dip, pip, mcp) => {
       let votes = 0;
       if (!fingerAngleExtended(tip, pip, mcp)) votes++;
@@ -198,7 +198,7 @@ const GestureDemo = () => {
     const middleExtended = isFingerExtended(middleTip, middleDIP, middlePIP, middleMCP);
     const ringExtended = isFingerExtended(ringTip, ringDIP, ringPIP, ringMCP);
     const pinkyExtended = isFingerExtended(pinkyTip, pinkyDIP, pinkyPIP, pinkyMCP);
-    
+
     const indexCurled = isFingerCurled(indexTip, indexDIP, indexPIP, indexMCP);
     const middleCurled = isFingerCurled(middleTip, middleDIP, middlePIP, middleMCP);
     const ringCurled = isFingerCurled(ringTip, ringDIP, ringPIP, ringMCP);
@@ -209,20 +209,20 @@ const GestureDemo = () => {
     const thumbMCPToWrist = distance(thumbMCP, wrist);
     const thumbToPalm = distance(thumbTip, palmCenter);
     const thumbToIndex = distance(thumbTip, indexMCP);
-    
+
     // Thumb extended away from palm
     const thumbExtended = thumbToPalm > palmSize * 0.8 && thumbToWrist > thumbMCPToWrist * 1.1;
-    
+
     // Thumb pointing UP (y decreases upward)
-    const thumbUp = thumbTip.y < thumbMCP.y - palmSize * 0.3 && 
+    const thumbUp = thumbTip.y < thumbMCP.y - palmSize * 0.3 &&
                     thumbTip.y < indexMCP.y &&
                     thumbTip.y < wrist.y - palmSize * 0.2;
-    
+
     // Thumb pointing DOWN
-    const thumbDown = thumbTip.y > thumbMCP.y + palmSize * 0.3 && 
+    const thumbDown = thumbTip.y > thumbMCP.y + palmSize * 0.3 &&
                       thumbTip.y > wrist.y + palmSize * 0.2 &&
                       thumbTip.y > indexTip.y;
-    
+
     // Thumb tucked (for fist)
     const thumbTucked = thumbToIndex < palmSize * 0.5 || thumbToPalm < palmSize * 0.6;
 
@@ -313,7 +313,7 @@ const GestureDemo = () => {
       name: newGesture.name,
       confidence: newGesture.confidence
     });
-    
+
     // Keep buffer size at 7 frames for smoother detection
     if (gestureBuffer.current.length > 7) {
       gestureBuffer.current.shift();
@@ -343,7 +343,7 @@ const GestureDemo = () => {
     // Require at least 3 occurrences OR very high confidence
     const minOccurrences = counts[bestGesture] >= 3;
     const highConfidence = (confidenceSum[bestGesture] / counts[bestGesture]) >= 92;
-    
+
     if (bestGesture && (minOccurrences || (counts[bestGesture] >= 2 && highConfidence))) {
       const gestureData = WOFFY_GESTURES[bestGesture];
       if (gestureData) {
@@ -386,14 +386,14 @@ const GestureDemo = () => {
   const updateHistory = useCallback((gesture) => {
     if (gesture && gesture.name !== lastGesture.current) {
       lastGesture.current = gesture.name;
-      
+
       // Show Woffy's response
       setWoffyResponse(gesture.response);
       setTimeout(() => setWoffyResponse(null), 2000);
-      
+
       // Update mood
       updateWoffyMood(gesture.name);
-      
+
       setGestureHistory(prev => {
         const newHistory = [{ ...gesture, timestamp: Date.now() }, ...prev].slice(0, 10);
         return newHistory;
@@ -427,7 +427,7 @@ const GestureDemo = () => {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'user' },
       });
-      
+
       // We only need the permission grant; release the stream because Mediapipe will request it again.
       stream.getTracks().forEach(track => track.stop());
 
@@ -531,7 +531,7 @@ const GestureDemo = () => {
 
           if (results.multiHandLandmarks?.length > 0) {
             setHandCount(results.multiHandLandmarks.length);
-            
+
             for (const landmarks of results.multiHandLandmarks) {
               ctx.shadowColor = '#818cf8';
               ctx.shadowBlur = 15;
@@ -557,7 +557,7 @@ const GestureDemo = () => {
 
             const rawGesture = recognizeGesture(results.multiHandLandmarks);
             const stableGesture = stabilizeGesture(rawGesture);
-            
+
             if (stableGesture) {
               setDetectedGesture(stableGesture);
               setConfidence(stableGesture.confidence);
@@ -588,9 +588,9 @@ const GestureDemo = () => {
         }
       } catch (error) {
         console.error('Error initializing tracking:', error);
-        
+
         let errorMessage = 'Unable to initialize gesture recognition.';
-        
+
         if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
           errorMessage = 'Camera permission denied. Please allow access in your browser settings.';
         } else if (error.message && (error.message.includes('fetch') || error.message.includes('load'))) {
@@ -598,7 +598,7 @@ const GestureDemo = () => {
         } else if (error.message && error.message.includes('camera')) {
           errorMessage = 'Unable to access camera. Please check your device settings.';
         }
-        
+
         setCameraError(errorMessage);
         setIsLoading(false);
       }
@@ -638,13 +638,13 @@ const GestureDemo = () => {
           >
             {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} className="text-slate-500" />}
           </button>
-          
+
           {/* Woffy Mood */}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30">
             <span className="text-lg">{getMoodEmoji()}</span>
             <span className="text-sm font-medium text-amber-400 capitalize">{woffyMood}</span>
           </div>
-          
+
           {/* Face Detection */}
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300 ${
             faceDetected ? 'bg-emerald-500/20 border border-emerald-500/30' : 'bg-slate-800/50 border border-slate-700'
@@ -658,7 +658,7 @@ const GestureDemo = () => {
       </header>
 
       <main className="flex-1 p-4 md:p-8 flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto w-full">
-        
+
         {/* Camera Feed */}
         <div className="flex-1 flex flex-col">
           <div className="mb-4 flex items-center justify-between">
@@ -668,10 +668,10 @@ const GestureDemo = () => {
             </div>
             <div className="text-sm text-slate-500 font-mono">{fps > 0 && `${fps} FPS`}</div>
           </div>
-          
+
           <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-amber-500/10">
             <video ref={videoRef} className="hidden" playsInline autoPlay muted />
-            
+
             <canvas
               ref={canvasRef}
               width={1280}
@@ -780,7 +780,7 @@ const GestureDemo = () => {
                   transition={{ type: 'spring', damping: 20 }}
                   className={`absolute bottom-6 left-1/2 -translate-x-1/2 px-8 py-4 bg-gradient-to-r ${detectedGesture.color} backdrop-blur-md rounded-2xl flex items-center gap-5 shadow-2xl border border-white/20`}
                 >
-                  <motion.span 
+                  <motion.span
                     className="text-5xl"
                     initial={{ scale: 0.5, rotate: -20 }}
                     animate={{ scale: 1, rotate: 0 }}
@@ -837,7 +837,7 @@ const GestureDemo = () => {
             <div className="grid grid-cols-2 gap-2 text-center">
               <div className="p-3 bg-slate-900/50 rounded-xl">
                 <div className={`text-2xl font-bold ${faceDetected ? 'text-emerald-400' : 'text-slate-500'}`}>
-                  {faceDetected ? '✓' : '—'}
+                  {faceDetected ? '✓' : ', '}
                 </div>
                 <div className="text-xs text-slate-400">Owner</div>
               </div>
