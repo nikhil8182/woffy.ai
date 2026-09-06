@@ -132,3 +132,7 @@ dist
 .netlify
 
 .vercel
+
+.env.*
+!.env.example
+output/

@@ -1,31 +1,40 @@
-// Use Netlify function (works for dev and production)
-const FUNCTION_URL =
-  import.meta.env.VITE_WOFFY_FUNCTION_URL ||
-  (import.meta.env.DEV
-    ? "http://localhost:8888/.netlify/functions/chatWithWoffy"
-    : "/api/chatWithWoffy");
-
-// Chat with Woffy via HTTP Function (public)
-export const chatWithWoffy = async (message, chatHistory = []) => {
+export async function chatWithWoffy(message, chatHistory = []) {
+  const history = [];
+  let characters = 0;
+  for (const item of chatHistory.slice(-12).reverse()) {
+    if (
+      !["user", "model", "assistant"].includes(item.role) ||
+      typeof item.text !== "string"
+    )
+      continue;
+    const text = item.text.slice(0, 2000);
+    if (!text.trim() || characters + text.length > 8000) break;
+    characters += text.length;
+    history.unshift({ role: item.role, text });
+  }
+  let response;
   try {
-    const res = await fetch(FUNCTION_URL, {
+    response = await fetch("/api/chatWithWoffy", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message,
-        history: chatHistory.map((m) => ({ role: m.role, text: m.text })),
-      }),
+      signal: AbortSignal.timeout(12000),
+      body: JSON.stringify({ message, history }),
     });
-
-    if (!res.ok) {
-      console.error("Woffy API error status:", res.status);
-      return "I had a little hiccup. Try again?";
-    }
-
-    const data = await res.json();
-    return data.response || "I had a little hiccup. Try again?";
-  } catch (error) {
-    console.error("Woffy AI error:", error);
-    return "Something went wrong. Can you try again?";
+  } catch {
+    throw new Error(
+      "Unable to reach Woffy. Check your connection and try again.",
+    );
   }
-};
+  const data = await response.json().catch(() => null);
+  if (!response.ok)
+    throw new Error(
+      data?.error ||
+        "Woffy is unavailable right now. Please try again shortly.",
+    );
+  if (
+    typeof data?.response !== "string" ||
+    !["ai", "project-faq"].includes(data.mode)
+  )
+    throw new Error("Woffy could not load a reply. Please try again shortly.");
+  return data;
+}
