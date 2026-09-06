@@ -6,7 +6,7 @@ import {
   rateLimited,
 } from "./_lib/http.js";
 
-const SYSTEM_PROMPT = `You are the Woffy website project guide, a conversational software demo from Onwords in Coimbatore, India. You are not a connected physical robot.
+const SYSTEM_PROMPT = `You are the Woffy website project guide, a conversational software demo from Onwords in South India. You are not a connected physical robot.
 Use only these project facts for claims about Woffy:
 - Woffy is a companion robotics project in research and development. Product design and hardware specifications are still being tested.
 - The team is exploring movement, interaction and useful home assistance, and learning through robot-arm experiments. These experiments do not prove autonomous whole-home capabilities.
@@ -33,7 +33,7 @@ export function projectFaq(message) {
   if (/waitlist|sign.?up|update|subscribe|join|beta/.test(text))
     return "Use “Get build updates” to register your email for Woffy project updates. Your name is optional. This is an expression of interest, not a preorder or guaranteed beta access. You can ask hello@woffy.ai to remove your registration.";
   if (/who|team|onwords|founder|company|contact|partner|invest/.test(text))
-    return "Woffy is a companion robotics project being built by Onwords in Coimbatore, India. The team is exploring how movement, interaction and home assistance could come together. For collaboration, contact hello@woffy.ai or visit /about.";
+    return "Woffy is a companion robotics project being built by Onwords in South India. The team is exploring how movement, interaction and home assistance could come together. For collaboration, contact hello@woffy.ai or visit /about.";
   if (
     /roadmap|progress|stage|status|milestone|today|capabilit|can.*do/.test(text)
   )

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Hands } from '@mediapipe/hands';
 import { FaceDetection } from '@mediapipe/face_detection';
 import { Camera as MPCamera } from '@mediapipe/camera_utils';
+import '../styles/gesture.css';
 
 const HAND_CONNECTIONS = [
   [0, 1], [1, 2], [2, 3], [3, 4],
@@ -82,7 +83,7 @@ const WOFFY_GESTURES = {
 const GestureDemo = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [cameraError, setCameraError] = useState(null);
   const [detectedGesture, setDetectedGesture] = useState(null);
   const [woffyResponse, setWoffyResponse] = useState(null);
@@ -103,6 +104,13 @@ const GestureDemo = () => {
   const faceDetectionRef = useRef(null);
   const handsRef = useRef(null);
   const permissionRequestRef = useRef(false);
+  const cameraRef = useRef(null);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
 
   const distance = (p1, p2) => {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2) + Math.pow((p1.z || 0) - (p2.z || 0), 2));
@@ -408,7 +416,13 @@ const GestureDemo = () => {
   }, [soundEnabled, updateWoffyMood]);
 
   const requestCameraAccess = useCallback(async (userInitiated = false) => {
-    if (permissionRequestRef.current) return false;
+    if (!userInitiated || permissionRequestRef.current) return false;
+
+    if (!window.isSecureContext) {
+      setCameraError('Camera access needs HTTPS. Open the secure website to try this experiment.');
+      setPermissionStatus('blocked');
+      return false;
+    }
 
     if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
       setCameraError('Camera access is not supported in this browser.');
@@ -419,6 +433,8 @@ const GestureDemo = () => {
 
     permissionRequestRef.current = true;
     setIsRequestingPermission(true);
+    setIsLoading(true);
+    setCameraError(null);
     setPermissionStatus('prompt');
 
     let granted = false;
@@ -431,10 +447,13 @@ const GestureDemo = () => {
       // We only need the permission grant; release the stream because Mediapipe will request it again.
       stream.getTracks().forEach(track => track.stop());
 
+      if (!mountedRef.current) return false;
+
       setPermissionStatus('granted');
       setCameraError(null);
       granted = true;
     } catch (error) {
+      if (!mountedRef.current) return false;
       console.error('Camera permission error:', error);
       const denied = error?.name === 'NotAllowedError' || error?.name === 'PermissionDeniedError';
       const notFound = error?.name === 'NotFoundError' || error?.name === 'OverconstrainedError';
@@ -455,9 +474,9 @@ const GestureDemo = () => {
       }
     } finally {
       permissionRequestRef.current = false;
-      setIsRequestingPermission(false);
-      if (!granted) {
-        setIsLoading(false);
+      if (mountedRef.current) {
+        setIsRequestingPermission(false);
+        if (!granted) setIsLoading(false);
       }
     }
 
@@ -474,13 +493,36 @@ const GestureDemo = () => {
       return;
     }
 
-    requestCameraAccess(false);
-  }, [requestCameraAccess]);
+    // Inspect support only. Camera permission is requested exclusively by a click.
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraError('Camera access is not supported in this browser. Try a current browser on a device with a camera.');
+      setPermissionStatus('unsupported');
+    }
+  }, []);
+
+  const stopCamera = () => {
+    cameraRef.current?.stop();
+    const stream = videoRef.current?.srcObject;
+    stream?.getTracks?.().forEach(track => track.stop());
+    if (videoRef.current) videoRef.current.srcObject = null;
+    setPermissionStatus('unknown');
+    setIsLoading(false);
+    setCameraError(null);
+    setDetectedGesture(null);
+    setWoffyResponse(null);
+    setHandCount(0);
+    setFaceDetected(false);
+    setFaceCount(0);
+    setFps(0);
+    gestureBuffer.current = [];
+  };
 
   useEffect(() => {
     if (permissionStatus !== 'granted') return;
 
     let camera = null;
+    let cancelled = false;
+    const videoElement = videoRef.current;
 
     const initializeTracking = async () => {
       try {
@@ -497,6 +539,7 @@ const GestureDemo = () => {
         });
 
         faceDetectionRef.current.onResults((results) => {
+          if (cancelled) return;
           setFaceDetected(results.detections?.length > 0);
           setFaceCount(results.detections?.length || 0);
         });
@@ -513,6 +556,7 @@ const GestureDemo = () => {
         });
 
         handsRef.current.onResults((results) => {
+          if (cancelled) return;
           frameCount.current++;
           const now = Date.now();
           if (now - lastFrameTime.current >= 1000) {
@@ -576,17 +620,27 @@ const GestureDemo = () => {
         if (videoRef.current) {
           camera = new MPCamera(videoRef.current, {
             onFrame: async () => {
+              if (cancelled) return;
               if (handsRef.current && videoRef.current) await handsRef.current.send({ image: videoRef.current });
               if (faceDetectionRef.current && videoRef.current) await faceDetectionRef.current.send({ image: videoRef.current });
             },
             width: 1280,
             height: 720,
           });
+          cameraRef.current = camera;
 
           await camera.start();
+          if (cancelled) {
+            camera.stop();
+            videoElement?.srcObject?.getTracks?.().forEach(track => track.stop());
+            return;
+          }
           setIsLoading(false);
         }
       } catch (error) {
+        if (cancelled) return;
+        camera?.stop();
+        videoElement?.srcObject?.getTracks?.().forEach(track => track.stop());
         console.error('Error initializing tracking:', error);
 
         let errorMessage = 'Unable to initialize gesture recognition.';
@@ -607,9 +661,12 @@ const GestureDemo = () => {
     initializeTracking();
 
     return () => {
+      cancelled = true;
       if (camera) camera.stop();
-      if (handsRef.current) handsRef.current.close();
-      if (faceDetectionRef.current) faceDetectionRef.current.close();
+      if (cameraRef.current === camera) cameraRef.current = null;
+      videoElement?.srcObject?.getTracks?.().forEach(track => track.stop());
+      if (handsRef.current) Promise.resolve(handsRef.current.close()).catch(() => {});
+      if (faceDetectionRef.current) Promise.resolve(faceDetectionRef.current.close()).catch(() => {});
     };
   }, [permissionStatus, recognizeGesture, stabilizeGesture, updateHistory]);
 
@@ -624,15 +681,18 @@ const GestureDemo = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col">
+    <div className="g-page min-h-screen bg-slate-950 text-white flex flex-col">
       {/* Header */}
-      <header className="p-4 md:p-6 flex items-center justify-between border-b border-white/10 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="g-header p-4 md:p-6 flex items-center justify-between border-b border-white/10 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
         <Link to="/specs" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
           <ChevronLeft size={20} />
           <span className="hidden sm:inline">Back to Specs</span>
         </Link>
         <div className="flex items-center gap-4">
           <button
+            type="button"
+            aria-label={soundEnabled ? 'Turn sound cues off' : 'Turn sound cues on'}
+            aria-pressed={soundEnabled}
             onClick={() => setSoundEnabled(!soundEnabled)}
             className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
           >
@@ -642,7 +702,7 @@ const GestureDemo = () => {
           {/* Woffy Mood */}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30">
             <span className="text-lg">{getMoodEmoji()}</span>
-            <span className="text-sm font-medium text-amber-400 capitalize">{woffyMood}</span>
+            <span className="text-sm font-medium text-amber-400 capitalize">Demo: {woffyMood}</span>
           </div>
 
           {/* Face Detection */}
@@ -651,25 +711,27 @@ const GestureDemo = () => {
           }`}>
             <User size={16} className={faceDetected ? 'text-emerald-400' : 'text-slate-500'} />
             <span className={`text-sm font-medium ${faceDetected ? 'text-emerald-400' : 'text-slate-500'}`}>
-              {faceDetected ? 'Owner Detected' : 'No Face'}
+              {permissionStatus !== 'granted' ? 'Camera off' : faceDetected ? 'Face detected' : 'No face detected'}
             </span>
           </div>
         </div>
       </header>
 
-      <main className="flex-1 p-4 md:p-8 flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto w-full">
+      <div className="g-heading"><p>Woffy browser experiment</p><h1>A little body language.</h1><span>Explore six hand gestures and their on-screen responses. This experiment does not control a physical robot.</span></div>
+
+      <div className="g-body flex-1 p-4 md:p-8 flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto w-full">
 
         {/* Camera Feed */}
         <div className="flex-1 flex flex-col">
           <div className="mb-4 flex items-center justify-between">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-400 font-medium text-sm border border-amber-500/30">
               <Dog size={16} />
-              <span>Woffy Gesture Control</span>
+              <span>Gesture playground</span>
             </div>
-            <div className="text-sm text-slate-500 font-mono">{fps > 0 && `${fps} FPS`}</div>
+            <div className="g-camera-actions">{permissionStatus === 'granted' && <button type="button" onClick={stopCamera} className="g-stop"><Square size={13} aria-hidden="true" />Stop camera</button>}</div>
           </div>
 
-          <div className="relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-amber-500/10">
+          <div className="g-camera-frame relative aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-amber-500/10">
             <video ref={videoRef} className="hidden" playsInline autoPlay muted />
 
             <canvas
@@ -678,7 +740,18 @@ const GestureDemo = () => {
               height={720}
               className="w-full h-full object-contain bg-slate-900"
               style={{ transform: 'scaleX(-1)' }}
+              aria-label="Camera preview with detected hand landmarks"
             />
+
+            {permissionStatus === 'unknown' && !cameraError && !isLoading && (
+              <div className="g-entry">
+                <span className="g-camera-icon"><Camera size={29} strokeWidth={1.4} aria-hidden="true" /></span>
+                <h2>Your camera. Your choice.</h2>
+                <p>Allow your camera when you’re ready. Hand and face detection runs in this browser, and you can stop the camera at any time.</p>
+                <button type="button" className="g-start" onClick={() => requestCameraAccess(true)} disabled={isRequestingPermission}><Camera size={16} aria-hidden="true" />Start camera experiment</button>
+                <small>The browser will ask for camera access. No microphone is requested.</small>
+              </div>
+            )}
 
             {/* Loading State */}
             {isLoading && (
@@ -689,8 +762,8 @@ const GestureDemo = () => {
                     <div className="absolute inset-0 border-4 border-transparent border-t-amber-500 rounded-full animate-spin"></div>
                     <span className="absolute inset-0 flex items-center justify-center text-4xl">🐕</span>
                   </div>
-                  <p className="text-white font-medium text-lg">Waking up Woffy...</p>
-                  <p className="text-slate-500 text-sm mt-2">Loading gesture recognition</p>
+                  <p className="text-white font-medium text-lg">{isRequestingPermission ? 'Waiting for camera permission' : 'Preparing the experiment'}</p>
+                  <p className="text-slate-500 text-sm mt-2">{isRequestingPermission ? 'Choose Allow in your browser to continue.' : 'Loading hand and face detection'}</p>
                 </div>
               </div>
             )}
@@ -698,23 +771,25 @@ const GestureDemo = () => {
             {/* Camera Error */}
             {cameraError && (
               <div className="absolute inset-0 flex items-center justify-center bg-slate-900/95">
-                <div className="text-center p-8 max-w-md space-y-4">
+                <div className="g-error text-center p-8 max-w-md space-y-4" role="alert">
                   <AlertCircle className="w-16 h-16 text-red-500 mx-auto" />
                   <div>
-                    <h3 className="text-xl font-bold text-white">Camera Access Required</h3>
+                    <h3 className="text-xl font-bold text-white">Let’s get the camera ready</h3>
                     <p className="text-slate-400 mt-2">{cameraError}</p>
                   </div>
                   <div className="flex flex-col gap-3">
-                    {permissionStatus !== 'granted' && permissionStatus !== 'unsupported' && (
+                    {permissionStatus !== 'granted' && permissionStatus !== 'unsupported' && permissionStatus !== 'blocked' && (
                       <button
+                        type="button"
                         onClick={() => requestCameraAccess(true)}
                         disabled={isRequestingPermission}
                         className="px-6 py-3 bg-emerald-600 text-white rounded-full font-semibold hover:bg-emerald-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        {isRequestingPermission ? 'Requesting Access…' : 'Allow Camera Access'}
+                        {isRequestingPermission ? 'Requesting access…' : 'Try camera access again'}
                       </button>
                     )}
                     <button
+                      type="button"
                       onClick={() => window.location.reload()}
                       className="px-6 py-3 bg-slate-800 text-white rounded-full font-medium hover:bg-slate-700 transition-colors"
                     >
@@ -731,7 +806,7 @@ const GestureDemo = () => {
             )}
 
             {/* Scanning Corners */}
-            {!isLoading && !cameraError && (
+            {permissionStatus === 'granted' && !isLoading && !cameraError && (
               <>
                 <div className="absolute top-4 left-4 w-16 h-16 border-l-2 border-t-2 border-amber-500/50 rounded-tl-lg"></div>
                 <div className="absolute top-4 right-4 w-16 h-16 border-r-2 border-t-2 border-amber-500/50 rounded-tr-lg"></div>
@@ -750,7 +825,7 @@ const GestureDemo = () => {
                   className="absolute top-4 right-20 px-4 py-2 bg-emerald-500/90 backdrop-blur-md rounded-xl flex items-center gap-2 shadow-lg"
                 >
                   <Smile className="w-5 h-5 text-white" />
-                  <span className="text-white font-bold text-sm">Owner Detected!</span>
+                  <span className="text-white font-bold text-sm">Face detected</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -764,7 +839,7 @@ const GestureDemo = () => {
                   exit={{ opacity: 0, y: -20 }}
                   className="absolute top-20 left-1/2 -translate-x-1/2 px-6 py-3 bg-amber-500/90 backdrop-blur-md rounded-2xl shadow-xl"
                 >
-                  <span className="text-white font-bold text-lg">{woffyResponse}</span>
+                  <span className="text-white font-bold text-lg"><small className="g-simulation-label">On-screen response</small>{woffyResponse}</span>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -794,7 +869,7 @@ const GestureDemo = () => {
                       <div className="w-20 h-1.5 bg-white/30 rounded-full overflow-hidden">
                         <motion.div className="h-full bg-white rounded-full" animate={{ width: `${confidence}%` }} />
                       </div>
-                      <span className="text-white/80 text-sm font-medium">{confidence}%</span>
+                      <span className="text-white/80 text-sm font-medium">Match score: {confidence}%</span>
                     </div>
                   </div>
                 </motion.div>
@@ -806,23 +881,23 @@ const GestureDemo = () => {
           <div className="mt-4 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
             <p className="text-amber-200 text-sm text-center">
               <Dog className="inline w-4 h-4 mr-2 text-amber-400" />
-              Use hand gestures to communicate with Woffy! Try <span className="text-white font-medium">🖐️ Stay</span>, <span className="text-white font-medium">✊ Stop</span>, <span className="text-white font-medium">👍 Good Boy</span>, or <span className="text-white font-medium">✌️ Play</span>
+              Try an open palm, a fist, thumbs up, or a peace sign. Keep your hand in view and use good lighting.
             </p>
           </div>
 
           {/* Beta Notice */}
           <div className="mt-3 p-3 bg-gradient-to-r from-violet-500/10 to-indigo-500/10 rounded-xl border border-violet-500/20">
             <div className="flex items-center justify-center gap-2">
-              <span className="px-2 py-0.5 bg-violet-500/30 text-violet-300 text-xs font-bold rounded-full uppercase tracking-wider">Beta</span>
+              <span className="px-2 py-0.5 bg-violet-500/30 text-violet-300 text-xs font-bold rounded-full uppercase tracking-wider">Experiment</span>
               <p className="text-violet-200/80 text-xs text-center">
-                This is an early beta preview. We'll improve gesture accuracy & add more commands before launch!
+                Recognition is experimental. The responses are a simulation, not a product capability or safety control.
               </p>
             </div>
           </div>
         </div>
 
         {/* Sidebar */}
-        <div className="w-full lg:w-80 space-y-4">
+        <div className="g-sidebar w-full lg:w-80 space-y-4">
           {/* Woffy Status */}
           <div className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 backdrop-blur-sm border border-amber-500/20 rounded-2xl p-6">
             <div className="flex items-center gap-4 mb-4">
@@ -830,20 +905,20 @@ const GestureDemo = () => {
                 🐕
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">Woffy</h3>
-                <p className="text-amber-400 text-sm capitalize">Mood: {woffyMood}</p>
+                <h3 className="text-lg font-bold text-white">On-screen Woffy</h3>
+                <p className="text-amber-400 text-sm capitalize">Demo mood: {woffyMood}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2 text-center">
               <div className="p-3 bg-slate-900/50 rounded-xl">
                 <div className={`text-2xl font-bold ${faceDetected ? 'text-emerald-400' : 'text-slate-500'}`}>
-                  {faceDetected ? '✓' : ', '}
+                  {permissionStatus === 'granted' ? faceCount : 'Off'}
                 </div>
-                <div className="text-xs text-slate-400">Owner</div>
+                <div className="text-xs text-slate-400">Faces in view</div>
               </div>
               <div className="p-3 bg-slate-900/50 rounded-xl">
                 <div className={`text-2xl font-bold ${handCount > 0 ? 'text-indigo-400' : 'text-slate-500'}`}>
-                  {handCount}
+                  {permissionStatus === 'granted' ? handCount : 'Off'}
                 </div>
                 <div className="text-xs text-slate-400">Hands</div>
               </div>
@@ -854,10 +929,10 @@ const GestureDemo = () => {
           <div className="bg-slate-900/80 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
             <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <History className="w-4 h-4 text-amber-400" />
-              Command History
+              Gesture history
             </h3>
             {gestureHistory.length === 0 ? (
-              <p className="text-slate-500 text-sm text-center py-4">No commands yet</p>
+              <p className="text-slate-500 text-sm text-center py-4">Your detected gestures will appear here.</p>
             ) : (
               <div className="space-y-2 max-h-40 overflow-y-auto">
                 {gestureHistory.slice(0, 5).map((gesture, i) => (
@@ -878,7 +953,7 @@ const GestureDemo = () => {
           {/* Gesture Commands */}
           <div className="bg-slate-900/80 backdrop-blur-sm border border-white/10 rounded-2xl p-4">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-              Woffy Commands
+              Try these gestures
             </h3>
             <div className="grid grid-cols-2 gap-1">
               {Object.entries(WOFFY_GESTURES).map(([name, data]) => (
@@ -894,7 +969,7 @@ const GestureDemo = () => {
                   <div className="flex items-center gap-1.5">
                     <span className="text-sm">{data.emoji}</span>
                     <div className={`font-medium text-[10px] leading-tight ${detectedGesture?.name === name ? data.textColor : 'text-white/90'}`}>
-                      {data.command}
+                      {name}
                     </div>
                   </div>
                 </motion.div>
@@ -907,15 +982,15 @@ const GestureDemo = () => {
             <div className="flex items-start gap-3">
               <Scan className="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0" />
               <div>
-                <h4 className="font-medium text-indigo-300 mb-1">AI-Powered Control</h4>
+                <h4 className="font-medium text-indigo-300 mb-1">A browser experiment</h4>
                 <p className="text-xs text-indigo-200/70 leading-relaxed">
-                  Woffy understands your gestures through advanced hand tracking. All processing happens on-device for instant response.
+                  This page uses MediaPipe in your browser to detect hand shapes and faces. It does not identify people or connect to a robot. Models are downloaded when you start.
                 </p>
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
