@@ -77,7 +77,7 @@ const content = {
         title: "A project in development",
         text: (
           <>
-            Woffy is a robotics project from Onwords. The website shares our
+            Woffy is a robotics project. The website shares our
             current work and intended direction. Concept illustrations, proposed
             capabilities, and future milestones are not specifications of a
             product available for purchase. Designs and plans may change as

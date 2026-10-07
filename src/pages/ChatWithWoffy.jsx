@@ -176,7 +176,7 @@ export default function ChatWithWoffy() {
             <p>We’re building a companion robot for everyday life. Get to know the idea, the work in progress, and the people behind it.</p>
             <Link to="/about" className="c-text-link">Meet the project <ArrowUpRight size={17} aria-hidden="true" /></Link>
           </div>
-          <div className="c-aside-footer"><span>Made with curiosity.</span><a href="https://onwords.in" rel="noopener noreferrer">By Onwords <ArrowUpRight size={13} aria-hidden="true" /></a></div>
+          <div className="c-aside-footer"><span>Made with curiosity.</span><span>Built by the Woffy team</span></div>
         </aside>
 
         <section className="c-conversation" aria-labelledby="c-chat-title">

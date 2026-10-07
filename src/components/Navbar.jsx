@@ -33,7 +33,7 @@ export default function Navbar({ onJoinWaitlist }) {
       {links.map(([href,label]) => <NavLink key={href} to={href} end={href === '/'}>{label}<ArrowUpRight size={22} /></NavLink>)}
       <NavLink to="/chat">Say hello to Woffy <ArrowUpRight size={22} /></NavLink>
       <button className="button button-primary" onClick={join}>Get build updates <ArrowUpRight size={18} /></button>
-      <p>A companion robot in the making.<br />By Onwords.</p>
+      <p>A companion robot in the making.<br />Built by the Woffy team.</p>
     </nav>
   </header>;
 }
